@@ -1,0 +1,103 @@
+@import "../../../../shareds/colors.scss";
+
+.filters-wrapper {
+  position: relative;
+
+  .filter-button {
+    background: linear-gradient(90deg, $pure-white, $rare-deep-blue);
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    padding: 14px 20px;
+    font-size: 14px;
+    border: 2px solid $pure-white;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow:
+      0 0 2px $pure-cyan,
+      0 0 2px $rare-deep-blue;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.05);
+      box-shadow:
+        0 0 5px $pure-cyan,
+        0 0 8px  $pure-cyan,
+        inset 0 0 8px #ffffff66;
+    }
+  }
+  
+  .filter-menu {
+    position: absolute;
+    background: $pure-white;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    z-index: 10;
+    width: 260px;
+    max-height: 420px;
+    overflow-y: auto;
+    flex-direction: column;
+
+    .filter-label {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 160px;
+      overflow-y: auto;
+
+      label {
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+
+        input[type="radio"] {
+          accent-color: $rare-deep-blue;
+          cursor: pointer;
+        }
+
+        input[disabled] {
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .apply-button {
+      padding: 8px 0;
+      background-color: $success-green;
+      color:$pure-white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: $success-green-dark;
+      }
+    }
+
+    .reset-button {
+      padding: 4px 0;
+      background: transparent;
+      border: none;
+      color: $neutral-gray;
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        color: $dark-gray;
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<app-nav-bar></app-nav-bar>
+<router-outlet></router-outlet>
+
+<!-- Modal de login -->
+<app-login-modal
+  *ngIf="modalView === 'login'"
+  (switchToRegister)="modalView = 'register'"
+  (loginSuccess)="handleLoginSuccess()"
+  (close)="closeModal()"
+/>
+
+<!-- Modal de registro -->
+<app-login-modal
+  *ngIf="modalView === 'register'"
+  (switchToLogin)="modalView = 'login'"
+  (registerSuccess)="handleLoginSuccess()"
+  (close)="closeModal()"
+/>

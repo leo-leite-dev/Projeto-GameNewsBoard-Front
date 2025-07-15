@@ -1,0 +1,59 @@
+h1,
+h2 {
+  color: $pure-white;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+p {
+  margin: 6px 0 12px;
+  color: rgba($pure-white, 0.9);
+  line-height: 1.6;
+}
+
+a {
+  color: $rare-deep-blue;
+  font-weight: bold;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: lighten($rare-deep-blue, 10%);
+    text-decoration: underline;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}

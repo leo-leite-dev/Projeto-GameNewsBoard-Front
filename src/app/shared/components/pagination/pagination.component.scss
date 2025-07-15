@@ -1,0 +1,32 @@
+@import "../../../../shareds/colors.scss";
+
+.pagination-controls {
+  justify-content: center;
+  margin-top: 1.5rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    border: 1px solid $pure-yellow;;
+    background-color: transparent;
+    color: $pure-white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+
+    &:hover:enabled {
+      background-color: $rare-deep-blue;
+      color: $pure-black;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    color: $pure-white;
+    font-weight: bold;
+  }
+}

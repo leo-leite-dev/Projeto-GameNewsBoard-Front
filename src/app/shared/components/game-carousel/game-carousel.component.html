@@ -1,0 +1,12 @@
+<app-gamer-loading *ngIf="isLoading" />
+
+<app-game-search-filter (filtersChanged)="onFiltersChanged($event)" />
+
+<app-carousel
+  *ngIf="!isLoading"
+  [title]="'Jogos Disponíveis'"
+  [games]="filteredGames"
+  [isLoading]="isLoading"
+  [enableDrag]="true"
+  [connectedDropLists]="connectedDropLists"
+/>

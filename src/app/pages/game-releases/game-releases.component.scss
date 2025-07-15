@@ -1,0 +1,72 @@
+@import '../../../shareds/colors.scss';
+
+.container-overflow {
+  background-color: $light-gray;
+  padding: 30px;
+  width: 50%;
+  margin-top: 20px;
+
+  .release-item {
+    position: relative;
+    width: 250px;
+    height: 320px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex: 0 0 auto;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .game-cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .game-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.75);
+      color: $pure-white;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.75rem;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+
+      .game-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .game-extra {
+        small {
+          font-size: 12px;
+          display: block;
+          opacity: 0.9;
+          line-height: 1.2;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .container-overflow {
+    margin-top: 80px;
+
+    .release-item {
+      width: 130px;
+      height: 200px;
+    }
+  }
+}

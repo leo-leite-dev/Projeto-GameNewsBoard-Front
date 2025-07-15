@@ -1,0 +1,106 @@
+@import '../../../../shareds/colors.scss';
+
+.main-header {
+  display: none;
+
+  @media (max-width: 600px) {
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+    background-color: $void-black;
+    color: $pure-white;
+    padding: 10px 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid $charcoal;
+
+    .header-content-grid {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: flex-start;
+      width: 100%;
+      margin: 0 auto;
+      height: 100%;
+      gap: 8px;
+
+      .profile-icon mat-icon {
+        overflow: visible !important;
+      }
+
+      .mobile-menu-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: $pure-white;
+        border-radius: 4px;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+      }
+
+      .header-title {
+        justify-self: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: $pure-white;
+        margin: 0;
+        white-space: nowrap;
+        text-align: center;
+      }
+
+      .profile-placeholder {
+        margin-right: 20px;
+
+        .profile-dropdown {
+          position: relative;
+
+          .profile-icon {
+            background: transparent;
+            border: none;
+            color: $pure-white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+
+            mat-icon {
+              font-size: 24px;
+            }
+          }
+
+          .dropdown-menu {
+            position: absolute;
+            top: 38px;
+            right: 0;
+            background: $dark-gray;
+            border: 1px solid $charcoal;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            list-style: none;
+            padding: 8px 0;
+            margin: 0;
+            width: 140px;
+            z-index: 1100;
+
+            li {
+              padding: 8px 16px;
+              font-size: 14px;
+              color: $pure-white;
+              cursor: pointer;
+              transition: background 0.2s;
+
+              &:hover {
+                background-color: $charcoal;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<div class="search d-flex center end">
+  <app-input
+    [label]="'Buscar jogo'"
+    [placeholder]="'Digite o nome do jogo...'"
+    [value]="filters.searchTerm"
+    (valueChange)="onSearch($event)"
+  ></app-input>
+
+  <app-filter-menu
+    [selectedPlatform]="filters.platform"
+    [selectedYearCategory]="filters.yearCategory"
+    [platformOptions]="platformOptions"
+    [yearCategoryOptions]="yearCategoryOptions"
+    (filterApplied)="onFilterApplied($event)"
+  ></app-filter-menu>
+</div>

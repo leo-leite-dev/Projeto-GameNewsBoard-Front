@@ -1,0 +1,54 @@
+<app-gamer-loading *ngIf="isLoading" />
+<div *ngIf="!isLoading" class="container-global-tier">
+  <div class="tier-list-container d-flex space-between center mb-20">
+    <h2 class="tier-title fs-24">Suas Tier Lists</h2>
+
+    <app-navigate-button
+      label="Criar nova tier"
+      [icon]="'fa fa-plus'"
+      (click)="goToCreateTier()"
+      className="back-btn"
+    />
+  </div>
+
+  <div *ngIf="tierLists.length" class="container-tier d-flex gap-10 wrap">
+    <div class="tier-card" *ngFor="let tier of tierLists">
+      <app-remove-button
+        class="remove-button"
+        tooltip="Excluir tier"
+        (click)="openConfirmDialog(tier.id); $event.stopPropagation()"
+      />
+
+      <fa-icon
+        [icon]="['fas', 'pen']"
+        class="edit-button"
+        title="Editar tier"
+        (click)="goToEditTier(tier.id); $event.stopPropagation()"
+      />
+
+      <div
+        class="tier-image"
+        [style.backgroundImage]="'url(' + getImageUrl(tier.imageUrl) + ')'"
+        (click)="goToTier(tier.id)"
+      >
+        <div class="tier-info-overlay">
+          <h3 class="tier-name">{{ tier.title }}</h3>
+          <p class="tier-sub">Clique para ver o ranking</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!tierLists.length" class="no-tiers">
+    <p class="info-text">Você ainda não criou nenhuma tier list.</p>
+  </div>
+</div>
+
+<app-confirm-dialog
+  *ngIf="confirmTierId"
+  [message]="'Tem certeza que deseja excluir esta tier list?'"
+  [confirmText]="'Excluir'"
+  [cancelText]="'Cancelar'"
+  (confirmed)="onDeleteConfirmed()"
+  (cancelled)="onDeleteCancelled()"
+/>

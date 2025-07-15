@@ -1,0 +1,12 @@
+<div class="form-wrapper d-flex">
+  <label class="mb-10 fs-14" *ngIf="label">{{ label }}</label>
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [value]="value"
+    [disabled]="isDisabled"
+    (input)="onInputChange($event)"
+    (blur)="onTouched()"
+    class="input"
+  />
+</div>

@@ -1,0 +1,5 @@
+<div class="pagination-controls d-flex center gap-20">
+  <button (click)="onPrevious()" [disabled]="page === 1">Anterior</button>
+  <span>Página {{ page }}</span>
+  <button (click)="onNext()" [disabled]="!hasNext">Próxima</button>
+</div>

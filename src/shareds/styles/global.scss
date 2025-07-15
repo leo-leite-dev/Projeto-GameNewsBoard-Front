@@ -1,0 +1,89 @@
+@import '../colors';
+@import './layouts';
+@import './typography';
+@import './forms';
+@import './auth';
+@import './scrollbar';
+@import './table';
+
+html,
+body,
+app-root {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #7f00ff transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #2f243b, #e100ff);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #a100ff, #ff00d4);
+}
+
+.content {
+  min-height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+
+  background: radial-gradient(circle at top left, #2a004f 0%, #3d0074 35%, #1c002e 80%);
+  background-color: #2a004f;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.container-overflow {
+  height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: 'Orbitron', sans-serif;
+  color: $pure-white;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+@media (orientation: portrait), (max-width: 1920px), (max-width: 600px) {
+  html,
+  body,
+  app-root {
+    overflow-y: auto;
+  }
+
+  .container-global {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: $void-black;
+  }
+
+  .content {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 0;
+  }
+}

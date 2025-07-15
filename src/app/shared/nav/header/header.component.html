@@ -1,0 +1,29 @@
+<header class="main-header" *ngIf="!menuExpanded || !isSmallScreen">
+  <div class="header-content-grid">
+    <button class="mobile-menu-toggle" (click)="toggleMenu()" *ngIf="isSmallScreen">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <h1 class="header-title">Game Board</h1>
+
+    <div class="profile-placeholder" *ngIf="isSmallScreen">
+      <div class="profile-dropdown">
+        <button class="profile-icon" (click)="toggleDropdown()">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <ul class="dropdown-menu" *ngIf="isDropdownOpen">
+          <ng-container *ngIf="authenticatedUser$ | async as user; else guestOptions">
+            <li (click)="navigateToProfile()">Ver perfil</li>
+            <li (click)="navigateToSettings()">Configurações</li>
+          </ng-container>
+
+          <ng-template #guestOptions>
+            <li (click)="navigateToLogin()">Entrar</li>
+            <li (click)="navigateToRegister()">Registrar</li>
+          </ng-template>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

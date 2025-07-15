@@ -1,0 +1,131 @@
+@import '../../../../shareds/colors.scss';
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 999;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(145deg, #181818, #1f1f1f);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), 0 0 8px rgba(92, 40, 255, 0.2);
+  border-radius: 16px;
+  color: #f1f1f1;
+  padding: 2rem;
+  z-index: 1000;
+  width: 100%;
+  max-width: 420px;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  animation: popIn 0.3s ease-out;
+
+  .modal-close-btn {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: $pure-white;
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: scale(1.08);
+    }
+  }
+
+  h1.title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+
+    &::before {
+      content: '🎮';
+      font-size: 1.6rem;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .auth-button {
+    width: 100%;
+    background: linear-gradient(135deg, #6e30ff, #aa58ff);
+    color: #fff;
+    padding: 0.9rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(174, 93, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 15px rgba(174, 93, 255, 0.6);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+
+  .auth-link {
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    text-align: center;
+    color: #aaa;
+
+    a {
+      color: #8b5cf6;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #a78bfa;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .error-message {
+    color: #ff4c4c;
+    background: rgba(255, 0, 0, 0.05);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

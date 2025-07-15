@@ -1,0 +1,162 @@
+@import '../../../../../../shareds/colors.scss';
+
+.add-game-tier-list-container {
+  .tier-list-header {
+    .view-toggle-btn {
+      background: none;
+      border: none;
+      color: $pure-white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 4px;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.15);
+      }
+    }
+  }
+
+  .container-overflow {
+    height: 67vh;
+    overflow-y: auto;
+    transition: height 0.3s ease;
+
+    &.view-only {
+      height: 92vh;
+    }
+
+    .tier-row {
+      align-items: stretch;
+      min-height: 12.5vh;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .tier-label {
+      width: 80px;
+      min-width: 80px;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .tier-dropzone {
+      flex: 1;
+      padding: 0;
+      gap: 2px;
+      border: 1px dashed $pure-white;
+      box-sizing: border-box;
+
+      &.cdk-drop-list-dragging {
+        background-color: rgba(0, 0, 0, 0.1);
+
+        .empty-dropzone {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .container-overflow {
+      width: 52.5%;
+    }
+  }
+
+  @media (min-width: 3840px) {
+    .container-overflow {
+      width: 39.4%;
+
+      .tier-row {
+        min-height: 8.5vh;
+      }
+    }
+  }
+
+  @media (orientation: portrait) {
+    .container-overflow {
+      width: 84.9%;
+
+      .tier-row {
+        min-height: 11.2vh;
+        flex-direction: column;
+      }
+
+      .tier-label {
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem;
+        padding: 6px 0;
+      }
+    }
+    .empty-dropzone {
+      padding-top: 10%;
+    }
+
+    .game-icon {
+      width: 130px;
+      height: 180px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .tier-list-container {
+    margin-top: 20px;
+    .container-overflow {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .tier-row {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .tier-label {
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem;
+        padding: 6px 0;
+      }
+
+      .tier-dropzone {
+        width: 100%;
+        padding: 10px;
+        min-height: 120px;
+        border-radius: 6px;
+      }
+    }
+  }
+
+  .game-icon {
+    width: 80px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 600px) {
+  .tier-list-container {
+    .game-icon {
+      width: 90px;
+      height: 120px;
+    }
+  }
+}
+
+@media (max-width: 377px) {
+  .game-icon {
+    width: 79px;
+    height: 109px;
+  }
+}
+
+@each $tier, $color in $tier-colors {
+  .tier-#{$tier} {
+    background-color: $color;
+  }
+}

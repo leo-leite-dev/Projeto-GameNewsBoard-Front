@@ -1,0 +1,50 @@
+<div class="container-overflow">
+  <app-platform-filter [platforms]="platforms" [selected]="selectedPlatform"
+    (platformChange)="filterByPlatform($event)">
+  </app-platform-filter>
+
+  <app-carousel [title]="'Lançamentos Do Dia'" [games]="todayGames" [isLoading]="isLoading">
+    <ng-template let-game>
+      <div class="release-item">
+        <img [src]="game.coverImage" [alt]="game.title" class="game-cover" />
+        <div class="game-overlay">
+          <div class="game-title">{{ game.title }}</div>
+          <div class="game-extra">
+            <small>{{ game.platform }}</small>
+            <small>Lançamento: {{ game.releaseDate }}</small>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </app-carousel>
+
+  <app-carousel [title]="'Lançamentos Futuros'" [games]="upcomingGames" [isLoading]="isLoading">
+    <ng-template let-game>
+      <div class="release-item">
+        <img [src]="game.coverImage" [alt]="game.title" class="game-cover" />
+        <div class="game-overlay">
+          <div class="game-title">{{ game.title }}</div>
+          <div class="game-extra">
+            <small>{{ game.platform }}</small>
+            <small>Lançamento: {{ game.releaseDate }}</small>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </app-carousel>
+
+  <app-carousel [title]="'Lançamentos Recentes'" [games]="recentGames" [isLoading]="isLoading">
+    <ng-template let-game>
+      <div class="release-item">
+        <img [src]="game.coverImage" [alt]="game.title" class="game-cover" />
+        <div class="game-overlay">
+          <div class="game-title">{{ game.title }}</div>
+          <div class="game-extra">
+            <small>{{ game.platform }}</small>
+            <small>Lançamento: {{ game.releaseDate }}</small>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </app-carousel>
+</div>

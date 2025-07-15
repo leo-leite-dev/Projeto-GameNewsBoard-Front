@@ -1,0 +1,13 @@
+<div class="platform-filter d-flex gap-10 justify-end mb-20">
+  <button
+    *ngFor="let platform of platforms"
+    (click)="onSelect(platform.value)"
+    class="platform-btn"
+    [ngClass]="[
+      selected === platform.value ? 'selected' : '',
+      selected === platform.value ? platform.key : ''
+    ]"
+  >
+    <fa-icon [icon]="platform.icon"></fa-icon>
+  </button>
+</div>

@@ -1,0 +1,48 @@
+<app-gamer-loading *ngIf="isLoading" />
+
+<div *ngIf="!isLoading && message" class="user-message text-center mt-20">
+  {{ message }}
+</div>
+
+<div class="game-grid-wrapper d-flex center mb-20" *ngIf="!isLoading && games.length">
+  <app-game-search-filter (filtersChanged)="onFiltersChanged($event)" />
+
+  <div class="game-grid">
+    <div class="game-card" *ngFor="let game of games">
+      <div class="cover-container">
+        <img
+          *ngIf="game.coverImage"
+          [src]="game.coverImage.replace('t_thumb', 't_cover_big')"
+          alt="Capa do jogo"
+          class="cover"
+        />
+        <div
+          class="rating fs-10 bold"
+          *ngIf="game.rating"
+          [ngClass]="{
+            green: game.rating >= 80,
+            yellow: game.rating >= 70 && game.rating < 80,
+            orange: game.rating >= 60 && game.rating < 70,
+            red: game.rating < 60
+          }"
+        >
+          {{ game.rating | number : '1.0-0' }}
+        </div>
+      </div>
+      <div class="overlay">
+        <div class="date fs-10">{{ getReleaseYear(game.released) }}</div>
+        <div class="title fs-14 bold">{{ game.title }}</div>
+        <div class="platform fs-12">{{ game.platform }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination-wrapper">
+    <app-pagination
+      [page]="page"
+      [hasNext]="hasMoreGames"
+      (previous)="previousPage()"
+      (next)="nextPage()"
+    />
+  </div>
+</div>

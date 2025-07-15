@@ -1,0 +1,23 @@
+@import "../../../../shareds/colors.scss";
+
+
+.dropdown {
+  min-width: 200px;
+  padding: 8px 12px;
+  border: 1px solid $pure-yellow;
+  border-radius: 6px;
+  background-color: transparent;
+  color: $pure-white;
+  outline: none;
+  transition: border-color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    border-color: $rare-deep-blue;
+  }
+
+  option {
+    background: $light-gray;
+    color: $pure-white;
+  }
+}

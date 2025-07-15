@@ -1,0 +1,55 @@
+@import '../../../../shareds/colors.scss';
+
+:host {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.platform-btn {
+    background-color: transparent;
+    border: 2px solid transparent;
+    padding: 8px;
+    border-radius: 50%;
+    font-size: 18px;
+    color: rgba($pure-white, 0.7);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: rgba($rare-deep-blue, 0.1);
+        color: $rare-deep-blue;
+    }
+
+    &.selected {
+        color: $pure-white;
+        box-shadow: 0 0 8px rgba($pure-white, 0.4);
+
+        &.xbox {
+            background-color: $xbox-green;
+            border-color: $xbox-green;
+        }
+
+        &.playstation {
+            background-color: $playstation-blue;
+            border-color: $playstation-blue;
+        }
+
+        &.steam {
+            background-color: $steam-gray;
+            border-color: $steam-gray;
+        }
+
+        &.nintendo {
+            background-color: $nintendo-red;
+            border-color: $nintendo-red;
+        }
+
+        &.todos {
+            background-color: $rare-deep-blue;
+            border-color: $rare-deep-blue;
+        }
+    }
+}

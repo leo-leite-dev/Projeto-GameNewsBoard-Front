@@ -1,0 +1,41 @@
+<div class="modal-wrapper" (click)="close.emit()">
+  <div class="overlay"></div>
+
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="modal-close-btn" (click)="close.emit()" aria-label="Fechar">
+      <fa-icon [icon]="'times'"></fa-icon>
+    </button>
+
+    <h1 class="title">Faça login</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div *ngIf="errorMessage" class="error-message mb-20">
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-group">
+        <app-input
+          formControlName="username"
+          [label]="'Usuário'"
+          [placeholder]="'Digite seu nome de usuário'"
+        ></app-input>
+      </div>
+
+      <div class="form-group">
+        <app-input
+          formControlName="password"
+          [label]="'Senha'"
+          [placeholder]="'Digite sua senha'"
+          [type]="'password'"
+        ></app-input>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid" class="auth-button">Entrar</button>
+    </form>
+
+    <p class="auth-link">
+      Ainda não tem conta?
+      <a (click)="navigateToRegister($event)">Criar agora</a>
+    </p>
+  </div>
+</div>

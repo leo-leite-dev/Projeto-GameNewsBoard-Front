@@ -1,0 +1,313 @@
+@import '../../../../shareds/colors.scss';
+
+.menu-toggle {
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  transform: translateY(-50%);
+  background: $void-black;
+  border: none;
+  color: $pure-white;
+  border-radius: 0 4px 4px 0;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+
+  &:hover {
+    background: $charcoal;
+  }
+}
+
+.side-menu {
+  width: 250px;
+  background-color: $void-black;
+  color: $pure-white;
+  height: 100vh;
+  position: fixed;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 0 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+  .menu-header {
+    padding: 20px;
+    border-bottom: 1px solid $charcoal;
+    display: flex;
+    align-items: center;
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $pure-white;
+    }
+
+    .collapsed-logo {
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      color: $pure-white;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+    }
+  }
+
+  &.collapsed {
+    width: 70px;
+    padding: 0;
+
+    span,
+    .arrow,
+    .menu-footer {
+      display: none;
+    }
+
+    .menu-header {
+      padding: 20px 0;
+      border-bottom: 1px solid $charcoal;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      h2 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: $pure-white;
+      }
+
+      .collapsed-logo {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+        color: $pure-white;
+      }
+    }
+  }
+
+  .menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+
+    .menu-item {
+      border-bottom: 1px solid $light-gray-transparent;
+
+      .main-item {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: $light-gray-transparent;
+        }
+
+        mat-icon {
+          margin-right: 15px;
+          font-size: 24px;
+          min-width: 24px;
+        }
+
+        span {
+          flex-grow: 1;
+          font-size: 14px;
+        }
+
+        .arrow {
+          transition: transform 0.3s;
+          min-width: 24px;
+        }
+      }
+
+      .submenu {
+        padding: 0;
+        margin: 0;
+        background-color: $charcoal;
+
+        li {
+          padding: 12px 16px 12px 40px;
+          cursor: pointer;
+          font-size: 13px;
+          border-left: 3px solid transparent;
+          transition: all 0.2s ease;
+          color: $pure-white;
+
+          &:hover {
+            background-color: $neutral-gray;
+          }
+        }
+      }
+
+      &.open {
+        .arrow {
+          transform: rotate(180deg);
+        }
+
+        .submenu {
+          max-height: 500px;
+        }
+      }
+    }
+  }
+
+  .menu-footer {
+    position: relative;
+    padding: 20px;
+    border-top: 1px solid $light-gray-transparent;
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+
+      .auth-btn {
+        background: $charcoal;
+        border: none;
+        color: $pure-white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s;
+        flex: 1;
+        text-align: center;
+
+        &:hover {
+          background: $light-gray-transparent;
+        }
+      }
+    }
+
+    .user-profile {
+      cursor: pointer;
+      padding: 0.75rem 1.2rem;
+      color: $pure-white;
+      border-top: 1px solid $charcoal;
+      transition: background 0.3s;
+      width: 100%;
+
+      &:hover {
+        background-color: $charcoal;
+      }
+
+      .arrow-icon {
+        transition: transform 0.3s ease;
+
+        &.open {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .profile-dropdown {
+      margin: 2px;
+      padding: 0;
+      width: 100%;
+      position: absolute;
+      bottom: calc(94% + 4px);
+      left: 0;
+      background-color: #1a1a1a;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4);
+      animation: dropUp 0.2s ease-in-out;
+      z-index: 10;
+
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      li {
+        padding: 0.65rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        color: $pure-white;
+        font-size: 0.95rem;
+        transition: background-color 0.2s;
+        white-space: nowrap;
+        width: 100%;
+
+        mat-icon {
+          font-size: 20px;
+          margin-left: 0;
+        }
+
+        &:hover {
+          background-color: $charcoal;
+        }
+      }
+    }
+  }
+
+  .collapsed-profile-footer {
+    margin-top: auto;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-top: 1px solid $light-gray-transparent;
+
+    mat-icon {
+      font-size: 24px;
+      color: $pure-white;
+    }
+
+    &:hover {
+      background-color: $charcoal;
+    }
+  }
+
+  @keyframes dropUp {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 800px) {
+    width: 100vw;
+    max-width: 320px;
+    transform: translateX(-100%);
+
+    &.menu-open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.menu-close-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: 1px solid $void-black;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  cursor: pointer;
+  z-index: 1002;
+
+  mat-icon {
+    color: $void-black;
+  }
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}

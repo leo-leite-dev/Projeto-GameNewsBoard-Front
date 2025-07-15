@@ -1,0 +1,136 @@
+@import '../../../../../shareds/colors.scss';
+@import '../../../../../shareds/breakpoints';
+
+.container-global-tier {
+  max-width: 1700px;
+  margin: 50px auto 0 auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #1e1e1e91, #0000002a);
+  backdrop-filter: blur(8px);
+
+  @media (max-width: 1920px) {
+    margin-left: 100px;
+  }
+
+  @media (max-width: 1843px) {
+    margin-right: 32px;
+  }
+
+  .tier-title {
+    color: $pure-white;
+    margin: 0;
+  }
+
+  .create-button {
+    white-space: nowrap;
+  }
+
+  .container-tier {
+    padding: 0.8rem;
+    background: linear-gradient(135deg, #1e1e1e2f, #0000002a);
+    border-radius: 1rem;
+    backdrop-filter: blur(8px);
+
+    .tier-card {
+      position: relative;
+      width: 400px;
+      flex-direction: column;
+      background-color: $void-black;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+
+      @media screen and (max-width: 600px) {
+        width: 90vw;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px $pure-white;
+
+        ::ng-deep .remove-button,
+        .edit-button {
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+
+      .tier-image {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background-size: cover;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        display: block;
+
+        .tier-info-overlay {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.75);
+          padding: 10px;
+          text-align: center;
+
+          .tier-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: $pure-white;
+            margin: 0;
+          }
+
+          .tier-sub {
+            font-size: 0.8rem;
+            color: $neutral-gray;
+            margin-top: 4px;
+          }
+
+          @media (max-width: 600px) {
+            .tier-name {
+              font-size: 0.9rem;
+            }
+
+            .tier-sub {
+              font-size: 0.7rem;
+            }
+          }
+        }
+      }
+    }
+
+    .remove-button,
+    .edit-button {
+      position: absolute;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .remove-button {
+      top: 10px;
+      right: 10px;
+    }
+
+    .edit-button {
+      top: 10px;
+      left: 10px;
+      color: $pure-white;
+      font-size: 1.2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tier-list-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+}

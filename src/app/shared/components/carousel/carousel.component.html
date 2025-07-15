@@ -1,0 +1,41 @@
+<app-gamer-loading *ngIf="isLoading" />
+
+<div class="carousel-wrapper" *ngIf="!isLoading">
+  <div class="carousel-header d-flex space-between">
+    <h2 class="carousel-title">{{ title }}</h2>
+    <button class="btn-toggle-scroll" (click)="toggleScroll()" title="Iniciar/Pausar">
+      <fa-icon [icon]="isPaused ? 'play' : 'pause'" />
+    </button>
+  </div>
+
+  <div class="carousel-outer">
+    <button *ngIf="isPaused" class="scroll-arrow arrow-left" (click)="scrollLeft()" title="Voltar">
+      <fa-icon [icon]="'chevron-left'" />
+    </button>
+
+    <ng-template #defaultItem let-game>
+      <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" class="game-cover" />
+    </ng-template>
+
+    <div *ngIf="enableDrag; else simpleCarousel" #carouselContainer class="carousel-container d-flex gap-10" cdkDropList
+      [id]="'carousel-drop-list'" [cdkDropListData]="games" [cdkDropListConnectedTo]="connectedDropLists"
+      [cdkDropListSortingDisabled]="true">
+      <div *ngFor="let game of games" class="game-icon" cdkDrag [cdkDragData]="game"
+        (cdkDragStarted)="onDragStarted(game)">
+        <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: { $implicit: game }"></ng-container>
+      </div>
+    </div>
+
+    <ng-template #simpleCarousel>
+      <div #carouselContainer class="carousel-container d-flex gap-10">
+        <div class="carousel-item" *ngFor="let game of games">
+          <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: { $implicit: game }"></ng-container>
+        </div>
+      </div>
+    </ng-template>
+
+    <button *ngIf="isPaused" class="scroll-arrow arrow-right" (click)="scrollRight()" title="Avançar">
+      <fa-icon [icon]="'chevron-right'" />
+    </button>
+  </div>
+</div>

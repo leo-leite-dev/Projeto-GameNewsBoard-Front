@@ -1,0 +1,10 @@
+.form-wrapper {
+  flex-direction: column;
+  color: $pure-yellow;
+  font-weight: bold;
+  font-family: "Orbitron", sans-serif;
+
+  select, input{
+    height: 50px;
+  }
+}

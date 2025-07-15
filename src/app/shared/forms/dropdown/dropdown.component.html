@@ -1,0 +1,6 @@
+<div class="form-wrapper d-flex">
+  <label class="mb-10 fs-14">{{ label }}</label>
+  <select [ngModel]="value" (change)="onChange($event)" class="dropdown">
+    <option *ngFor="let opt of options" [value]="opt.id">{{ opt.name }}</option>
+  </select>
+</div>

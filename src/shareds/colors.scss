@@ -1,0 +1,52 @@
+// =============================================
+// Cores Base
+// =============================================
+$pure-black: #000000;
+$pure-white: #ffffff;
+$pure-orange: #ff5e00;
+$pure-red: #ff0000;
+$pure-yellow: #ffd000;
+$pure-green: #00ff88;
+$pure-cyan: #00ffc3;
+
+// =============================================
+// Escala de Cinza
+// =============================================
+$void-black: #1b1b1b;
+$cloud-gray: #888;
+$mist-gray: #67686952;
+$dark-gray: #2c2c2c;
+$light-gray: #999;
+$charcoal: #333;
+$void-black: #1f1f1f;
+$light-gray: rgb(59, 58, 58);
+$rare-deep-blue: #0070f3;
+$neutral-gray: #bbb;
+$cyber-glow: 0 0 20px rgba(0, 255, 200, 0.15);
+$light-gray-transparent:#eeeeee2c;
+// =============================================
+// Escala de Plataformas
+// =============================================
+$xbox-green: #107c10;
+$playstation-blue: #00439c;
+$steam-gray: #9e9e9e;
+$nintendo-red: #e60012;
+$soft-pink: #ffb3b3;
+
+$orange-overlay: #ff5e0088;
+
+$success-green: #28a745;
+$success-green-dark: #218838;
+
+$overlay-bg: rgba(0, 0, 0, 0.7);
+$overlay-h-bg: rgba(0, 0, 0, 0.9);
+
+$tier-colors: (
+  sss: #ffa500,
+  ss: #e83e8c,
+  s: #6f42c1,
+  a: #007bff,
+  c: #28a745,
+  d: #6c757d,
+  f: #dc3545,
+);

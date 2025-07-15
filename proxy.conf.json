@@ -1,0 +1,17 @@
+{
+  "/api": {
+    "target": "http://localhost:5140",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "headers": {
+      "ngrok-skip-browser-warning": "true"
+    }
+  },
+  "/uploads": {
+    "target": "http://localhost:5140",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

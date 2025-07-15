@@ -1,0 +1,78 @@
+@import "../colors.scss";
+
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  background: $void-black;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: $cyber-glow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    color: $pure-cyan;
+    font-family: "Orbitron", sans-serif;
+    text-align: center;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .error-message {
+    background-color: $pure-red;
+    color: $pure-white;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .input-error {
+    color: $soft-pink;
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  .auth-button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: $success-green;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background: $success-green-dark;
+    }
+
+    &:disabled {
+      background: $charcoal;
+      color: $light-gray;
+      cursor: not-allowed;
+    }
+  }
+
+  .auth-link {
+    color: $neutral-gray;
+    text-align: center;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    a {
+      color: $rare-deep-blue;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
