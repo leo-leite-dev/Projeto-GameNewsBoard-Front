@@ -1,5 +1,5 @@
-@import '../../../../../shareds/colors.scss';
-@import '../../../../../shareds/breakpoints';
+@use 'colors' as *;
+@use 'breakpoints' as *;
 
 .container-global-tier {
   max-width: 1700px;

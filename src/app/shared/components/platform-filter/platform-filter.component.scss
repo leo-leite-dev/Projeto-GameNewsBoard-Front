@@ -1,4 +1,4 @@
-@import '../../../../shareds/colors.scss';
+@use 'colors' as *;
 
 :host {
     display: flex;

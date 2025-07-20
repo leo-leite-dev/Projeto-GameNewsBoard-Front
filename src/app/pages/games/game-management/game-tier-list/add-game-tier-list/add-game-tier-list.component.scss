@@ -1,4 +1,4 @@
-@import '../../../../../../shareds/colors.scss';
+@use 'colors' as *;
 
 .add-game-tier-list-container {
   .tier-list-header {
@@ -90,6 +90,7 @@
         padding: 6px 0;
       }
     }
+
     .empty-dropzone {
       padding-top: 10%;
     }
@@ -104,6 +105,7 @@
 @media (max-width: 768px) {
   .tier-list-container {
     margin-top: 20px;
+
     .container-overflow {
       width: 100%;
       height: auto;

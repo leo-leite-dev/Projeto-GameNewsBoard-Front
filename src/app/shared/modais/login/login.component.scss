@@ -1,4 +1,4 @@
-@import '../../../../shareds/colors.scss';
+@use 'colors' as *;
 
 .overlay {
   position: fixed;
@@ -124,6 +124,7 @@
     opacity: 0;
     transform: translate(-50%, -48%) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);

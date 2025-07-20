@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-  imports: [CommonModule, FormsModule],
-  exports: [CommonModule, FormsModule],
+  imports: [CommonModule, IonicModule, FormsModule],
+  exports: [CommonModule, IonicModule, FormsModule],
 })
-export class GenericModule {}
+export class GenericModule { }

@@ -1,4 +1,4 @@
-@import '../../../../shareds/colors.scss';
+@use 'colors' as *;
 
 .menu-toggle {
   position: absolute;
@@ -267,6 +267,7 @@
       opacity: 0;
       transform: translateY(5px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);

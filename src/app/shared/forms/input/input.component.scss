@@ -1,4 +1,4 @@
-@import "../../../../shareds/colors.scss";
+@use 'colors' as *;
 
 .input {
   padding: 0.8rem 1rem;

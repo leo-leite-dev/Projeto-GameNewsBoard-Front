@@ -1,15 +1,15 @@
-<div class="container-overflow mt-10">
-  <app-gamer-loading *ngIf="isLoading"></app-gamer-loading>
+<ion-content class="ion-padding">
+  <div class="container-overflow">
+    <app-gamer-loading *ngIf="isLoading"></app-gamer-loading>
 
-  <ng-container *ngIf="!isLoading">
-    <app-game-news-featured *ngIf="news && news.length > 0" [news]="news[0]"></app-game-news-featured>
+    <ng-container *ngIf="!isLoading">
+      <app-game-news-featured *ngIf="firstNews" [news]="firstNews"></app-game-news-featured>
 
-    <app-platform-filter
-      [platforms]="platforms"
-      [selected]="selectedPlatform"
-      (platformChange)="loadGameNews($event)">
-    </app-platform-filter>
+      <app-platform-filter [platforms]="platforms" [selected]="selectedPlatform"
+        (platformChange)="loadGameNews($event)">
+      </app-platform-filter>
 
-    <app-game-news-list *ngIf="slicedNews.length > 0" [news]="slicedNews"></app-game-news-list>
-  </ng-container>
-</div>
+      <app-game-news-list *ngIf="slicedNews.length > 0" [news]="slicedNews"></app-game-news-list>
+    </ng-container>
+  </div>
+</ion-content>

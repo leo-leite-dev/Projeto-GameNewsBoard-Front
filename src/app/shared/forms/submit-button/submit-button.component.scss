@@ -1,4 +1,5 @@
-@import '../../../../shareds/colors.scss';
+@use 'colors' as *;
+
 .create-button {
   background: linear-gradient(90deg, #6a00f4, #8e2de2);
   color: $pure-white;

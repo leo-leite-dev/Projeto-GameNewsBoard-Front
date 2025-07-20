@@ -1,15 +1,15 @@
-<div class="featured-news mb-20" *ngIf="news">
+<ion-card class="featured-news" *ngIf="news">
   <div class="featured-image-wrapper">
     <img [src]="news.imageUrl" alt="Imagem destacada" class="featured-image" />
   </div>
-  <div class="featured-content">
-    <h1 class="fs-24 bold">{{ news.title }}</h1>
+  <div class="featured-content mb-20">
+    <h1 class="fs-20 bold">{{ news.title }}</h1>
     <p class="fs-14 mt-20">{{ news.description }}</p>
     <div class="d-flex space-between">
       <a class="fs-12" [href]="news.link" target="_blank">Ler mais</a>
       <span class="fs-12">
-        {{ news.pubDate | date : "dd/MM/yyyy HH:mm" }}
+        {{ news.pubDate | date : "dd/MM/yyyy" }}
       </span>
     </div>
   </div>
-</div>
+</ion-card>

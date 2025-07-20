@@ -1,7 +1,8 @@
-@import '../../../../../shareds/colors.scss';
+@use 'colors' as *;
 
 .status-list-container {
-      margin-left: 100px;
+  margin-left: 100px;
+
   .container-overflow {
     flex-direction: row;
     gap: 10px;

@@ -1,20 +1,10 @@
-@import '../../../shareds/colors.scss';
+@use 'colors' as *;
 
 .container-overflow {
   background-color: $light-gray;
   padding: 30px;
-  width: 40%;
-  margin-top: 20px;
-}
-
-@media (max-width: 600px) {
-  .container-overflow {
-    margin-top: 80px;
-  }
-}
-
-@media (orientation: portrait) {
-  .container-overflow {
-    width: 90%;
-  }
+  margin: 20px auto;
+  max-width: 900px;
+  width: 100%;
+  border-radius: 12px;
 }

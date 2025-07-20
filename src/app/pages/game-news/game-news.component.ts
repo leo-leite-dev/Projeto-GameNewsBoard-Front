@@ -10,11 +10,13 @@ import { GameNewsService } from '../../shared/services/game-news.service';
 import { NotificationService } from '../../shared/services/commons/notification.service';
 import { PlatformFilterComponent } from '../../shared/components/platform-filter/platform-filter.component';
 import { GamerLoadingComponent } from '../../shared/components/gamer-loading/gamer-loading.component';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-game-news',
   standalone: true,
   imports: [
+    IonicModule,
     GenericModule,
     GameNewsListComponent,
     FontAwesomeModule,
@@ -43,8 +45,16 @@ export class GameNewsComponent implements OnInit {
     private notification: NotificationService
   ) { }
 
+  get hasNews(): boolean {
+    return Array.isArray(this.news) && this.news.length > 0;
+  }
+
+  get firstNews(): GameNewsArticle | null {
+    return this.hasNews ? this.news[0] : null;
+  }
+
   get slicedNews(): GameNewsArticle[] {
-    return this.news?.slice(1) ?? [];
+    return this.hasNews ? this.news.slice(1) : [];
   }
 
   ngOnInit(): void {

@@ -1,24 +1,22 @@
-<div class="container-news mb-20" *ngFor="let item of news.slice(1)">
-  <div class="news-items d-flex gap-20">
-    <img
-      *ngIf="item.imageUrl"
-      [src]="item.imageUrl"
-      alt="Imagem da notícia"
-      class="news-image"
-    />
+<ion-content>
+  <div class="container-news mb-20" *ngFor="let item of news.slice(1)">
+    <div class="news-items d-flex gap-20">
+      <img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="Imagem da notícia" class="news-image" />
 
-    <div class="news-text">
-      <div class="d-flex space-between align-start">
+      <div class="news-text">
         <h2 class="bold fs-18">{{ item.title }}</h2>
-        <span class="date fs-12">
-          {{ item.pubDate | date : "dd/MM/yyyy HH:mm" }}
-        </span>
+
+        <p class="fs-12 mt-10">{{ item.description }}</p>
+
+        <div class="d-flex space-between align-center mt-10 mobile-stack">
+          <a class="fs-12" [href]="item.link" target="_blank">Ler mais</a>
+          <span class="date fs-12">
+            {{ item.pubDate | date: 'dd/MM/yyyy HH:mm' }}
+          </span>
+        </div>
       </div>
-
-      <p class="fs-12 mt-20">{{ item.description }}</p>
-      <a [href]="item.link" target="_blank">Ler mais</a>
     </div>
-  </div>
 
-  <hr class="mt-20" />
-</div>
+    <hr class="mt-20" />
+  </div>
+</ion-content>

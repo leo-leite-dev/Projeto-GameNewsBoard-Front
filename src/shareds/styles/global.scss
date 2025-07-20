@@ -1,10 +1,10 @@
-@import '../colors';
-@import './layouts';
-@import './typography';
-@import './forms';
-@import './auth';
-@import './scrollbar';
-@import './table';
+@use 'colors' as *;
+@use 'layouts' as *;
+@use 'typography' as *;
+@use 'forms' as *;
+@use 'auth' as *;
+@use 'scrollbar' as *;
+@use 'table' as *;
 
 html,
 body,
@@ -67,7 +67,10 @@ app-root {
   border-radius: 12px;
 }
 
-@media (orientation: portrait), (max-width: 1920px), (max-width: 600px) {
+@media (orientation: portrait),
+(max-width: 1920px),
+(max-width: 600px) {
+
   html,
   body,
   app-root {
