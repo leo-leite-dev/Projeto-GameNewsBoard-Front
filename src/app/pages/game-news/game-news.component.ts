@@ -10,13 +10,11 @@ import { GameNewsService } from '../../shared/services/game-news.service';
 import { NotificationService } from '../../shared/services/commons/notification.service';
 import { PlatformFilterComponent } from '../../shared/components/platform-filter/platform-filter.component';
 import { GamerLoadingComponent } from '../../shared/components/gamer-loading/gamer-loading.component';
-import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-game-news',
   standalone: true,
   imports: [
-    IonicModule,
     GenericModule,
     GameNewsListComponent,
     FontAwesomeModule,

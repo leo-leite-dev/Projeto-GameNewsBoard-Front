@@ -1,14 +1,14 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, OnDestroy, AfterViewInit, TemplateRef, ContentChild, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GamerLoadingComponent } from '../gamer-loading/gamer-loading.component';
 import { CarouselItem } from '../../models/commons/game-carousel-tem.model';
+import { GenericModule } from '../../../../shareds/commons/GenericModule';
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, DragDropModule, GamerLoadingComponent],
+  imports: [GenericModule, FontAwesomeModule, DragDropModule, GamerLoadingComponent],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
 })
@@ -18,16 +18,18 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() isLoading: boolean = false;
   @Input() enableDrag: boolean = false;
   @Input() connectedDropLists: string[] = [];
+  @Input() autoReverse: boolean = false;
+  @Input() itemTemplate?: TemplateRef<any>;
 
   @Output() dragStarted = new EventEmitter<CarouselItem>();
 
   @ViewChild('carouselContainer', { static: false })
   carouselContainerRef!: ElementRef<HTMLDivElement>;
 
-  @ContentChild(TemplateRef) itemTemplate?: TemplateRef<any>;
-
   scrollInterval: any;
   isPaused = false;
+  canScroll: boolean = false;
+  direction: 'forward' | 'backward' = 'forward';
 
   private autoScrollRetryInterval?: any;
 
@@ -60,7 +62,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       const dataReady = !this.isLoading && this.games.length > 0;
 
       if (containerReady && dataReady) {
-        this.startAutoScroll();
+        const container = this.carouselContainerRef.nativeElement;
+
+        this.canScroll = container.scrollWidth > container.clientWidth;
+
+        if (this.canScroll) this.startAutoScroll();
+
         clearInterval(this.autoScrollRetryInterval);
       }
     }, 100);
@@ -70,16 +77,23 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
     const container = this.carouselContainerRef?.nativeElement;
     if (!container) return;
 
-    if (this.scrollInterval)
-      clearInterval(this.scrollInterval);
+    if (this.scrollInterval) clearInterval(this.scrollInterval);
 
     this.scrollInterval = setInterval(() => {
       if (this.isPaused) return;
 
-      container.scrollLeft += 1.5;
+      const scrollAmount = this.direction === 'forward' ? 1.5 : -1.5;
+      container.scrollLeft += scrollAmount;
 
-      if (container.scrollLeft >= container.scrollWidth / 2)
-        container.scrollLeft = 0;
+      if (this.autoReverse) {
+        const maxScroll = container.scrollWidth - container.clientWidth;
+
+        if (container.scrollLeft >= maxScroll) this.direction = 'backward';
+        if (container.scrollLeft <= 0) this.direction = 'forward';
+      } else {
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        if (container.scrollLeft >= maxScroll) container.scrollLeft = 0;
+      }
     }, 20);
   }
 

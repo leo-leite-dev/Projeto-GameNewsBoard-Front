@@ -3,7 +3,7 @@
 <div class="carousel-wrapper" *ngIf="!isLoading">
   <div class="carousel-header d-flex space-between">
     <h2 class="carousel-title">{{ title }}</h2>
-    <button class="btn-toggle-scroll" (click)="toggleScroll()" title="Iniciar/Pausar">
+    <button *ngIf="canScroll" class="btn-toggle-scroll" (click)="toggleScroll()" title="Iniciar/Pausar">
       <fa-icon [icon]="isPaused ? 'play' : 'pause'" />
     </button>
   </div>

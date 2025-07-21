@@ -6,17 +6,19 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PlatformFamily } from '../../shared/enums/platform.enum';
 import { faGamepad, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { faPlaystation, faSteam, faXbox } from '@fortawesome/free-brands-svg-icons';
-import { CommonModule } from '@angular/common';
 import { PlatformFilterComponent } from '../../shared/components/platform-filter/platform-filter.component';
+import { GenericModule } from '../../../shareds/commons/GenericModule';
+import { GamerLoadingComponent } from '../../shared/components/gamer-loading/gamer-loading.component';
 
 @Component({
   selector: 'app-game-releases',
   standalone: true,
   imports: [
-    CommonModule,
+    GenericModule,
     CarouselComponent,
     FontAwesomeModule,
-    PlatformFilterComponent
+    PlatformFilterComponent,
+    GamerLoadingComponent
   ],
   templateUrl: './game-releases.component.html',
   styleUrls: ['./game-releases.component.scss'],

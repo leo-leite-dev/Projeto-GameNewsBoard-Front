@@ -1,10 +1,13 @@
 @use 'colors' as *;
+@use 'breakpoints' as *;
 
 .container-overflow {
-  background-color: $light-gray;
-  padding: 30px;
-  width: 50%;
-  margin-top: 20px;
+  flex-direction: column;
+
+  .filter-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
   .release-item {
     position: relative;
@@ -60,13 +63,14 @@
   }
 }
 
-@media (max-width: 600px) {
+@include respond(mobile) {
   .container-overflow {
-    margin-top: 80px;
+    padding: 16px;
 
     .release-item {
-      width: 130px;
-      height: 200px;
+      width: 180px;
+      height: 250px;
     }
+
   }
 }

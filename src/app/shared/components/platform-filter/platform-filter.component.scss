@@ -1,11 +1,9 @@
 @use 'colors' as *;
+@use 'breakpoints' as *;
 
 :host {
     display: flex;
     justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
 }
 
 .platform-btn {
@@ -17,6 +15,7 @@
     color: rgba($pure-white, 0.7);
     cursor: pointer;
     transition: all 0.2s ease;
+
 
     &:hover {
         background-color: rgba($rare-deep-blue, 0.1);
@@ -51,5 +50,13 @@
             background-color: $rare-deep-blue;
             border-color: $rare-deep-blue;
         }
+    }
+}
+
+
+@include respond(mobile) {
+    .platform-btn {
+        margin: 45px 10px 0 0;
+        padding: 4px;
     }
 }

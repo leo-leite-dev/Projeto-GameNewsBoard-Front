@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-gamer-loading',
-  imports: [],
+  standalone: true,
   templateUrl: './gamer-loading.component.html',
-  styleUrl: './gamer-loading.component.scss'
+  styleUrls: ['./gamer-loading.component.scss']
 })
 export class GamerLoadingComponent {
-
+  @Input() text: string = 'Carregando jogos';
 }
