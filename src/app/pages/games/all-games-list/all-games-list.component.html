@@ -10,22 +10,14 @@
   <div class="game-grid">
     <div class="game-card" *ngFor="let game of games">
       <div class="cover-container">
-        <img
-          *ngIf="game.coverImage"
-          [src]="game.coverImage.replace('t_thumb', 't_cover_big')"
-          alt="Capa do jogo"
-          class="cover"
-        />
-        <div
-          class="rating fs-10 bold"
-          *ngIf="game.rating"
-          [ngClass]="{
+        <img *ngIf="game.coverImage" [src]="game.coverImage.replace('t_thumb', 't_cover_big')" alt="Capa do jogo"
+          class="cover" />
+        <div class="rating fs-10 bold" *ngIf="game.rating" [ngClass]="{
             green: game.rating >= 80,
             yellow: game.rating >= 70 && game.rating < 80,
             orange: game.rating >= 60 && game.rating < 70,
             red: game.rating < 60
-          }"
-        >
+          }">
           {{ game.rating | number : '1.0-0' }}
         </div>
       </div>
@@ -38,11 +30,6 @@
   </div>
 
   <div class="pagination-wrapper">
-    <app-pagination
-      [page]="page"
-      [hasNext]="hasMoreGames"
-      (previous)="previousPage()"
-      (next)="nextPage()"
-    />
+    <app-pagination [page]="page" [hasNext]="hasMoreGames" (previous)="previousPage()" (next)="nextPage()" />
   </div>
 </div>

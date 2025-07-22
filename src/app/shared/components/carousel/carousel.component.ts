@@ -8,7 +8,12 @@ import { GenericModule } from '../../../../shareds/commons/GenericModule';
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [GenericModule, FontAwesomeModule, DragDropModule, GamerLoadingComponent],
+  imports: [
+    GenericModule,
+    FontAwesomeModule,
+    DragDropModule,
+    GamerLoadingComponent
+  ],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
 })
@@ -20,17 +25,19 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() connectedDropLists: string[] = [];
   @Input() autoReverse: boolean = false;
   @Input() itemTemplate?: TemplateRef<any>;
+  @Input() category!: 'today' | 'upcoming' | 'recent';
 
   @Output() dragStarted = new EventEmitter<CarouselItem>();
+  @Output() seeAllClicked = new EventEmitter<void>();
 
   @ViewChild('carouselContainer', { static: false })
-  carouselContainerRef!: ElementRef<HTMLDivElement>;
 
-  scrollInterval: any;
+  carouselContainerRef!: ElementRef<HTMLDivElement>;
   isPaused = false;
   canScroll: boolean = false;
-  direction: 'forward' | 'backward' = 'forward';
 
+  private scrollInterval: any;
+  private direction: 'forward' | 'backward' = 'forward';
   private autoScrollRetryInterval?: any;
 
   ngAfterViewInit(): void {
@@ -117,5 +124,11 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   onDragStarted(game: CarouselItem): void {
     this.dragStarted.emit(game);
+  }
+
+  onSeeAllClick(event: MouseEvent): void {
+    event.preventDefault();
+    console.log('[Carousel] Ver tudo clicado - categoria:', this.category);
+    this.seeAllClicked.emit();
   }
 }

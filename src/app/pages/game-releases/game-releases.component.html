@@ -52,15 +52,21 @@
     </ng-template>
 
     <app-carousel [title]="'Lançamentos Do Dia'" [games]="todayGames" [isLoading]="false" [autoReverse]="true"
-      [itemTemplate]="todayTemplate">
+      [itemTemplate]="todayTemplate" [category]="'today'" (seeAllClicked)="goToAllReleases('today')">
     </app-carousel>
 
+    <ng-container *ngIf="!isLoading && todayGames.length === 0">
+      <div class="no-games-message">
+        🎮 Nenhum lançamento hoje para esta plataforma
+      </div>
+    </ng-container>
+
     <app-carousel [title]="'Lançamentos Futuros'" [games]="upcomingGames" [isLoading]="false" [autoReverse]="true"
-      [itemTemplate]="upcomingTemplate">
+      [itemTemplate]="upcomingTemplate" [category]="'upcoming'" (seeAllClicked)="goToAllReleases('upcoming')">
     </app-carousel>
 
     <app-carousel [title]="'Lançamentos Recentes'" [games]="recentGames" [isLoading]="false" [autoReverse]="true"
-      [itemTemplate]="recentTemplate">
+      [itemTemplate]="recentTemplate" [category]="'recent'" (seeAllClicked)="goToAllReleases('recent')">
     </app-carousel>
   </ng-template>
 </ion-content>

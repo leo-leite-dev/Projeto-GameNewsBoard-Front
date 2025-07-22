@@ -7,6 +7,18 @@
   position: relative;
 
   .carousel-header {
+    .right-header {
+      .see-all-link {
+        color: $steam-gray;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+          color: $pure-white;
+        }
+      }
+    }
+
     .btn-toggle-scroll {
       background: $overlay-bg;
       color: $pure-white;
@@ -73,7 +85,16 @@
 
 @include respond(mobile) {
   .carousel-header {
+    font-size: 12px;
+    white-space: nowrap;
     margin-left: 5px;
+    margin-bottom: 0px;
+
+    .right-header {
+      .see-all-link {
+        font-size: 10px;
+      }
+    }
 
     .btn-toggle-scroll {
       margin-right: 10px;

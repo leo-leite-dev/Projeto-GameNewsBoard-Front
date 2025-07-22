@@ -18,8 +18,9 @@ export enum Platform {
 }
 
 export enum PlatformFamily {
-  FamilyXbox = 100,
-  FamilyPlaystation = 101,
-  FamilyNintendo = 103,
-  FamilyMicrosoft = 104
+  All = 100,
+  FamilyXbox = 101,
+  FamilyPlaystation = 102,
+  FamilyMicrosoft = 103,
+  FamilyNintendo = 104,
 }

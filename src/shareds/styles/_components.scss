@@ -1,0 +1,29 @@
+@use 'colors' as *;
+@use 'breakpoints' as *;
+
+.global-loading-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.no-games-message {
+    text-align: center;
+    color: $steam-gray;
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+@include respond(mobile) {
+    .global-loading-wrapper {
+        font-size: 10px;
+    }
+}

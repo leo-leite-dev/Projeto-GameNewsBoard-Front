@@ -51,6 +51,7 @@ $transition-speed: 0.3s;
 .mt-20 {
   margin-top: 20px;
 }
+
 .mt-40 {
   margin-top: 60px;
 }
@@ -69,4 +70,12 @@ $transition-speed: 0.3s;
 
 .space-between {
   justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.column {
+  flex-direction: column;
 }

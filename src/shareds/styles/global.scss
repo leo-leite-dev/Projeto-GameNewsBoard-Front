@@ -5,6 +5,7 @@
 @use 'auth' as *;
 @use 'scrollbar' as *;
 @use 'table' as *;
+@use 'components' as *;
 
 html,
 body,
@@ -40,6 +41,11 @@ app-root {
   background: linear-gradient(180deg, #a100ff, #ff00d4);
 }
 
+.d-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
 .content {
   min-height: 100vh;
   flex: 1;
@@ -65,18 +71,6 @@ app-root {
   margin: 0 auto;
   padding: 10px;
   border-radius: 12px;
-}
-
-.global-loading-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
 }
 
 @media (orientation: portrait),

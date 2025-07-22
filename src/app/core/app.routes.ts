@@ -7,6 +7,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { AddGameTierListComponent } from '../pages/games/game-management/game-tier-list/add-game-tier-list/add-game-tier-list.component';
 import { TierListFormComponent } from '../pages/games/game-management/game-tier-list/tier-list-form/tier-list-form.component';
 import { GameReleasesComponent } from '../pages/game-releases/game-releases.component';
+import { AllReleasesComponent } from '../pages/game-releases/all-releases/all-releases.component';
 
 export const routes: Routes = [
   {
@@ -30,7 +31,10 @@ export const routes: Routes = [
         path: 'game-releases',
         component: GameReleasesComponent,
       },
-
+      {
+        path: 'all-releases',
+        component: AllReleasesComponent,
+      },
       {
         path: 'manage-games',
         component: GameManagementComponent,

@@ -1,0 +1,44 @@
+<ion-content [fullscreen]="true">
+    <div class="container-overflow">
+        <app-gamer-loading class="global-loading-wrapper" *ngIf="isLoading" />
+
+        <div *ngIf="!isLoading && games.length" class="d-grid align-center mb-10">
+            <div class="category-buttons d-flex gap-10">
+                <button *ngFor="let cat of categories" (click)="onCategoryChange(cat.value)"
+                    [class.active]="category === cat.value" class="category-button fs-12">
+                    {{ cat.label }}
+                </button>
+            </div>
+
+            <div class="platform-filter-wrapper">
+                <app-platform-filter [platforms]="platforms" [selected]="selectedPlatform"
+                    (platformChange)="onPlatformChange($event)">
+                </app-platform-filter>
+            </div>
+        </div>
+
+        <div *ngIf="!isLoading && !games.length && message" class="user-message text-center mt-20">
+            {{ message }}
+        </div>
+
+        <div class="game-grid-wrapper " *ngIf="!isLoading && games.length">
+            <div class="game-grid">
+                <div class="game-card" *ngFor="let game of games">
+                    <div class="cover-container">
+                        <img *ngIf="game.coverImage" [src]="game.coverImage.replace('t_thumb', 't_cover_big')"
+                            [alt]="game.title" class="cover" />
+
+                        <div class="release-date-always-visible fs-12">
+                            Lançamento: {{ game.releaseDate | date: 'dd/MM/yyyy' }}
+                        </div>
+
+                        <div class="overlay">
+                            <div class="title fs-14 bold">{{ game.title }}</div>
+                            <div class="platform fs-12">{{ game.platform }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

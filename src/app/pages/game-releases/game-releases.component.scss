@@ -2,8 +2,6 @@
 @use 'breakpoints' as *;
 
 .container-overflow {
-  flex-direction: column;
-
   .filter-wrapper {
     max-width: 1200px;
     margin: 0 auto;
@@ -36,7 +34,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: $overlay-bg;
       color: $pure-white;
       padding: 8px;
       text-align: center;
@@ -65,12 +63,14 @@
 
 @include respond(mobile) {
   .container-overflow {
-    padding: 16px;
+    .filter-wrapper {
+      max-width: 1200px;
+      margin: 40px auto 0;
+    }
 
     .release-item {
       width: 180px;
       height: 250px;
     }
-
   }
 }

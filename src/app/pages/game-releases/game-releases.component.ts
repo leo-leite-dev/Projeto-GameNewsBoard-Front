@@ -9,6 +9,7 @@ import { faPlaystation, faSteam, faXbox } from '@fortawesome/free-brands-svg-ico
 import { PlatformFilterComponent } from '../../shared/components/platform-filter/platform-filter.component';
 import { GenericModule } from '../../../shareds/commons/GenericModule';
 import { GamerLoadingComponent } from '../../shared/components/gamer-loading/gamer-loading.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game-releases',
@@ -29,20 +30,23 @@ export class GameReleasesComponent implements OnInit {
   recentGames: GameReleaseResponse[] = [];
   isLoading = false;
   errorMessage = '';
+  message = '';
+  selectedPlatform: PlatformFamily = PlatformFamily.All;
 
   public PlatformFamily = PlatformFamily;
 
-  selectedPlatform: PlatformFamily | null = null;
-
   platforms = [
-    { value: null, icon: faLayerGroup, label: 'Todos', key: 'todos' },
+    { value: PlatformFamily.All, icon: faLayerGroup, label: 'Todos', key: 'todos' },
     { value: PlatformFamily.FamilyXbox, icon: faXbox, label: 'Xbox', key: 'xbox' },
     { value: PlatformFamily.FamilyPlaystation, icon: faPlaystation, label: 'PlayStation', key: 'playstation' },
     { value: PlatformFamily.FamilyMicrosoft, icon: faSteam, label: 'PCMicrosoftWindows', key: 'steam' },
     { value: PlatformFamily.FamilyNintendo, icon: faGamepad, label: 'Nintendo', key: 'nintendo' },
   ];
 
-  constructor(private gameReleaseService: GameReleaseService) { }
+  constructor(
+    private gameReleaseService: GameReleaseService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadReleases();
@@ -53,8 +57,9 @@ export class GameReleasesComponent implements OnInit {
     this.errorMessage = '';
 
     this.gameReleaseService.getTodayGames().subscribe({
-      next: (games) => {
-        this.todayGames = games;
+      next: (res) => {
+        this.todayGames = res.data ?? [];
+        this.errorMessage = res.message;  
       },
       error: () => {
         this.errorMessage = 'Erro ao carregar lançamentos do dia';
@@ -62,8 +67,9 @@ export class GameReleasesComponent implements OnInit {
     });
 
     this.gameReleaseService.getUpcomingGames(7).subscribe({
-      next: (games) => {
-        this.upcomingGames = games;
+      next: (res) => {
+        this.upcomingGames = res.data ?? [];
+        this.errorMessage = res.message;
         this.isLoading = false;
       },
       error: () => {
@@ -73,31 +79,63 @@ export class GameReleasesComponent implements OnInit {
     });
 
     this.gameReleaseService.getRecentGames(7).subscribe({
-      next: (games) => (this.recentGames = games),
-      error: () => (this.errorMessage = 'Erro ao carregar lançamentos recentes'),
+      next: (res) => {
+        this.recentGames = res.data ?? [];
+        this.errorMessage = res.message;
+      },
+      error: () => {
+        this.errorMessage = 'Erro ao carregar lançamentos recentes';
+      },
     });
   }
 
-  filterByPlatform(platform: PlatformFamily | null): void {
+  filterByPlatform(platform: PlatformFamily): void {
     this.selectedPlatform = platform;
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.gameReleaseService.getUpcomingGames(7, platform ?? undefined).subscribe({
-      next: (games) => {
-        this.upcomingGames = games;
+    this.gameReleaseService.getTodayGames(platform).subscribe({
+      next: (res) => {
+        this.todayGames = res.data ?? [];
+        this.errorMessage = res.message;
+      },
+      error: () => {
+        this.errorMessage = 'Erro ao filtrar lançamentos do dia';
+        this.todayGames = [];
+      }
+    });
+
+    this.gameReleaseService.getUpcomingGames(7, platform).subscribe({
+      next: (res) => {
+        this.upcomingGames = res.data ?? [];
+        this.errorMessage = res.message;
         this.isLoading = false;
       },
       error: () => {
         this.errorMessage = 'Erro ao filtrar lançamentos futuros';
+        this.upcomingGames = [];
         this.isLoading = false;
-      },
+      }
     });
 
-    this.gameReleaseService.getRecentGames(7, platform ?? undefined).subscribe({
-      next: (games) => (this.recentGames = games),
-      error: () => (this.errorMessage = 'Erro ao filtrar lançamentos recentes'),
+    this.gameReleaseService.getRecentGames(7, platform).subscribe({
+      next: (res) => {
+        this.recentGames = res.data ?? [];
+        this.errorMessage = res.message;
+      },
+      error: () => {
+        this.errorMessage = 'Erro ao filtrar lançamentos recentes';
+        this.recentGames = [];
+      }
     });
   }
 
+  goToAllReleases(category: 'upcoming' | 'today' | 'recent'): void {
+    this.router.navigate(['/all-releases'], {
+      queryParams: {
+        category,
+        platform: this.selectedPlatform
+      }
+    });
+  }
 }
