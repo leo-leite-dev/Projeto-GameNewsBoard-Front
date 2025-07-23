@@ -2,18 +2,19 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { YearCategory } from '../../enums/year-category.enum';
 import { Platform } from '../../enums/platform.enum';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-filter-menu',
   standalone: true,
-  imports: [GenericModule],
+  imports: [GenericModule, FontAwesomeModule],
   templateUrl: './filter-menu.component.html',
   styleUrls: ['./filter-menu.component.scss'],
 })
 export class FilterMenuComponent {
   @Input() selectedPlatform!: Platform;
   @Input() selectedYearCategory!: YearCategory;
-
   @Input() platformOptions: { platform: Platform; name: string }[] = [];
   @Input() yearCategoryOptions: { category: YearCategory; name: string }[] = [];
 
@@ -22,6 +23,8 @@ export class FilterMenuComponent {
     yearCategory: YearCategory;
   }>();
 
+  faTimes = faTimes;
+  
   showFilterMenu = false;
 
   Platform = Platform;

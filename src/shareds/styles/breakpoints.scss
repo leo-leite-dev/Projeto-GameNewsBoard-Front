@@ -5,6 +5,7 @@ $breakpoints: (
   desktop: 1920px,
   ultrawide: 2560px,
   tv4k: 3840px,
+  portrait: 1545px
 );
 
 @mixin respond($device) {
@@ -12,7 +13,9 @@ $breakpoints: (
     @media (max-width: map-get($breakpoints, $device)) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @warn "Breakpoint `#{$device}` not found.";
   }
 }

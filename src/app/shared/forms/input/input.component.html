@@ -1,12 +1,12 @@
 <div class="form-wrapper d-flex">
-  <label class="mb-10 fs-14" *ngIf="label">{{ label }}</label>
-  <input
-    [type]="type"
-    [placeholder]="placeholder"
-    [value]="value"
-    [disabled]="isDisabled"
-    (input)="onInputChange($event)"
-    (blur)="onTouched()"
-    class="input"
-  />
+  <input class="input" [placeholder]="placeholder" [(ngModel)]="value" [readonly]="isMobile"
+    (click)="isMobile ? isSearchModalOpen = true : null" (ngModelChange)="onInputChange()" />
+</div>
+
+<div class="mobile-search-modal" *ngIf="isMobile && isSearchModalOpen">
+  <input class="input big" [placeholder]="placeholder" [(ngModel)]="value" />
+  <button (click)="confirmMobileSearch()">Buscar</button>
+  <button class="close-button" (click)="isSearchModalOpen = false">
+    <fa-icon [icon]="['fas', 'times']"></fa-icon>
+  </button>
 </div>

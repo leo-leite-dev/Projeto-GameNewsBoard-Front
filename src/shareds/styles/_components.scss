@@ -22,6 +22,15 @@
     opacity: 0.9;
 }
 
+.no-games-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60vh;
+    padding: 20px;
+}
+
 @include respond(mobile) {
     .global-loading-wrapper {
         font-size: 10px;

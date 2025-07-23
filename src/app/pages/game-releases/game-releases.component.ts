@@ -49,42 +49,47 @@ export class GameReleasesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadReleases();
+    this.loadReleases(); // usa `this.selectedPlatform`
   }
 
   loadReleases(): void {
     this.isLoading = true;
-    this.errorMessage = '';
 
-    this.gameReleaseService.getTodayGames().subscribe({
+    this.gameReleaseService.getTodayGames(this.selectedPlatform).subscribe({
       next: (res) => {
         this.todayGames = res.data ?? [];
-        this.errorMessage = res.message;  
+
+        this.message = (!res.data || res.data.length === 0) ? res.message : '';
+        this.errorMessage = '';
       },
       error: () => {
         this.errorMessage = 'Erro ao carregar lançamentos do dia';
+        this.todayGames = [];
+        this.message = '';
       }
     });
 
-    this.gameReleaseService.getUpcomingGames(7).subscribe({
+    this.gameReleaseService.getUpcomingGames(7, this.selectedPlatform).subscribe({
       next: (res) => {
         this.upcomingGames = res.data ?? [];
-        this.errorMessage = res.message;
+        this.errorMessage = '';
         this.isLoading = false;
       },
       error: () => {
         this.errorMessage = 'Erro ao carregar lançamentos futuros';
+        this.upcomingGames = [];
         this.isLoading = false;
       },
     });
 
-    this.gameReleaseService.getRecentGames(7).subscribe({
+    this.gameReleaseService.getRecentGames(7, this.selectedPlatform).subscribe({
       next: (res) => {
         this.recentGames = res.data ?? [];
-        this.errorMessage = res.message;
+        this.errorMessage = '';
       },
       error: () => {
         this.errorMessage = 'Erro ao carregar lançamentos recentes';
+        this.recentGames = [];
       },
     });
   }
@@ -97,18 +102,21 @@ export class GameReleasesComponent implements OnInit {
     this.gameReleaseService.getTodayGames(platform).subscribe({
       next: (res) => {
         this.todayGames = res.data ?? [];
-        this.errorMessage = res.message;
+
+        this.message = (!res.data || res.data.length === 0) ? res.message : '';
+        this.errorMessage = '';
       },
       error: () => {
         this.errorMessage = 'Erro ao filtrar lançamentos do dia';
         this.todayGames = [];
+        this.message = '';
       }
     });
 
     this.gameReleaseService.getUpcomingGames(7, platform).subscribe({
       next: (res) => {
         this.upcomingGames = res.data ?? [];
-        this.errorMessage = res.message;
+        this.errorMessage = '';
         this.isLoading = false;
       },
       error: () => {
@@ -121,7 +129,7 @@ export class GameReleasesComponent implements OnInit {
     this.gameReleaseService.getRecentGames(7, platform).subscribe({
       next: (res) => {
         this.recentGames = res.data ?? [];
-        this.errorMessage = res.message;
+        this.errorMessage = '';
       },
       error: () => {
         this.errorMessage = 'Erro ao filtrar lançamentos recentes';

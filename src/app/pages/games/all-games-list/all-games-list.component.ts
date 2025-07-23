@@ -21,7 +21,12 @@ import { isEqual } from 'lodash';
 @Component({
   selector: 'app-all-games-list',
   standalone: true,
-  imports: [GenericModule, GamerLoadingComponent, PaginationComponent, GameSearchFilterComponent],
+  imports: [
+    GenericModule,
+    GamerLoadingComponent,
+    PaginationComponent,
+    GameSearchFilterComponent
+  ],
   templateUrl: './all-games-list.component.html',
   styleUrls: ['./all-games-list.component.scss'],
 })
@@ -48,7 +53,7 @@ export class AllGamesListComponent implements OnInit {
     private gameDataService: GameDataService,
     private errorHandler: ErrorHandlingService,
     private notification: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadGames();

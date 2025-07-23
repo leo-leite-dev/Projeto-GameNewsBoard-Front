@@ -1,18 +1,25 @@
 import {
   Component,
-  forwardRef,
   Input,
   Output,
   EventEmitter,
+  forwardRef,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [GenericModule],
+  imports: [CommonModule, FormsModule, GenericModule, FontAwesomeModule],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   providers: [
@@ -23,23 +30,37 @@ import { GenericModule } from '../../../../shareds/commons/GenericModule';
     },
   ],
 })
-export class InputComponent implements ControlValueAccessor, OnInit {
+export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
   @Input() label: string = '';
   @Input() placeholder: string = '';
-  @Input() value: string = '';
   @Input() type: string = 'text';
+
+  value: string = '';
+
   @Output() valueChange = new EventEmitter<string>();
 
-  onChange = (_: any) => {};
-  onTouched = () => {};
   isDisabled = false;
+  isSearchModalOpen = false;
+  isMobile = false;
+
+  private onChange: (value: string) => void = () => { };
+  private onTouchedFn: () => void = () => { };
 
   ngOnInit(): void {
-    if (this.value) this.onChange(this.value);
+    this.checkIfMobile();
+    window.addEventListener('resize', this.checkIfMobile);
   }
 
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.checkIfMobile);
+  }
+
+  checkIfMobile = (): void => {
+    this.isMobile = window.innerWidth <= 480;
+  };
+
   writeValue(value: string): void {
-    this.value = value;
+    this.value = value ?? '';
   }
 
   registerOnChange(fn: any): void {
@@ -47,18 +68,22 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   }
 
   registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+    this.onTouchedFn = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
 
-  onInputChange(event: Event): void {
-    const inputValue = (event.target as HTMLInputElement).value;
-    this.value = inputValue;
+  onInputChange(): void {
+    console.log('[InputComponent] valor digitado (web):', this.value);
+    this.onChange(this.value);
+    this.valueChange.emit(this.value);
+  }
 
-    this.onChange(inputValue);
-    this.valueChange.emit(inputValue);
+  confirmMobileSearch(): void {
+    this.onChange(this.value);
+    this.valueChange.emit(this.value);
+    this.isSearchModalOpen = false;
   }
 }

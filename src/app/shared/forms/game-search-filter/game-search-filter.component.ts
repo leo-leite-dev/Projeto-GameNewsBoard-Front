@@ -5,11 +5,12 @@ import { Platform } from '../../enums/platform.enum';
 import { YearCategory } from '../../enums/year-category.enum';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { GameFilters } from '../../models/commons/game-filters.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-game-search-filter',
   standalone: true,
-  imports: [InputComponent, FilterMenuComponent],
+  imports: [InputComponent, FilterMenuComponent, FormsModule],
   templateUrl: './game-search-filter.component.html',
   styleUrl: './game-search-filter.component.scss'
 })
@@ -39,14 +40,15 @@ export class GameSearchFilterComponent {
   constructor() {
     this.searchTermSubject
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe(term => {
-        this.filters.searchTerm = term;
+      .subscribe(() => {
         this.emitFilters();
       });
   }
 
-  onSearch(term: string): void {
-    this.searchTermSubject.next(term);
+  onSearch(value: string): void {
+    console.log('[GameSearchFilterComponent] Digitando (modo web):', value);
+    this.filters.searchTerm = value;
+    this.searchTermSubject.next(value);
   }
 
   onFilterApplied(filters: {

@@ -1,6 +1,6 @@
-<app-gamer-loading *ngIf="isLoading" />
+<app-gamer-loading class="global-loading-wrapper" *ngIf="isLoading" />
 
-<div *ngIf="!isLoading && message" class="user-message text-center mt-20">
+<div *ngIf="!isLoading && message" class="no-games-container">
   {{ message }}
 </div>
 
@@ -22,14 +22,12 @@
         </div>
       </div>
       <div class="overlay">
-        <div class="date fs-10">{{ getReleaseYear(game.released) }}</div>
-        <div class="title fs-14 bold">{{ game.title }}</div>
+        <div class="date mb-10 fs-10">{{ getReleaseYear(game.released) }}</div>
+        <div class="title mb-10 fs-14 bold">{{ game.title }}</div>
         <div class="platform fs-12">{{ game.platform }}</div>
       </div>
     </div>
   </div>
 
-  <div class="pagination-wrapper">
-    <app-pagination [page]="page" [hasNext]="hasMoreGames" (previous)="previousPage()" (next)="nextPage()" />
-  </div>
+  <app-pagination [page]="page" [hasNext]="hasMoreGames" (previous)="previousPage()" (next)="nextPage()" />
 </div>

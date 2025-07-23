@@ -55,9 +55,9 @@
       [itemTemplate]="todayTemplate" [category]="'today'" (seeAllClicked)="goToAllReleases('today')">
     </app-carousel>
 
-    <ng-container *ngIf="!isLoading && todayGames.length === 0">
-      <div class="no-games-message">
-        🎮 Nenhum lançamento hoje para esta plataforma
+    <ng-container *ngIf="!isLoading && todayGames.length === 0 && message">
+      <div class="fs-12 text-center mb-40">
+        {{ message }}
       </div>
     </ng-container>
 

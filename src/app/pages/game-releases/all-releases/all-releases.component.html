@@ -2,7 +2,7 @@
     <div class="container-overflow">
         <app-gamer-loading class="global-loading-wrapper" *ngIf="isLoading" />
 
-        <div *ngIf="!isLoading && games.length" class="d-grid align-center mb-10">
+        <div *ngIf="!isLoading" class="d-grid align-center mb-10">
             <div class="category-buttons d-flex gap-10">
                 <button *ngFor="let cat of categories" (click)="onCategoryChange(cat.value)"
                     [class.active]="category === cat.value" class="category-button fs-12">
@@ -17,8 +17,10 @@
             </div>
         </div>
 
-        <div *ngIf="!isLoading && !games.length && message" class="user-message text-center mt-20">
-            {{ message }}
+        <div *ngIf="!isLoading && !games.length && message" class="no-games-container">
+            <div class="user-message">
+                {{ message }}
+            </div>
         </div>
 
         <div class="game-grid-wrapper " *ngIf="!isLoading && games.length">

@@ -1,4 +1,5 @@
 @use 'colors' as *;
+@use 'breakpoints' as *;
 
 .input {
   padding: 0.8rem 1rem;
@@ -16,5 +17,46 @@
   &:hover,
   &:focus {
     border-color: $rare-deep-blue;
+  }
+}
+
+
+@include respond(mobile) {
+  .mobile-search-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+    border-radius: 12px;
+    justify-content: center;
+    align-items: center;
+
+    .input.big {
+      width: 80%;
+      font-size: 1.2rem;
+      padding: 1rem;
+    }
+
+    button {
+      width: 80%;
+      padding: 0.75rem;
+      font-weight: bold;
+      border-radius: 8px;
+      background: $rare-deep-blue;
+      color: $pure-white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .close-button {
+      background: none;
+      color: $pure-white;
+      font-size: 1.4rem;
+    }
   }
 }
