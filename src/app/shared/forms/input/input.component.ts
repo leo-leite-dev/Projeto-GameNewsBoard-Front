@@ -1,16 +1,5 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { Component, Input, Output, EventEmitter, forwardRef, OnInit, OnDestroy } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -34,8 +23,10 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() type: string = 'text';
+  @Input() useMobileModal: boolean = true;
 
   value: string = '';
+  showPassword = false;
 
   @Output() valueChange = new EventEmitter<string>();
 
@@ -45,6 +36,11 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   private onChange: (value: string) => void = () => { };
   private onTouchedFn: () => void = () => { };
+
+  get computedInputType(): string {
+    if (this.type !== 'password') return this.type;
+    return this.showPassword ? 'text' : 'password';
+  }
 
   ngOnInit(): void {
     this.checkIfMobile();

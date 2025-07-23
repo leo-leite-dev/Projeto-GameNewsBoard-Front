@@ -1,0 +1,116 @@
+@use 'colors' as *;
+@use 'breakpoints' as *;
+
+.coming-soon-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #0f0f0f, #1b1b1b);
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    padding: 2rem;
+}
+
+.glow-border {
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(102, 0, 255, 0.3), 0 0 12px rgba(255, 255, 255, 0.05);
+    text-align: center;
+    max-width: 600px;
+    background: rgba(20, 20, 20, 0.8);
+    animation: fadeIn 0.8s ease-out;
+}
+
+.title {
+    font-size: 3rem;
+    background: linear-gradient(90deg, #6e30ff, #aa58ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    animation: popIn 0.5s ease;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 1s ease-in;
+}
+
+.info {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 2rem;
+    animation: fadeIn 1.2s ease-in;
+}
+
+.loading-glow {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #6e30ff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@include respond(mobile) {
+  .coming-soon-container {
+    padding: 1.5rem;
+  }
+
+  .glow-border {
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 90vw;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .info {
+    font-size: 0.95rem;
+  }
+
+  .loading-glow {
+    width: 48px;
+    height: 48px;
+    border-width: 5px;
+  }
+}

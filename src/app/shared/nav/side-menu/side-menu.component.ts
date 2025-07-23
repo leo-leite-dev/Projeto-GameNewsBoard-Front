@@ -1,4 +1,4 @@
-import { Component, HostListener, ElementRef } from '@angular/core';
+import { Component, HostListener, ElementRef, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MenuItem } from '../../models/commons/menu-item.model';
@@ -9,8 +9,9 @@ import { HeaderComponent } from '../header/header.component';
 import { LoginComponent } from '../../modais/login/login.component';
 import { RegisterComponent } from '../../modais/register/register.component';
 import { UserProfileResponse } from '../../models/user-profile.model';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { LogoutComponent } from '../../modais/logout/logout.component';
+import { ModalAuthService } from '../../services/commons/modal-auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -27,36 +28,47 @@ import { LogoutComponent } from '../../modais/logout/logout.component';
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.scss',
 })
-export class SideMenuComponent {
+export class SideMenuComponent implements OnInit {
   submenuOpen = false;
   menuExpanded = true;
   selectedMenuTitle: string | null = null;
   activeSubmenu: MenuItem[] | null = null;
-  isSmallScreen: boolean = false;
-  modalView: 'login' | 'register' | null = null;
-  showLoginModal = false;
-  showLogoutModal = false;
+  isSmallScreen = false;
   isDropdownOpen = false;
 
+  modalView$!: Observable<'login' | 'register' | null>;
+  showLogoutModal$!: Observable<boolean>;
+
   authenticatedUser$!: Observable<UserProfileResponse | null>;
-  pendingNavigationAfterLogin: string | null = null;
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private eRef: ElementRef
+    private eRef: ElementRef,
+    public modalAuth: ModalAuthService
   ) {
     this.detectScreenSize();
     this.authenticatedUser$ = this.userService.authenticatedUser$;
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  onResize() {
     this.detectScreenSize();
   }
 
   @HostListener('document:click', ['$event'])
+
+  ngOnInit(): void {
+    this.modalView$ = this.modalAuth.modalView$;
+    this.showLogoutModal$ = this.modalAuth.showLogoutModal$;
+
+    combineLatest([this.modalAuth.modalView$, this.authenticatedUser$]).subscribe(([modalView]) => {
+      if (this.isSmallScreen && (modalView === 'login' || modalView === 'register'))
+        this.menuExpanded = false;
+    });
+  }
+
   handleClickOutside(event: Event) {
     if (
       this.isDropdownOpen &&
@@ -68,7 +80,7 @@ export class SideMenuComponent {
   }
 
   detectScreenSize(): void {
-    this.isSmallScreen = window.innerWidth < 800;
+    this.isSmallScreen = window.innerWidth < 600;
     this.menuExpanded = !this.isSmallScreen;
   }
 
@@ -87,7 +99,7 @@ export class SideMenuComponent {
 
   navigateTo(item: MenuItem): void {
     if (item.label === 'Sair') {
-      this.openLogoutModal();
+      this.modalAuth.openLogout();
       return;
     }
 
@@ -97,8 +109,8 @@ export class SideMenuComponent {
           if (user) {
             this.router.navigate([item.route]);
           } else {
-            this.pendingNavigationAfterLogin = item.route!;
-            this.openLoginModal();
+            this.modalAuth.setPendingNavigation(item.route!);
+            this.modalAuth.openLogin();
           }
         });
       } else if (this.router.url !== item.route) {
@@ -134,45 +146,39 @@ export class SideMenuComponent {
     this.menuExpanded = !this.menuExpanded;
   }
 
-  goToProfile() {}
-  goToSettings() {}
+  goToProfile() {
+    this.router.navigate(['/coming-soon']);
 
-  closeModal() {
-    this.modalView = null;
+    if (this.isSmallScreen)
+      this.menuExpanded = false;
   }
-
-  openLoginModal() {
-    this.modalView = 'login';
-  }
-
-  openRegisterModal() {
-    this.modalView = 'register';
+  goToSettings() {
+    this.router.navigate(['/coming-soon']);
+    
+    if (this.isSmallScreen)
+      this.menuExpanded = false;
   }
 
   handleLoginSuccess() {
     this.userService.refreshUser();
-    this.closeModal();
-
+    this.modalAuth.closeModal();
     this.isDropdownOpen = false;
 
-    if (this.pendingNavigationAfterLogin) {
-      this.router.navigate([this.pendingNavigationAfterLogin]);
-      this.pendingNavigationAfterLogin = null;
+    const redirect = this.modalAuth.getPendingNavigation();
+    if (redirect) {
+      this.router.navigate([redirect]);
+      this.modalAuth.clearPendingNavigation();
     }
   }
 
   handleRegisterSuccess() {
-    this.modalView = 'login';
-  }
-
-  openLogoutModal() {
-    this.showLogoutModal = true;
+    this.modalAuth.openLogin();
   }
 
   logout() {
     this.authService.logout().subscribe(() => {
       this.userService.clearUser();
-      this.showLogoutModal = false;
+      this.modalAuth.closeLogout();
       this.router.navigate(['/']);
     });
   }

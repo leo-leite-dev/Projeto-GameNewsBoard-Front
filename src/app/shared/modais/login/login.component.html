@@ -6,28 +6,24 @@
       <fa-icon [icon]="'times'"></fa-icon>
     </button>
 
-    <h1 class="title">Faça login</h1>
+    <h1 class="title d-flex align-center mb-20 gap-10">
+      <fa-icon [icon]="faUser"></fa-icon>Faça login
+    </h1>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div *ngIf="errorMessage" class="error-message mb-20">
+      <div *ngIf="errorMessage" class="error-message fs-14 mb-20">
         {{ errorMessage }}
       </div>
 
-      <div class="form-group">
-        <app-input
-          formControlName="username"
-          [label]="'Usuário'"
-          [placeholder]="'Digite seu nome de usuário'"
-        ></app-input>
+      <div class="form-group mb-20">
+        <app-input formControlName="username" [label]="'Usuário'" [placeholder]="'Digite seu nome de usuário'"
+          [useMobileModal]="false">
+        </app-input>
       </div>
 
-      <div class="form-group">
-        <app-input
-          formControlName="password"
-          [label]="'Senha'"
-          [placeholder]="'Digite sua senha'"
-          [type]="'password'"
-        ></app-input>
+      <div class="form-group mb-20">
+        <app-input formControlName="password" [label]="'Senha'" [placeholder]="'Digite sua senha'" [type]="'password'"
+          [useMobileModal]="false"></app-input>
       </div>
 
       <button type="submit" [disabled]="form.invalid" class="auth-button">Entrar</button>

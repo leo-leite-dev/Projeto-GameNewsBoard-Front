@@ -1,6 +1,7 @@
 <div class="form-wrapper d-flex">
-  <input class="input" [placeholder]="placeholder" [(ngModel)]="value" [readonly]="isMobile"
-    (click)="isMobile ? isSearchModalOpen = true : null" (ngModelChange)="onInputChange()" />
+  <input class="input" [type]="type" [placeholder]="placeholder" [(ngModel)]="value"
+    [readonly]="isMobile && useMobileModal" (click)="(isMobile && useMobileModal) ? isSearchModalOpen = true : null"
+    (ngModelChange)="onInputChange()" />
 </div>
 
 <div class="mobile-search-modal" *ngIf="isMobile && isSearchModalOpen">

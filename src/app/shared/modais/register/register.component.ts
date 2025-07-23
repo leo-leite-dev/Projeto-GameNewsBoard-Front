@@ -5,6 +5,7 @@ import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/auth/services/auth.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-register-modal',
@@ -20,6 +21,7 @@ export class RegisterComponent {
 
   form: FormGroup;
   errorMessage!: string;
+  faUser = faUser;
 
   constructor(
     private fb: FormBuilder,

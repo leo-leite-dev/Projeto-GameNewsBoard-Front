@@ -8,6 +8,7 @@ import { AddGameTierListComponent } from '../pages/games/game-management/game-ti
 import { TierListFormComponent } from '../pages/games/game-management/game-tier-list/tier-list-form/tier-list-form.component';
 import { GameReleasesComponent } from '../pages/game-releases/game-releases.component';
 import { AllReleasesComponent } from '../pages/game-releases/all-releases/all-releases.component';
+import { ComingSoonComponent } from '../shared/components/coming-soon/coming-soon.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,10 @@ export const routes: Routes = [
         path: '',
         redirectTo: 'news',
         pathMatch: 'full',
+      },
+      {
+        path: 'coming-soon',
+        component: ComingSoonComponent,
       },
       {
         path: 'news',
@@ -61,8 +66,6 @@ export const routes: Routes = [
           },
         ],
       },
-
-      // ✅ Formulários independentes (criação/edição de tier)
       {
         path: 'manage-games/tier-list/create-tier-list',
         component: TierListFormComponent,

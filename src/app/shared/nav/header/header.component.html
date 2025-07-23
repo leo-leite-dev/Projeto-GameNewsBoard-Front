@@ -16,14 +16,23 @@
           <ng-container *ngIf="authenticatedUser$ | async as user; else guestOptions">
             <li (click)="navigateToProfile()">Ver perfil</li>
             <li (click)="navigateToSettings()">Configurações</li>
+            <li (click)="modalAuth.openLogout()">Sair</li>
           </ng-container>
 
           <ng-template #guestOptions>
-            <li (click)="navigateToLogin()">Entrar</li>
-            <li (click)="navigateToRegister()">Registrar</li>
+            <li (click)="modalAuth.openLogin()">Entrar</li>
+            <li (click)="modalAuth.openRegister()">Registrar</li>
           </ng-template>
         </ul>
       </div>
     </div>
   </div>
 </header>
+
+<app-login-modal *ngIf="(modalView$ | async) === 'login'" (loginSuccess)="handleLoginSuccess()"
+  (close)="modalAuth.closeModal()" (switchToRegister)="modalAuth.openRegister()" />
+
+<app-register-modal *ngIf="(modalView$ | async) === 'register'" (registerSuccess)="handleRegisterSuccess()"
+  (close)="modalAuth.closeModal()" (switchToLogin)="modalAuth.openLogin()" />
+
+<app-logout-modal *ngIf="showLogoutModal$ | async" (confirm)="logout()" (cancel)="modalAuth.closeLogout()" />

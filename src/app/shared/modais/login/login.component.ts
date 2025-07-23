@@ -7,11 +7,18 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../../core/auth/services/auth.service';
 import { UserService } from '../../services/user.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login-modal',
   standalone: true,
-  imports: [GenericModule, ReactiveFormsModule, InputComponent, GenericModule, FontAwesomeModule],
+  imports: [
+    GenericModule,
+    ReactiveFormsModule,
+    InputComponent,
+    GenericModule,
+    FontAwesomeModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -22,6 +29,7 @@ export class LoginComponent {
 
   form: FormGroup;
   errorMessage!: string;
+  faUser = faUser;
 
   constructor(
     private fb: FormBuilder,
