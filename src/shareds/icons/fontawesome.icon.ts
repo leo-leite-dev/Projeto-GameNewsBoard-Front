@@ -1,16 +1,8 @@
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
-  faArrowLeft,
-  faChevronLeft,
-  faChevronRight,
-  faExpand,
-  faImage,
-  faPause,
-  faPen,
-  faPenToSquare,
-  faPlay,
-  faSpinner,
-  faTimes,
+  faArrowLeft, faArrowRight, faChevronLeft, faChevronRight, faCog, faExpand, faImage, faPause, faPen,
+  faPenToSquare, faPlay, faPlus, faSignOutAlt, faSpinner, faTimes,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
 export function registerIcons(library: FaIconLibrary): void {
@@ -25,6 +17,12 @@ export function registerIcons(library: FaIconLibrary): void {
     faPause,
     faChevronLeft,
     faChevronRight,
-    faTimes
+    faTimes,
+    faTrash,
+    faSignOutAlt,
+    faArrowLeft,
+    faArrowRight,
+    faPlus,
+    faCog
   );
 }

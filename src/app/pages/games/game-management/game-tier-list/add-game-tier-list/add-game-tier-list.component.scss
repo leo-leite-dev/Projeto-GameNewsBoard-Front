@@ -1,4 +1,5 @@
 @use 'colors' as *;
+@use 'breakpoints' as *;
 
 .add-game-tier-list-container {
   .tier-list-header {
@@ -18,19 +19,15 @@
   }
 
   .container-overflow {
-    height: 67vh;
-    overflow-y: auto;
+    width: 52.5%;
+    height: calc(100vh - 400px);
     transition: height 0.3s ease;
-
-    &.view-only {
-      height: 92vh;
-    }
 
     .tier-row {
       align-items: stretch;
-      min-height: 12.5vh;
       border-radius: 6px;
       overflow: hidden;
+      min-height: 12.5vh;
     }
 
     .tier-label {
@@ -49,7 +46,7 @@
       box-sizing: border-box;
 
       &.cdk-drop-list-dragging {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: $overlay-bg;
 
         .empty-dropzone {
           display: none;
@@ -58,54 +55,7 @@
     }
   }
 
-  @media (min-width: 2560px) {
-    .container-overflow {
-      width: 52.5%;
-    }
-  }
-
-  @media (min-width: 3840px) {
-    .container-overflow {
-      width: 39.4%;
-
-      .tier-row {
-        min-height: 8.5vh;
-      }
-    }
-  }
-
-  @media (orientation: portrait) {
-    .container-overflow {
-      width: 84.9%;
-
-      .tier-row {
-        min-height: 11.2vh;
-        flex-direction: column;
-      }
-
-      .tier-label {
-        width: 100%;
-        text-align: center;
-        font-size: 1.2rem;
-        padding: 6px 0;
-      }
-    }
-
-    .empty-dropzone {
-      padding-top: 10%;
-    }
-
-    .game-icon {
-      width: 130px;
-      height: 180px;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .tier-list-container {
-    margin-top: 20px;
-
+  @include respond(mobile) {
     .container-overflow {
       width: 100%;
       height: auto;
@@ -132,28 +82,17 @@
         min-height: 120px;
         border-radius: 6px;
       }
+
+      .game-icon {
+        width: 80px;
+        height: 110px;
+      }
     }
-  }
 
-  .game-icon {
-    width: 80px;
-    height: 110px;
-  }
-}
-
-@media (max-width: 600px) {
-  .tier-list-container {
     .game-icon {
-      width: 90px;
-      height: 120px;
+      width: 80px;
+      height: 110px;
     }
-  }
-}
-
-@media (max-width: 377px) {
-  .game-icon {
-    width: 79px;
-    height: 109px;
   }
 }
 

@@ -1,0 +1,116 @@
+@use 'colors' as *;
+@use 'breakpoints' as *;
+
+$overlay-light: rgba(255, 255, 255, 0.1);
+
+.form-wrapper {
+    min-height: 90vh;
+}
+
+.back-btn-inline {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 16px;
+
+    .back-btn {
+        font-size: 0.95rem;
+    }
+}
+
+.tier-header {
+    animation: fadeIn 0.6s ease-out;
+
+    .tier-subtitle {
+        color: $neutral-gray;
+        margin-top: 6px;
+        font-weight: 400;
+    }
+}
+
+.create-tier-form {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 30px;
+    padding: 30px;
+    background: linear-gradient(135deg, #1e1e1e40, #00000050);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 15px $overlay-light;
+}
+
+.upload-label {
+    color: $pure-white;
+}
+
+.upload-dropzone {
+    position: relative;
+    height: 280px;
+    border: 2px dashed $pure-white;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+
+    &:hover {
+        background-color: $overlay-light;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .upload-preview-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 12px;
+        background-color: $pure-black;
+        z-index: 1;
+    }
+
+    .upload-icon {
+        font-size: 2rem;
+        color: $pure-white;
+        margin-bottom: 10px;
+        z-index: 1;
+    }
+
+    .upload-text {
+        color: $neutral-gray;
+        font-size: 1rem;
+        font-weight: 500;
+        z-index: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@include respond(mobile) {
+    .create-tier-form {
+        padding: 20px;
+    }
+
+    .tier-main-title {
+        font-size: 1.5rem;
+    }
+
+    .tier-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .upload-dropzone {
+        height: 220px;
+    }
+
+    .upload-icon {
+        font-size: 1.5rem;
+    }
+}

@@ -22,7 +22,6 @@ export class GameManagementComponent implements OnInit {
       this.modalView = 'login';
     });
   }
-  
 
   handleLoginSuccess() {
     this.userService.refreshUser();

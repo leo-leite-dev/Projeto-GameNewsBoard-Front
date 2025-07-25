@@ -35,4 +35,6 @@
 <app-register-modal *ngIf="(modalView$ | async) === 'register'" (registerSuccess)="handleRegisterSuccess()"
   (close)="modalAuth.closeModal()" (switchToLogin)="modalAuth.openLogin()" />
 
-<app-logout-modal *ngIf="showLogoutModal$ | async" (confirm)="logout()" (cancel)="modalAuth.closeLogout()" />
+<app-confirm-dialog *ngIf="showLogoutModal$ | async" [message]="'Tem certeza que deseja sair?'" [confirmText]="'Sair'"
+  [cancelText]="'Cancelar'" [iconConfirm]="['fas', 'sign-out-alt']" [iconCancel]="['fas', 'times']"
+  (confirmed)="logout()" (cancelled)="modalAuth.closeLogout()" />

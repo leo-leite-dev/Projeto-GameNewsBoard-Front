@@ -1,0 +1,45 @@
+<ion-content class="form-wrapper d-flex jc-center align-center mt-20">
+    <div class="back-btn-inline" *ngIf="!isMobile">
+        <app-navigate-button [icon]="'arrow-left'" (click)="goBack()"></app-navigate-button>
+    </div>
+
+    <div class="tier-header text-center">
+        <h2 class="tier-main-title fs-24">Criação da Tier List</h2>
+        <p class="tier-subtitle">
+            Defina um nome e selecione uma imagem que represente sua nova Tier.
+        </p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="create-tier-form d-flex gap-20 column">
+        <div class="form-group">
+            <app-input formControlName="title" [label]="'Título'" [placeholder]="'Ex: Meus favoritos da franquia Zelda'"
+                [useMobileModal]="false">
+            </app-input>
+        </div>
+
+        <div class="form-group d-flex gap-10 column">
+            <label class="upload-label mb-5">Selecione uma imagem</label>
+
+            <label class="upload-dropzone d-flex align-center jc-center column" [class.has-preview]="previewUrl">
+                <input type="file" class="upload-input" (change)="onFileSelected($event)"
+                    accept="image/png, image/jpeg, image/webp" hidden />
+
+                <img *ngIf="previewUrl" [src]="previewUrl" class="upload-preview-img" />
+
+                <ng-container *ngIf="!previewUrl">
+                    <ion-icon name="image-outline" class="upload-icon"></ion-icon>
+                    <p class="upload-text">Clique para escolher uma imagem</p>
+                </ng-container>
+            </label>
+
+            <div *ngIf="uploading" class="uploading-text">
+                <ion-icon name="sync-outline" class="fa-spin"></ion-icon>
+                Enviando imagem...
+            </div>
+        </div>
+
+        <app-submit-button [label]="isEditMode ? 'Atualizar Tier' : 'Criar Tier'"
+            [disabled]="form.invalid || uploading || !imageId" [routeAfterSubmit]="getRedirectRoute()">
+        </app-submit-button>
+    </form>
+</ion-content>

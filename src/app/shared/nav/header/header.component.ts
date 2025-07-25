@@ -7,9 +7,9 @@ import { UserProfileResponse } from '../../models/user-profile.model';
 import { UserService } from '../../services/user.service';
 import { LoginComponent } from '../../modais/login/login.component';
 import { RegisterComponent } from '../../modais/register/register.component';
-import { LogoutComponent } from '../../modais/logout/logout.component';
 import { ModalAuthService } from '../../services/commons/modal-auth.service';
 import { AuthService } from '../../../core/auth/services/auth.service';
+import { ConfirmDialogComponent } from '../../modais/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +19,7 @@ import { AuthService } from '../../../core/auth/services/auth.service';
     MatIconModule,
     LoginComponent,
     RegisterComponent,
-    LogoutComponent
+    ConfirmDialogComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

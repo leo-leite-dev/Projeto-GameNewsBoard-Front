@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { InputComponent } from '../../../shared/forms/input/input.component';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ToastrService } from 'ngx-toastr';
-import { firstValueFrom } from 'rxjs';
+import { catchError, delayWhen, firstValueFrom, of, retry, retryWhen, take, timer } from 'rxjs';
 import { AuthService } from '../../../core/auth/services/auth.service';
 import { UserService } from '../../services/user.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -53,8 +53,15 @@ export class LoginComponent {
       next: async (res) => {
         this.toastr.success(res.message);
 
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        const user = await firstValueFrom(this.userService.getAuthenticatedUserSafe());
+        const user = await firstValueFrom(
+          this.userService.getAuthenticatedUserSafe().pipe(
+            retry({
+              count: 5,
+              delay: () => timer(200)
+            }),
+            catchError(() => of(null))
+          )
+        );
 
         if (user?.username) {
           this.loginSuccess.emit();

@@ -10,8 +10,8 @@ import { LoginComponent } from '../../modais/login/login.component';
 import { RegisterComponent } from '../../modais/register/register.component';
 import { UserProfileResponse } from '../../models/user-profile.model';
 import { combineLatest, Observable } from 'rxjs';
-import { LogoutComponent } from '../../modais/logout/logout.component';
 import { ModalAuthService } from '../../services/commons/modal-auth.service';
+import { ConfirmDialogComponent } from '../../modais/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -23,7 +23,7 @@ import { ModalAuthService } from '../../services/commons/modal-auth.service';
     HeaderComponent,
     LoginComponent,
     RegisterComponent,
-    LogoutComponent,
+    ConfirmDialogComponent,
   ],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.scss',
@@ -154,7 +154,7 @@ export class SideMenuComponent implements OnInit {
   }
   goToSettings() {
     this.router.navigate(['/coming-soon']);
-    
+
     if (this.isSmallScreen)
       this.menuExpanded = false;
   }

@@ -1,0 +1,28 @@
+@use 'colors' as *;
+
+$hover-glow: #a088ff;
+
+.navigate-button {
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: transparent;
+  color: $pure-white;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  span {
+    font-size: 0.9rem;
+  }
+
+  &:hover {
+    border-color: $hover-glow;
+    background: rgba(160, 136, 255, 0.1);
+    box-shadow: 0 0 10px $hover-glow;
+    transform: scale(1.02);
+  }
+}

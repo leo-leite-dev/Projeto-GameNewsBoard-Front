@@ -1,44 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faImage, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { uploadedImageService } from '../../../../../shared/services/uploaded-image-service';
 import { TierListService } from '../../../../../shared/services/tier-list-service';
+import { uploadedImageService } from '../../../../../shared/services/uploaded-image-service';
 import { NotificationService } from '../../../../../shared/services/commons/notification.service';
-import {
-  TierListRequest,
-  TierListResponse,
-  UpdateTierListRequest,
-} from '../../../../../shared/models/tier-list.model';
+import { TierListRequest, TierListResponse, UpdateTierListRequest } from '../../../../../shared/models/tier-list.model';
 import { GenericModule } from '../../../../../../shareds/commons/GenericModule';
-import { SubmitButtonComponent } from '../../../../../shared/forms/submit-button/submit-button.component';
-import { NavigateButtonComponent } from '../../../../../shared/forms/navigate-button/navigate-button.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { InputComponent } from '../../../../../shared/forms/input/input.component';
+import { SubmitButtonComponent } from '../../../../../shared/components/buttons/submit-button/submit-button.component';
+import { NavigateButtonComponent } from '../../../../../shared/components/buttons/navigate-button/navigate-button.component';
 
 @Component({
-  selector: 'app-tier-list-form',
+  selector: 'app-add-tier-list',
   standalone: true,
   imports: [
     GenericModule,
     ReactiveFormsModule,
-    FormsModule,
     InputComponent,
     SubmitButtonComponent,
     NavigateButtonComponent,
-    FontAwesomeModule,
   ],
-  templateUrl: './tier-list-form.component.html',
-  styleUrls: ['./tier-list-form.component.scss'],
+  templateUrl: './add-tier-list.component.html',
+  styleUrl: './add-tier-list.component.scss'
 })
-export class TierListFormComponent implements OnInit {
+export class AddTierListComponent implements OnInit {
   @Input() tierId: string | null = null;
+
   @Output() formSubmitted = new EventEmitter<void>();
 
   form: FormGroup;
@@ -47,6 +34,7 @@ export class TierListFormComponent implements OnInit {
   imageUrl: string | null = null;
   uploading = false;
   isEditMode = false;
+  isMobile: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -61,8 +49,15 @@ export class TierListFormComponent implements OnInit {
     });
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = event.target.innerWidth <= 600;
+  }
+
   ngOnInit(): void {
     this.tierId = this.route.snapshot.paramMap.get('tierId');
+
+    this.isMobile = window.innerWidth <= 600;
 
     if (this.tierId) {
       this.isEditMode = true;

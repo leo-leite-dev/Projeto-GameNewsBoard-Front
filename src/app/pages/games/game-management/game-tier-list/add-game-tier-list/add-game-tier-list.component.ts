@@ -11,7 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorHandlingService } from '../../../../../shared/services/commons/error-handling.service';
 import { TierListEntryRequest } from '../../../../../shared/models/tier-list-entry.model';
-import { NavigateButtonComponent } from '../../../../../shared/forms/navigate-button/navigate-button.component';
+import { NavigateButtonComponent } from '../../../../../shared/components/buttons/navigate-button/navigate-button.component';
 
 @Component({
   selector: 'app-add-game-tier-list',

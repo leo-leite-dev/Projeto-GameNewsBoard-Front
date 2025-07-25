@@ -1,21 +1,19 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
+$black-overlay-light: #0000002a;
+
+.container-overflow-teste {
+  min-height: 80vh;
+}
+
 .container-global-tier {
-  max-width: 1700px;
-  margin: 50px auto 0 auto;
+  max-width: 1720px;
+  margin: 5px auto 0;
   padding: 2rem;
   border-radius: 1rem;
-  background: linear-gradient(135deg, #1e1e1e91, #0000002a);
+  background: linear-gradient(135deg, #1e1e1e91, $black-overlay-light);
   backdrop-filter: blur(8px);
-
-  @media (max-width: 1920px) {
-    margin-left: 100px;
-  }
-
-  @media (max-width: 1843px) {
-    margin-right: 32px;
-  }
 
   .tier-title {
     color: $pure-white;
@@ -28,109 +26,163 @@
 
   .container-tier {
     padding: 0.8rem;
-    background: linear-gradient(135deg, #1e1e1e2f, #0000002a);
     border-radius: 1rem;
     backdrop-filter: blur(8px);
+    background: linear-gradient(135deg, #1e1e1e2f, $black-overlay-light);
+
 
     .tier-card {
-      position: relative;
       width: 400px;
-      flex-direction: column;
+      height: 250px;
       background-color: $void-black;
       border-radius: 12px;
       overflow: hidden;
+      position: relative;
       transition: transform 0.2s ease-in-out;
       cursor: pointer;
-
-      @media screen and (max-width: 600px) {
-        width: 90vw;
-      }
 
       &:hover {
         transform: scale(1.05);
         box-shadow: 0 0 10px $pure-white;
 
         ::ng-deep .remove-button,
-        .edit-button {
-          opacity: 1;
-          pointer-events: auto;
+        ::ng-deep .edit-button {
+          opacity: 1 !important;
+          pointer-events: auto !important;
         }
       }
 
       .tier-image {
         width: 100%;
-        aspect-ratio: 16 / 9;
-        background-size: cover;
-        background-position: top;
-        background-repeat: no-repeat;
+        height: 100%;
+
+        background: {
+          size: contain;
+          position: center;
+          repeat: no-repeat;
+        }
+
         position: relative;
-        display: block;
 
         .tier-info-overlay {
           position: absolute;
           bottom: 0;
           width: 100%;
-          background: rgba(0, 0, 0, 0.75);
-          padding: 10px;
-          text-align: center;
-
-          .tier-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: $pure-white;
-            margin: 0;
-          }
+          background: $overlay-bg;
 
           .tier-sub {
-            font-size: 0.8rem;
             color: $neutral-gray;
             margin-top: 4px;
           }
+        }
+      }
 
-          @media (max-width: 600px) {
-            .tier-name {
-              font-size: 0.9rem;
-            }
+      .remove-button,
+      .edit-button {
+        position: absolute;
+        z-index: 2;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease-in-out;
+      }
 
-            .tier-sub {
-              font-size: 0.7rem;
-            }
+      .remove-button {
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+        background-color: transparent;
+      }
+
+      .edit-button {
+        top: 10px;
+        left: 10px;
+        color: $pure-white;
+        font-size: 1.2rem;
+        background-color: $overlay-bg;
+        border-radius: 50%;
+        padding: 8px;
+        cursor: pointer;
+
+        &:hover {
+          background: $steam-gray;
+        }
+      }
+
+      .mobile-settings,
+      .mobile-menu {
+        display: none;
+      }
+    }
+  }
+
+  .no-tiers {
+    height: 80vh;
+  }
+
+  @include respond(mobile) {
+    .tier-list-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .container-tier .tier-card {
+      width: 100% !important;
+
+      .remove-button,
+      .edit-button {
+        display: none !important;
+      }
+
+      .mobile-settings {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+        font-size: 1.3rem;
+        color: $pure-white;
+        background: $overlay-bg;
+        border-radius: 50%;
+        padding: 6px;
+        cursor: pointer;
+
+        &:hover {
+          background: $steam-gray;
+        }
+      }
+
+      .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 45px;
+        right: 10px;
+        z-index: 15;
+        background: $overlay-bg;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 8px $overlay-bg;
+
+        .menu-option {
+          padding: 8px 12px;
+          color: $pure-white;
+          background: transparent;
+          border: none;
+          text-align: left;
+          cursor: pointer;
+          font-size: 14px;
+
+          &:hover {
+            background-color: $steam-gray;
           }
         }
       }
     }
 
-    .remove-button,
-    .edit-button {
-      position: absolute;
-      z-index: 2;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease-in-out;
-    }
-
-    .remove-button {
-      top: 10px;
-      right: 10px;
-    }
-
-    .edit-button {
-      top: 10px;
-      left: 10px;
-      color: $pure-white;
-      font-size: 1.2rem;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 50%;
-      padding: 8px;
-      cursor: pointer;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .tier-list-container {
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
+    .no-tiers {
+      text-align: center;
+      padding-top: 40px;
     }
   }
 }

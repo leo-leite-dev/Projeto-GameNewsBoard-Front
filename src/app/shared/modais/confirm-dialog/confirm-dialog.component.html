@@ -1,10 +1,15 @@
-<!-- <div class="dialog-overlay">
-    <div class="dialog-box">
-      <p class="dialog-message">{{ message }}</p>
-      <div class="dialog-actions">
-        <button class="btn cancel" (click)="cancelled.emit()">✖ {{ cancelText }}</button>
-        <button class="btn confirm" (click)="confirmed.emit()">✔ {{ confirmText }}</button>
-      </div>
+<div class="dialog-overlay d-flex jc-center align-center">
+  <div class="dialog-box">
+    <p class="dialog-message">{{ message }}</p>
+    <div class="dialog-actions d-flex jc-center gap-10">
+      <button class="btn cancel" (click)="cancelled.emit()">
+        <fa-icon [icon]="iconCancel" class="mr-5"></fa-icon>
+        {{ cancelText }}
+      </button>
+      <button class="btn confirm" (click)="confirmed.emit()">
+        <fa-icon [icon]="iconConfirm" class="mr-5"></fa-icon>
+        {{ confirmText }}
+      </button>
     </div>
   </div>
-   -->
+</div>

@@ -11,7 +11,7 @@ import { ErrorHandlingService } from '../../../shared/services/commons/error-han
 export class AuthService {
   private readonly baseUrl = `${environment.apiBaseUrl}/auth`;
 
-  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) {}
+  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) { }
 
   register(data: { username: string; password: string }): Observable<ApiResponse<string>> {
     return this.http

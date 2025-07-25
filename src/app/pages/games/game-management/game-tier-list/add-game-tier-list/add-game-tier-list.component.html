@@ -1,61 +1,57 @@
-<div class="d-flex align-center jc-end">
-  <app-navigate-button
-    label="Voltar"
-    icon="fas fa-arrow-left"
-    className="back-btn"
-    (click)="goBack()"
-  />
-</div>
+<ion-content class="add-game-tier-list-container" [scrollY]="true" fullscreen>
 
-<div class="add-game-tier-list-container">
-  <div *ngIf="!viewOnlyMode">
-    <app-game-carousel [connectedDropLists]="dropListIds"></app-game-carousel>
-  </div>
+  <ion-grid>
+    <ion-row class="ion-justify-content-end ion-align-items-center">
+      <ion-col size="auto">
+        <app-navigate-button [icon]="'arrow-left'" (click)="goBack()"></app-navigate-button>
+      </ion-col>
+    </ion-row>
 
-  <div class="container-overflow scroll" [class.view-only]="viewOnlyMode">
-    <div class="tier-list-header d-flex space-between">
-      <h1 class="fs-24">{{ tierTitle }}</h1>
-      <button
-        class="view-toggle-btn"
-        (click)="toggleViewMode()"
-        title="{{ viewOnlyMode ? 'Editar' : 'Expandir' }}"
-      >
-        <fa-icon [icon]="viewOnlyMode ? ['fas', 'pen-to-square'] : ['fas', 'expand']" />
-      </button>
-    </div>
+    <ion-row *ngIf="!viewOnlyMode">
+      <ion-col>
+        <app-game-carousel [connectedDropLists]="dropListIds"></app-game-carousel>
+      </ion-col>
+    </ion-row>
 
-    <div class="tier-row d-flex tier-{{ tier.label.toLowerCase() }}" *ngFor="let tier of tiers">
-      <div class="tier-label d-flex center jc-center fs-18 bold">{{ tier.label }}</div>
+    <ion-row>
+      <ion-col>
+        <div class="container-overflow scroll" [class.view-only]="viewOnlyMode">
+          <div class="tier-list-header d-flex space-between">
+            <h1 class="fs-24">{{ tierTitle }}</h1>
+            <ion-button fill="clear" class="view-toggle-btn" (click)="toggleViewMode()"
+              [title]="viewOnlyMode ? 'Editar' : 'Expandir'">
+              <ion-icon [name]="viewOnlyMode ? 'create-outline' : 'expand-outline'" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
 
-      <div
-        class="tier-dropzone d-flex wrap"
-        cdkDropList
-        [id]="'tier-drop-' + tier.level"
-        [cdkDropListData]="tierGames[tier.level]"
-        [cdkDropListConnectedTo]="dropListIds"
-        cdkDropListSortingDisabled="true"
-        (cdkDropListDropped)="onDrop($event, tier.level)"
-      >
-        <div
-          *ngFor="let game of tierGames[tier.level]"
-          class="game-icon"
-          cdkDrag
-          [cdkDragData]="game"
-        >
-          <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
-          <button class="remove-button" (click)="removeGame(game)" *ngIf="!viewOnlyMode">×</button>
-
-          <ng-template cdkDragPlaceholder>
-            <div class="game-icon placeholder-preview">
-              <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
+          <div class="tier-row d-flex tier-{{ tier.label.toLowerCase() }}" *ngFor="let tier of tiers">
+            <div class="tier-label d-flex center jc-center fs-18 bold">
+              {{ tier.label }}
             </div>
-          </ng-template>
-        </div>
 
-        <div *ngIf="tierGames[tier.level]?.length === 0" class="empty-dropzone d-flex center">
-          <span>Arraste jogos para aqui</span>
+            <div class="tier-dropzone d-flex wrap" cdkDropList [id]="'tier-drop-' + tier.level"
+              [cdkDropListData]="tierGames[tier.level]" [cdkDropListConnectedTo]="dropListIds"
+              cdkDropListSortingDisabled="true" (cdkDropListDropped)="onDrop($event, tier.level)">
+              <div *ngFor="let game of tierGames[tier.level]" class="game-icon" cdkDrag [cdkDragData]="game">
+                <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
+                <button class="remove-button" (click)="removeGame(game)" *ngIf="!viewOnlyMode">
+                  ×
+                </button>
+
+                <ng-template cdkDragPlaceholder>
+                  <div class="game-icon placeholder-preview">
+                    <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
+                  </div>
+                </ng-template>
+              </div>
+
+              <div *ngIf="tierGames[tier.level]?.length === 0" class="empty-dropzone d-flex center">
+                <span>Arraste jogos para aqui</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

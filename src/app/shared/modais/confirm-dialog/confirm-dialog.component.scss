@@ -1,47 +1,57 @@
 @use 'colors' as *;
+$cancel-hover: #880808;
 
-// .dialog-overlay {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   background: $overlay-bg;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   z-index: 9999;
-// }
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $overlay-bg;
+    z-index: 9999;
+}
 
-// .dialog-box {
-//   background: $void-black;
-//   padding: 2rem;
-//   border-radius: 12px;
-//   text-align: center;
-//   color: $pure-white;
-//   max-width: 400px;
-// }
+.dialog-box {
+    background: $void-black;
+    padding: 2rem;
+    border-radius: 12px;
+    color: $pure-white;
+    max-width: 400px;
+}
 
-// .dialog-actions {
-//   display: flex;
-//   justify-content: center;
-//   gap: 1rem;
+.dialog-actions {
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.2rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
 
-//   .btn {
-//     padding: 0.5rem 1.2rem;
-//     border: none;
-//     border-radius: 6px;
-//     cursor: pointer;
-//     font-weight: bold;
-//   }
+        fa-icon {
+            font-size: 1.2rem;
+        }
 
-//   .confirm {
-//     background: $pure-green;
-//     color: $pure-white;
-//   }
+    }
 
-//   .cancel {
-//     background: $pure-red;
-//     color: $pure-white;
-//   }
-// }
+    .confirm {
+        background: $pure-green;
+        color: $pure-white;
+
+        &:hover {
+            background: $success-green;
+        }
+    }
+
+    .cancel {
+        background: $pure-red;
+        color: $pure-white;
+
+        &:hover {
+            background: $cancel-hover;
+        }
+    }
+}

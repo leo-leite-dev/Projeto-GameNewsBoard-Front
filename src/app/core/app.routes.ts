@@ -5,10 +5,10 @@ import { AllGamesListComponent } from '../pages/games/all-games-list/all-games-l
 import { GameManagementComponent } from '../pages/games/game-management/game-management.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { AddGameTierListComponent } from '../pages/games/game-management/game-tier-list/add-game-tier-list/add-game-tier-list.component';
-import { TierListFormComponent } from '../pages/games/game-management/game-tier-list/tier-list-form/tier-list-form.component';
 import { GameReleasesComponent } from '../pages/game-releases/game-releases.component';
 import { AllReleasesComponent } from '../pages/game-releases/all-releases/all-releases.component';
 import { ComingSoonComponent } from '../shared/components/coming-soon/coming-soon.component';
+import { AddTierListComponent } from '../pages/games/game-management/game-tier-list/add-tier-list/add-tier-list.component';
 
 export const routes: Routes = [
   {
@@ -68,12 +68,12 @@ export const routes: Routes = [
       },
       {
         path: 'manage-games/tier-list/create-tier-list',
-        component: TierListFormComponent,
+        component: AddTierListComponent,
         canActivate: [AuthGuard],
       },
       {
         path: 'manage-games/tier-list/edit-tier-list/:tierId',
-        component: TierListFormComponent,
+        component: AddTierListComponent,
         canActivate: [AuthGuard],
       },
       {

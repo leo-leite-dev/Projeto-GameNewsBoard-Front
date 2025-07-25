@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environments';
-import { ErrorHandlingService } from './commons/error-handling.service';
 import { ApiResponse } from '../models/commons/api-response.model';
 import { UserProfileResponse } from '../models/user-profile.model';
 
@@ -15,7 +14,7 @@ export class UserService {
   private loginModalSubject = new Subject<void>();
   loginModal$ = this.loginModalSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   triggerLoginModal() {
     this.loginModalSubject.next();
@@ -31,10 +30,12 @@ export class UserService {
 
   getAuthenticatedUserSafe(): Observable<UserProfileResponse | null> {
     return this.http
-      .get<ApiResponse<UserProfileResponse>>('/api/user/me', { withCredentials: true })
+      .get<ApiResponse<UserProfileResponse>>(`${environment.apiBaseUrl}/user/me`, {
+        withCredentials: true
+      })
       .pipe(
         map((res) => res.data),
-        catchError(() => of(null))  
+        catchError(() => of(null))
       );
   }
 }

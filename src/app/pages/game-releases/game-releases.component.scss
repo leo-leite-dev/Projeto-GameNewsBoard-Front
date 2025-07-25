@@ -1,77 +1,141 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.container-overflow {
-  .filter-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
+.container-global-tier {
+  max-width: 1700px;
+  margin: 50px auto 0 auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #1e1e1e91, #0000002a);
+  backdrop-filter: blur(8px);
+
+  @media (max-width: 1920px) {
+    margin-left: 100px;
   }
 
-  .release-item {
-    position: relative;
-    width: 250px;
-    height: 320px;
-    border-radius: 8px;
-    overflow: hidden;
-    flex: 0 0 auto;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  @media (max-width: 1843px) {
+    margin-right: 32px;
+  }
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px $overlay-bg;
-    }
+  .tier-title {
+    color: $pure-white;
+    margin: 0;
+  }
 
-    .game-cover {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+  .create-button {
+    white-space: nowrap;
+  }
 
-    .game-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: $overlay-bg;
-      color: $pure-white;
-      padding: 8px;
-      text-align: center;
-      font-size: 0.75rem;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
+  .container-tier {
+    padding: 0.8rem;
+    background: linear-gradient(135deg, #1e1e1e2f, #0000002a);
+    border-radius: 1rem;
+    backdrop-filter: blur(8px);
 
-      .game-title {
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: 4px;
-        line-height: 1.2;
+    .tier-card {
+      position: relative;
+      width: 400px;
+      flex-direction: column;
+      background-color: $void-black;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px $pure-white;
+
+        ::ng-deep .remove-button,
+        .edit-button {
+          opacity: 1;
+          pointer-events: auto;
+        }
       }
 
-      .game-extra {
-        small {
-          font-size: 12px;
-          display: block;
-          opacity: 0.9;
-          line-height: 1.2;
+      .tier-image {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background-size: cover;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        display: block;
+
+        .tier-info-overlay {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.75);
+          padding: 10px;
+          text-align: center;
+
+          .tier-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: $pure-white;
+            margin: 0;
+          }
+
+          .tier-sub {
+            font-size: 0.8rem;
+            color: $neutral-gray;
+            margin-top: 4px;
+          }
         }
       }
     }
-  }
 
-}
-
-@include respond(mobile) {
-  .container-overflow {
-    .filter-wrapper {
-      max-width: 1200px;
-      margin: 40px auto 0;
+    .remove-button,
+    .edit-button {
+      position: absolute;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease-in-out;
     }
 
-    .release-item {
-      width: 180px;
-      height: 250px;
+    .remove-button {
+      top: 10px;
+      right: 10px;
+    }
+
+    .edit-button {
+      top: 10px;
+      left: 10px;
+      color: $pure-white;
+      font-size: 1.2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+    }
+  }
+
+  // 🟦 Mobile adjustments
+  @include respond(mobile) {
+    .tier-list-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .container-tier {
+      .tier-card {
+        width: 90vw;
+
+        .tier-image {
+          .tier-info-overlay {
+            .tier-name {
+              font-size: 0.9rem;
+            }
+
+            .tier-sub {
+              font-size: 0.7rem;
+            }
+          }
+        }
+      }
     }
   }
 }
