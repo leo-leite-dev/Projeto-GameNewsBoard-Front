@@ -9,7 +9,7 @@ import { GameResponse } from '../../models/game.model';
 
 @Injectable({ providedIn: 'root' })
 export class GameDataService {
-  constructor(private igdbGameService: IgdbGameService) {}
+  constructor(private igdbGameService: IgdbGameService) { }
 
   loadGames(
     page: number,

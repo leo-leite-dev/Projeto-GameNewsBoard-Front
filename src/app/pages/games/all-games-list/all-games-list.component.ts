@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { GameDataService } from '../../../shared/services/commons/game-data.service';
 import { GameResponse } from '../../../shared/models/game.model';
 import { GameFilters } from '../../../shared/models/commons/game-filters.model';
-import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../../shared/constants/pagination.constants';
 import { GamerLoadingComponent } from '../../../shared/components/gamer-loading/gamer-loading.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
@@ -17,25 +17,34 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../../shared/services/commons/notification.service';
 import { getPaginatedFallback } from '../../../shared/utils/http-utils';
 import { isEqual } from 'lodash';
+import { Router } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DecimalPipe } from '@angular/common';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { ViewportService } from '../../../shared/services/commons/viewport.service';
 
 @Component({
   selector: 'app-all-games-list',
   standalone: true,
   imports: [
-    GenericModule,
+    CommonModule,
     GamerLoadingComponent,
     PaginationComponent,
-    GameSearchFilterComponent
+    GameSearchFilterComponent,
+    FontAwesomeModule,
+    DecimalPipe
   ],
   templateUrl: './all-games-list.component.html',
   styleUrls: ['./all-games-list.component.scss'],
 })
 export class AllGamesListComponent implements OnInit {
   games: GameResponse[] = [];
+  selectedGame: GameResponse | null = null;
   message: string | null = null;
   isLoading = false;
   hasMoreGames = false;
-  messageType: 'error' | 'info' = 'info';
+  icon: IconProp = 'info-circle';
+  showModal = false;
 
   filters: GameFilters = {
     searchTerm: '',
@@ -46,16 +55,23 @@ export class AllGamesListComponent implements OnInit {
   page = DEFAULT_PAGE;
   pageSize = DEFAULT_PAGE_SIZE;
 
+  selectedGameId: number | null = null;
+  isMobile = false;
+
   private filtersChanged$ = new Subject<GameFilters>();
   private destroy$ = new Subject<void>();
 
   constructor(
     private gameDataService: GameDataService,
     private errorHandler: ErrorHandlingService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private viewport: ViewportService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.checkIsMobile();
+    window.addEventListener('resize', this.checkIsMobile.bind(this));
     this.loadGames();
 
     this.filtersChanged$
@@ -64,7 +80,7 @@ export class AllGamesListComponent implements OnInit {
         distinctUntilChanged((a, b) => isEqual(a, b)),
         takeUntil(this.destroy$)
       )
-      .subscribe((filters) => {
+      .subscribe((filters: GameFilters) => {
         this.filters = { ...filters };
         this.page = DEFAULT_PAGE;
         this.loadGames();
@@ -74,11 +90,55 @@ export class AllGamesListComponent implements OnInit {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    window.removeEventListener('resize', this.checkIsMobile.bind(this));
+  }
+
+  checkIsMobile(): void {
+    this.isMobile = this.viewport.isMobile();
+  }
+
+  toggleOverlay(gameId: number): void {
+    this.selectedGameId = this.selectedGameId === gameId ? null : gameId;
+  }
+
+  isOverlayVisible(gameId: number): boolean {
+    return this.isMobile && this.selectedGameId === gameId;
+  }
+
+  onCardClick(event: MouseEvent, gameId: number): void {
+    const isIcon = (event.target as Element).closest('.toggle-overlay-icon');
+
+    if (this.isMobile) {
+      if (!isIcon)
+        this.goToComingSoon(gameId);
+
+      else
+        this.goToComingSoon(gameId);
+    }
+  }
+
+  onOverlayClick(event: MouseEvent, gameId: number): void {
+    event.stopPropagation();
+    if (!this.isMobile)
+      this.goToComingSoon(gameId);
+  }
+
+  onIconClick(event: MouseEvent, gameId: number): void {
+    event.stopPropagation();
+
+    if (this.isMobile) {
+      const selected = this.games.find(g => g.id === gameId);
+      if (selected) {
+        this.selectedGame = selected;
+        this.showModal = true;
+      }
+    } else {
+      this.toggleOverlay(gameId);
+    }
   }
 
   loadGames(): void {
     this.isLoading = true;
-
     this.gameDataService
       .loadGames(
         this.page,
@@ -88,29 +148,23 @@ export class AllGamesListComponent implements OnInit {
         this.filters.searchTerm
       )
       .subscribe({
-        next: (res) => this.handleResponse(res),
-        error: (err) => this.handleError(err),
+        next: (res) => {
+          const data = res?.data ?? getPaginatedFallback<GameResponse>(DEFAULT_PAGE, DEFAULT_PAGE_SIZE);
+          this.games = data.items;
+          this.hasMoreGames = data.items.length === this.pageSize;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          const errorMsg = this.errorHandler.handleHttpError(err);
+          this.games = [];
+          this.isLoading = false;
+          this.notification.error(errorMsg);
+        },
       });
   }
-
-  private handleResponse(res: ApiResponse<PaginatedResult<GameResponse>>): void {
-    const data = res?.data ?? getPaginatedFallback<GameResponse>(DEFAULT_PAGE, DEFAULT_PAGE_SIZE);
-    this.games = data.items;
-    this.hasMoreGames = data.items.length === this.pageSize;
-    this.isLoading = false;
-  }
-
-  private handleError(err: HttpErrorResponse): void {
-    const errorMsg = this.errorHandler.handleHttpError(err);
-    this.games = [];
-    this.isLoading = false;
-    this.notification.error(errorMsg);
-  }
-
+  
   onFiltersChanged(filters: GameFilters): void {
-    this.filters = { ...filters };
-    this.page = DEFAULT_PAGE;
-    this.loadGames();
+    this.filtersChanged$.next(filters);
   }
 
   previousPage(): void {
@@ -128,8 +182,10 @@ export class AllGamesListComponent implements OnInit {
   }
 
   getReleaseYear(dateStr: string | null | undefined): string | null {
-    if (!dateStr) return null;
-    const parts = dateStr.split('/');
-    return parts.length === 3 ? parts[2] : null;
+    return dateStr?.split('/')?.[2] || null;
+  }
+
+  goToComingSoon(gameId: number): void {
+    this.router.navigate(['/coming-soon'], { queryParams: { id: gameId } });
   }
 }

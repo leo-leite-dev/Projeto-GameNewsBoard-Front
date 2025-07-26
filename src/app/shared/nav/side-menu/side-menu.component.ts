@@ -12,6 +12,7 @@ import { UserProfileResponse } from '../../models/user-profile.model';
 import { combineLatest, Observable } from 'rxjs';
 import { ModalAuthService } from '../../services/commons/modal-auth.service';
 import { ConfirmDialogComponent } from '../../modais/confirm-dialog/confirm-dialog.component';
+import { ViewportService } from '../../services/commons/viewport.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -46,7 +47,8 @@ export class SideMenuComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private eRef: ElementRef,
-    public modalAuth: ModalAuthService
+    public modalAuth: ModalAuthService,
+    private viewport: ViewportService
   ) {
     this.detectScreenSize();
     this.authenticatedUser$ = this.userService.authenticatedUser$;
@@ -80,7 +82,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   detectScreenSize(): void {
-    this.isSmallScreen = window.innerWidth < 600;
+    this.isSmallScreen = this.viewport.isMobile();
     this.menuExpanded = !this.isSmallScreen;
   }
 

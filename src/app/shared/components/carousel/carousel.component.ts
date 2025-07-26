@@ -4,6 +4,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GamerLoadingComponent } from '../gamer-loading/gamer-loading.component';
 import { CarouselItem } from '../../models/commons/game-carousel-tem.model';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
+import { ViewportService } from '../../services/commons/viewport.service';
 
 @Component({
   selector: 'app-carousel',
@@ -40,6 +41,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   private direction: 'forward' | 'backward' = 'forward';
   private autoScrollRetryInterval?: any;
 
+  constructor(private viewport: ViewportService) { }
+
   ngAfterViewInit(): void {
     this.tryStartAutoScroll();
   }
@@ -70,10 +73,14 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
       if (containerReady && dataReady) {
         const container = this.carouselContainerRef.nativeElement;
-
         this.canScroll = container.scrollWidth > container.clientWidth;
 
-        if (this.canScroll) this.startAutoScroll();
+        if (this.canScroll && !this.viewport.isMobile()) {
+          this.isPaused = false;
+          this.startAutoScroll();
+        } else {
+          this.isPaused = true;
+        }
 
         clearInterval(this.autoScrollRetryInterval);
       }

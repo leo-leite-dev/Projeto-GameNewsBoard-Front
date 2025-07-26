@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorHandlingService } from '../../../../../shared/services/commons/error-handling.service';
 import { TierListEntryRequest } from '../../../../../shared/models/tier-list-entry.model';
 import { NavigateButtonComponent } from '../../../../../shared/components/buttons/navigate-button/navigate-button.component';
+import { ViewportService } from '../../../../../shared/services/commons/viewport.service';
 
 @Component({
   selector: 'app-add-game-tier-list',
@@ -54,8 +55,9 @@ export class AddGameTierListComponent implements OnInit {
     private tierListService: TierListService,
     private toastr: ToastrService,
     private errorHandler: ErrorHandlingService,
+    private viewport: ViewportService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.updateViewMode();
@@ -73,7 +75,7 @@ export class AddGameTierListComponent implements OnInit {
     });
   }
   private updateViewMode(): void {
-    this.isMobileView = window.innerWidth <= 768;
+    this.isMobileView = this.viewport.isMobile();
   }
 
   private loadTierListGames(tierId: string): void {
@@ -140,11 +142,8 @@ export class AddGameTierListComponent implements OnInit {
     };
 
     this.tierListService.setGameTier(this.tierId!, request).subscribe({
-      next: () => {},
-      error: (err) => {
-        this.errorMessage = this.errorHandler.handleHttpError(err);
-        this.toastr.error(this.errorMessage);
-      },
+      next: () => { },
+      error: (err) => this.handleError(err, 'Erro ao adicionar jogo'),
     });
   }
 
@@ -157,10 +156,7 @@ export class AddGameTierListComponent implements OnInit {
         this.tierGames[tierLevel] = this.tierGames[tierLevel].filter((g) => g.id !== game.id);
         delete this.gameTierMapping[game.id];
       },
-      error: (err) => {
-        this.errorMessage = this.errorHandler.handleHttpError(err);
-        this.toastr.error(this.errorMessage);
-      },
+      error: (err) => this.handleError(err, 'Erro ao remover jogo'),
     });
   }
 
@@ -180,12 +176,15 @@ export class AddGameTierListComponent implements OnInit {
     };
 
     this.tierListService.setGameTier(this.tierId!, request).subscribe({
-      next: () => {},
-      error: (err) => {
-        this.errorMessage = this.errorHandler.handleHttpError(err);
-        this.toastr.error(this.errorMessage);
-      },
+      next: () => { },
+      error: (err) => this.handleError(err, 'Erro ao carregar tier'),
     });
+  }
+
+  private handleError(err: any, contextMsg?: string): void {
+    const msg = this.errorHandler.handleHttpError(err);
+    this.errorMessage = contextMsg ? `${contextMsg}: ${msg}` : msg;
+    this.toastr.error(this.errorMessage);
   }
 
   getFullCoverUrl(coverImage: string): string {

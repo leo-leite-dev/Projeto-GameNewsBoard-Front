@@ -13,8 +13,8 @@
     </div>
 
     <ng-template #todayTemplate let-game>
-      <div class="release-item">
-        <img [src]="game.coverImage" [alt]="game.title" class="game-cover" />
+      <div class="release-item" (click)="onCardClick(game.id)">
+        <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
         <div class="game-overlay">
           <div class="game-title">{{ game.title }}</div>
           <div class="game-extra">
@@ -26,8 +26,8 @@
     </ng-template>
 
     <ng-template #upcomingTemplate let-game>
-      <div class="release-item">
-        <img [src]="game.coverImage" [alt]="game.title" class="game-cover" />
+      <div class="release-item" (click)="onCardClick(game.id)">
+        <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
         <div class="game-overlay">
           <div class="game-title">{{ game.title }}</div>
           <div class="game-extra">
@@ -39,8 +39,8 @@
     </ng-template>
 
     <ng-template #recentTemplate let-game>
-      <div class="release-item">
-        <img [src]="game.coverImage" [alt]="game.title" class="game-cover" />
+      <div class="release-item" (click)="onCardClick(game.id)">
+        <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
         <div class="game-overlay">
           <div class="game-title">{{ game.title }}</div>
           <div class="game-extra">

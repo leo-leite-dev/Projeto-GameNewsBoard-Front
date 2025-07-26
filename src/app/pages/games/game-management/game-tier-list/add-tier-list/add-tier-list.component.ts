@@ -9,6 +9,7 @@ import { GenericModule } from '../../../../../../shareds/commons/GenericModule';
 import { InputComponent } from '../../../../../shared/forms/input/input.component';
 import { SubmitButtonComponent } from '../../../../../shared/components/buttons/submit-button/submit-button.component';
 import { NavigateButtonComponent } from '../../../../../shared/components/buttons/navigate-button/navigate-button.component';
+import { ViewportService } from '../../../../../shared/services/commons/viewport.service';
 
 @Component({
   selector: 'app-add-tier-list',
@@ -42,7 +43,8 @@ export class AddTierListComponent implements OnInit {
     private tierListService: TierListService,
     private router: Router,
     private uploadedImageService: uploadedImageService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private viewport: ViewportService
   ) {
     this.form = this.fb.group({
       title: ['', Validators.required],
@@ -57,7 +59,7 @@ export class AddTierListComponent implements OnInit {
   ngOnInit(): void {
     this.tierId = this.route.snapshot.paramMap.get('tierId');
 
-    this.isMobile = window.innerWidth <= 600;
+    this.isMobile = this.viewport.isMobile();
 
     if (this.tierId) {
       this.isEditMode = true;

@@ -57,6 +57,37 @@ export class GameNewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadGameNews(this.selectedPlatform);
+//  this.selectedPlatform = 'xbox';
+//     this.isLoading = true;
+
+//     setTimeout(() => {
+//       const mockNews: GameNewsArticle[] = [
+//         {
+//           title: 'Novo exclusivo do Xbox impressiona em prévia',
+//           description: 'Imagens e gameplay do novo título surpreendem fãs.',
+//           link: 'https://example.com/noticia-xbox',
+//           imageUrl: 'https://via.placeholder.com/600x300?text=Notícia+Xbox',
+//           pubDate: new Date().toISOString(),
+//         },
+//         {
+//           title: 'PlayStation anuncia State of Play para agosto',
+//           description: 'Evento trará novidades sobre God of War e mais.',
+//           link: 'https://example.com/noticia-ps5',
+//           imageUrl: 'https://via.placeholder.com/600x300?text=Notícia+PS5',
+//           pubDate: new Date().toISOString(),
+//         },
+//       ];
+
+//       const mockResponse = {
+//         success: true,
+//         data: {
+//           totalResults: mockNews.length,
+//           articles: mockNews,
+//         },
+//       };
+
+//       this.handleResponse(mockResponse);
+//     }, 1500); // Simula delay de carregamento
   }
 
   loadGameNews(platform: string): void {

@@ -27,6 +27,7 @@
     <div *ngIf="enableDrag; else simpleCarousel" #carouselContainer class="carousel-container d-flex gap-10" cdkDropList
       [id]="'carousel-drop-list'" [cdkDropListData]="games" [cdkDropListConnectedTo]="connectedDropLists"
       [cdkDropListSortingDisabled]="true">
+
       <div *ngFor="let game of games" class="game-icon" cdkDrag [cdkDragData]="game"
         (cdkDragStarted)="onDragStarted(game)">
         <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: { $implicit: game }"></ng-container>

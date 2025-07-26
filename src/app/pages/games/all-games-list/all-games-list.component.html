@@ -4,24 +4,30 @@
   {{ message }}
 </div>
 
-<div class="game-grid-wrapper d-flex center mb-20" *ngIf="!isLoading && games.length">
+<div class="game-grid-wrapper d-flex center column gap-20 mb-20" *ngIf="!isLoading && games.length">
   <app-game-search-filter (filtersChanged)="onFiltersChanged($event)" />
 
   <div class="game-grid">
-    <div class="game-card" *ngFor="let game of games">
-      <div class="cover-container">
+    <div class="game-card" *ngFor="let game of games" [ngClass]="{ 'show-overlay': isOverlayVisible(game.id) }">
+      <div class="cover-container" (click)="onCardClick($event, game.id)">
         <img *ngIf="game.coverImage" [src]="game.coverImage.replace('t_thumb', 't_cover_big')" alt="Capa do jogo"
           class="cover" />
-        <div class="rating fs-10 bold" *ngIf="game.rating" [ngClass]="{
-            green: game.rating >= 80,
-            yellow: game.rating >= 70 && game.rating < 80,
-            orange: game.rating >= 60 && game.rating < 70,
-            red: game.rating < 60
-          }">
+
+        <div class="rating fs-14 bold" *ngIf="game.rating" [ngClass]="{
+      green: game.rating >= 80,
+      yellow: game.rating >= 70 && game.rating < 80,
+      orange: game.rating >= 60 && game.rating < 70,
+      red: game.rating < 60
+    }">
           {{ game.rating | number : '1.0-0' }}
         </div>
+
+        <fa-icon *ngIf="isMobile" [icon]="icon" class="toggle-overlay-icon" title="Mais informações"
+          (click)="onIconClick($event, game.id)">
+        </fa-icon>
       </div>
-      <div class="overlay">
+
+      <div class="overlay" (click)="onOverlayClick($event, game.id)" *ngIf="!isMobile || isOverlayVisible(game.id)">
         <div class="date mb-10 fs-10">{{ getReleaseYear(game.released) }}</div>
         <div class="title mb-10 fs-14 bold">{{ game.title }}</div>
         <div class="platform fs-12">{{ game.platform }}</div>
@@ -30,4 +36,24 @@
   </div>
 
   <app-pagination [page]="page" [hasNext]="hasMoreGames" (previous)="previousPage()" (next)="nextPage()" />
+</div>
+
+<div class="game-modal-backdrop" *ngIf="showModal" (click)="showModal = false">
+  <div class="game-modal-content" (click)="$event.stopPropagation()">
+    <button class="modal-close-btn" (click)="showModal = false">×</button>
+
+    <div class="game-modal-body">
+      <img *ngIf="selectedGame?.coverImage" [src]="selectedGame?.coverImage?.replace('t_thumb', 't_cover_big')"
+        alt="Capa do jogo" class="modal-cover" />
+
+      <div class="modal-info">
+        <h2 class="fs-18 mb-10">{{ selectedGame?.title }}</h2>
+        <p class="fs-14">{{ selectedGame?.platform }}</p>
+        <p class="fs-12 mt-10">Lançamento: {{ selectedGame?.released }}</p>
+        <p *ngIf="selectedGame?.rating" class="fs-12 mt-10">
+          Nota: {{ selectedGame?.rating | number : '1.0-0' }}
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

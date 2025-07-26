@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
+import { ViewportService } from '../../services/commons/viewport.service';
 
 @Component({
   selector: 'app-input',
@@ -34,6 +35,8 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
   isSearchModalOpen = false;
   isMobile = false;
 
+  constructor(private viewport: ViewportService) { }
+
   private onChange: (value: string) => void = () => { };
   private onTouchedFn: () => void = () => { };
 
@@ -52,7 +55,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
   }
 
   checkIfMobile = (): void => {
-    this.isMobile = window.innerWidth <= 480;
+    this.isMobile = this.viewport.isMobile();
   };
 
   writeValue(value: string): void {

@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-    <div class="container-overflow">
+    <div class="game-release-container">
         <app-gamer-loading class="global-loading-wrapper" *ngIf="isLoading" />
 
         <div *ngIf="!isLoading" class="d-grid align-center mb-10">
@@ -18,19 +18,18 @@
         </div>
 
         <div *ngIf="!isLoading && !games.length && message" class="no-games-container">
-            <div class="user-message">
+            <div class="user-message fs-14">
                 {{ message }}
             </div>
         </div>
 
-        <div class="game-grid-wrapper " *ngIf="!isLoading && games.length">
+        <div class="container-overflow" *ngIf="!isLoading && games.length">
             <div class="game-grid">
-                <div class="game-card" *ngFor="let game of games">
+                <div class="game-card" *ngFor="let game of games" (click)="onCardClick(game.id)">
                     <div class="cover-container">
-                        <img *ngIf="game.coverImage" [src]="game.coverImage.replace('t_thumb', 't_cover_big')"
-                            [alt]="game.title" class="cover" />
+                        <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
 
-                        <div class="release-date-always-visible fs-12">
+                        <div class="release-date-always-visible text-center fs-12">
                             Lançamento: {{ game.releaseDate | date: 'dd/MM/yyyy' }}
                         </div>
 

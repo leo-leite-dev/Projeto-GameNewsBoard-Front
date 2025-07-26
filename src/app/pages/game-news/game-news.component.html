@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
   <div class="container-overflow">
-    <app-gamer-loading *ngIf="isLoading" text="Carregando notícias"></app-gamer-loading>
+    <app-gamer-loading *ngIf="isLoading" class="global-loading-wrapper" text="Carregando notícias"></app-gamer-loading>
 
     <ng-container *ngIf="!isLoading">
       <app-game-news-featured *ngIf="firstNews" [news]="firstNews"></app-game-news-featured>

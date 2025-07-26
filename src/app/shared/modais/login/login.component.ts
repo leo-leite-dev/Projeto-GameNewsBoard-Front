@@ -7,7 +7,7 @@ import { catchError, delayWhen, firstValueFrom, of, retry, retryWhen, take, time
 import { AuthService } from '../../../core/auth/services/auth.service';
 import { UserService } from '../../services/user.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-login-modal',
@@ -29,7 +29,7 @@ export class LoginComponent {
 
   form: FormGroup;
   errorMessage!: string;
-  faUser = faUser;
+  icon: IconProp = 'user';
 
   constructor(
     private fb: FormBuilder,
