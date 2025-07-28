@@ -1,41 +1,50 @@
 <div class="status-list-container">
   <div class="carousel-container">
-    <app-game-carousel [connectedDropLists]="dropListIds"></app-game-carousel>
+    <app-game-carousel [connectedDropLists]="dropListIds" (gameClicked)="onGameClicked($event)">
+    </app-game-carousel>
   </div>
 
-  <div class="container-overflow d-flex">
+  <div class="container-overflow">
     <div class="status-column" *ngFor="let status of statusList">
-      <div class="status-header">{{ statusLabels[status] }}</div>
+      <div class="status-header fs-18 text-center mb-10 bold">
+        {{ getStatusLabel(status) }}
+      </div>
 
-      <div
-        class="status-dropzone scroll"
-        cdkDropList
-        [id]="'status-drop-' + status"
-        [cdkDropListData]="statusGames[status]"
-        [cdkDropListConnectedTo]="dropListIds"
-        cdkDropListSortingDisabled="true"
-        (cdkDropListDropped)="onDrop($event, status)"
-      >
-        <div
-          *ngFor="let game of statusGames[status]"
-          class="game-icon"
-          cdkDrag
-          [cdkDragData]="game"
-        >
+      <div class="status-dropzone gap-10" *ngIf="!isMobile" cdkDropList [id]="'status-drop-' + status"
+        [cdkDropListData]="statusGames[status]" [cdkDropListConnectedTo]="dropListIds" cdkDropListSortingDisabled="true"
+        (cdkDropListDropped)="onDrop($event, status)">
+
+        <div *ngFor="let game of statusGames[status]" class="game-icon" cdkDrag [cdkDragData]="game">
           <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
-          <button class="remove-button" (click)="removeGame(game)">×</button>
-
-          <ng-template cdkDragPlaceholder>
-            <div class="game-icon placeholder-preview">
-              <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
-            </div>
-          </ng-template>
+          <button class="remove-button" (click)="removeGame(game)">
+            <fa-icon [icon]="icon" />
+          </button>
         </div>
 
-        <div *ngIf="statusGames[status].length === 0" class="empty-dropzone">
+        <div *ngIf="statusGames[status].length === 0" class="empty-dropzone text-center">
+          <span>Arraste jogos para aqui</span>
+        </div>
+      </div>
+
+      <div class="game-drawer" *ngIf="isMobile" cdkDropList [id]="'status-drop-' + status"
+        [cdkDropListData]="statusGames[status]" [cdkDropListConnectedTo]="dropListIds" cdkDropListSortingDisabled="true"
+        (cdkDropListDropped)="onDrop($event, status)">
+
+        <div *ngFor="let game of statusGames[status]" class="game-icon" cdkDrag [cdkDragData]="game">
+          <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
+          <button class="remove-button" (click)="removeGame(game)">
+            <fa-icon [icon]="icon" />
+          </button>
+        </div>
+
+        <div *ngIf="statusGames[status].length === 0" class="empty-dropzone text-center">
           <span>Arraste jogos para aqui</span>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<app-assign-status *ngIf="showAssignStatusModal && selectedGame" [game]="selectedGame"
+  [currentStatus]="selectedGameStatus" (statusSelected)="onStatusSelected($event)"
+  (closed)="showAssignStatusModal = false" />

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameReleaseResponse } from '../../../shared/models/game-release.model';
-import { GameReleaseLoaderService } from '../../../shared/services/commons/game-release-loader.service';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { GamerLoadingComponent } from '../../../shared/components/gamer-loading/gamer-loading.component';
 import { PlatformFilterComponent } from '../../../shared/components/platform-filter/platform-filter.component';
 import { PlatformFamily } from '../../../shared/enums/platform.enum';
 import { PLATFORM_FILTER_OPTIONS } from '../../../shared/utils/platform-options';
+import { GameReleaseService } from '../../../shared/services/game-release.service';
+import { ApiResponse } from '../../../shared/models/commons/api-response.model';
 
 @Component({
   selector: 'app-all-releases',
@@ -33,7 +34,7 @@ export class AllReleasesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private gameReleaseLoader: GameReleaseLoaderService
+    private gameReleaseService: GameReleaseService
   ) { }
 
   ngOnInit(): void {
@@ -50,12 +51,13 @@ export class AllReleasesComponent implements OnInit {
     this.message = '';
     this.games = [];
 
-    this.gameReleaseLoader
+    this.gameReleaseService
       .loadAllByCategory(this.category, this.selectedPlatform)
       .subscribe({
-        next: (res: GameReleaseResponse[]) => {
-          this.games = res;
-          this.message = res.length === 0 ? 'Nenhum jogo encontrado.' : '';
+        next: (res) => {
+          console.log('🔍 Dados recebidos do loadAllByCategory:', res);
+          this.games = res.data ?? [];
+          this.message = res.message;
           this.isLoading = false;
         },
         error: () => {

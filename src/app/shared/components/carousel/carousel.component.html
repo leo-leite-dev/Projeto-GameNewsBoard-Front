@@ -1,14 +1,12 @@
-<app-gamer-loading *ngIf="isLoading" />
-
 <div class="carousel-wrapper" *ngIf="!isLoading">
   <div class="carousel-header d-flex space-between">
     <h2 class="carousel-title">{{ title }}</h2>
 
     <div class="right-header d-flex align-center gap-20">
-      <a *ngIf="games.length > 0" class="see-all-link fs-14" href="#" (click)="onSeeAllClick($event)">
+      <a *ngIf="items.length > 0" class="see-all-link fs-14" href="#" (click)="onSeeAllClick($event)">
         Ver tudo
       </a>
-      <button *ngIf="canScroll && games.length > 0" class="btn-toggle-scroll" (click)="toggleScroll()"
+      <button *ngIf="canScroll && items.length > 0" class="btn-toggle-scroll" (click)="toggleScroll()"
         title="Iniciar/Pausar">
         <fa-icon [icon]="isPaused ? 'play' : 'pause'" />
       </button>
@@ -20,24 +18,26 @@
       <fa-icon [icon]="'chevron-left'" />
     </button>
 
-    <ng-template #defaultItem let-game>
-      <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" class="game-cover" />
+    <ng-template #defaultItem let-item>
+      <div class="game-icon">
+        <img [src]="getFullCoverUrl(item.coverImage)" [alt]="item.title" />
+      </div>
     </ng-template>
 
     <div *ngIf="enableDrag; else simpleCarousel" #carouselContainer class="carousel-container d-flex gap-10" cdkDropList
-      [id]="'carousel-drop-list'" [cdkDropListData]="games" [cdkDropListConnectedTo]="connectedDropLists"
+      [id]="'carousel-drop-list'" [cdkDropListData]="items" [cdkDropListConnectedTo]="connectedDropLists"
       [cdkDropListSortingDisabled]="true">
 
-      <div *ngFor="let game of games" class="game-icon" cdkDrag [cdkDragData]="game"
-        (cdkDragStarted)="onDragStarted(game)">
-        <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: { $implicit: game }"></ng-container>
+      <div *ngFor="let item of items" class="game-icon" cdkDrag [cdkDragData]="item" [cdkDragDisabled]="isMobile"
+        (cdkDragStarted)="onDragStarted(item)" (click)="onItemClick(item)">
+        <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: { $implicit: item }"></ng-container>
       </div>
     </div>
 
     <ng-template #simpleCarousel>
       <div #carouselContainer class="carousel-container d-flex gap-10">
-        <div class="carousel-item" *ngFor="let game of games">
-          <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: { $implicit: game }"></ng-container>
+        <div class="carousel-item" *ngFor="let item of items" (click)="onItemClick(item)">
+          <ng-container *ngTemplateOutlet="itemTemplate || defaultItem; context: { $implicit: item }"></ng-container>
         </div>
       </div>
     </ng-template>

@@ -1,83 +1,84 @@
 @use 'colors' as *;
+@use 'breakpoints' as *;
 
 .status-list-container {
-  margin-left: 100px;
+  margin-left: 200px;
+
+  .carousel-container {
+    margin-bottom: 16px;
+  }
 
   .container-overflow {
-    flex-direction: row;
-    gap: 10px;
-    height: 62vh;
-    max-width: 84%;
-    overflow-x: hidden;
-  }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    width: 80%;
+    padding-bottom: 12px;
+    height: 66vh;
 
-  .status-column {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    padding: 10px;
-    box-sizing: border-box;
-  }
+    .status-column {
+      background-color: $white-overlay-05;
+      border-radius: 6px;
+      padding: 10px;
 
-  .status-header {
-    font-weight: bold;
-    font-size: 1.2em;
-    text-align: center;
-    margin-bottom: 8px;
-    color: $pure-white;
-  }
+      .status-dropzone {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        padding: 8px;
+        overflow-y: auto;
+        background-color: $white-overlay-08;
+        border-radius: 6px;
+        border: 2px dashed $white-overlay-02;
+        min-height: 140px;  
 
-  .status-dropzone {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    gap: 3px;
-    padding: 8px;
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    overflow-y: auto;
+        .game-icon {
+          width: 100%;
+          aspect-ratio: 11 / 16;
+          position: relative;
 
-    &.cdk-drop-list-dragging {
-      background-color: rgba(0, 0, 0, 0.1);
+          &:hover {
+            transform: scale(1.05);
+            z-index: 2;
 
-      .empty-dropzone {
-        display: none;
+            .remove-button {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      .game-drawer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        justify-content: start;
+        gap: 10px;
+        padding: 8px;
+        background-color: $white-overlay-08;
+        border-radius: 6px;
+        border: 2px dashed $white-overlay-02;
       }
     }
   }
-
-  .game-icon {
-    width: 85px;
-    height: 120px;
-  }
 }
 
-@media (max-width: 1158px) {
+@include respond(mobile) {
   .status-list-container {
+    margin-left: 0;
+
     .container-overflow {
-      flex-direction: column;
-      overflow-x: hidden;
-      overflow-y: auto;
-      height: auto;
-    }
-
-    .status-column {
-      min-width: unset;
+      grid-template-columns: 1fr;
       width: 100%;
-      height: auto;
-      flex-shrink: 0;
-      scroll-snap-align: unset;
-      margin-bottom: 15px;
-    }
 
-    .status-dropzone {
-      flex-wrap: wrap;
-      overflow-x: hidden;
+      .status-dropzone {
+        display: none;
+      }
+
+      .game-icon {
+        max-width: 32%;
+        min-width: 90px;
+        height: auto;
+        aspect-ratio: 2 / 3;
+      }
     }
   }
 }

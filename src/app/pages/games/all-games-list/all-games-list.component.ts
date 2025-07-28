@@ -41,10 +41,11 @@ export class AllGamesListComponent implements OnInit {
   games: GameResponse[] = [];
   selectedGame: GameResponse | null = null;
   message: string | null = null;
+
   isLoading = false;
   hasMoreGames = false;
-  icon: IconProp = 'info-circle';
   showModal = false;
+  isMobile = false;
 
   filters: GameFilters = {
     searchTerm: '',
@@ -56,10 +57,11 @@ export class AllGamesListComponent implements OnInit {
   pageSize = DEFAULT_PAGE_SIZE;
 
   selectedGameId: number | null = null;
-  isMobile = false;
 
   private filtersChanged$ = new Subject<GameFilters>();
   private destroy$ = new Subject<void>();
+
+  icon: IconProp = 'info-circle';
 
   constructor(
     private gameDataService: GameDataService,
@@ -162,7 +164,7 @@ export class AllGamesListComponent implements OnInit {
         },
       });
   }
-  
+
   onFiltersChanged(filters: GameFilters): void {
     this.filtersChanged$.next(filters);
   }

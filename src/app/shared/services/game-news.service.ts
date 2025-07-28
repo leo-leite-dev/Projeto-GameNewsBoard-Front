@@ -12,10 +12,10 @@ import { ErrorHandlingService } from './commons/error-handling.service';
 export class GameNewsService {
   private readonly baseUrl = `${environment.apiBaseUrl}/GameNews`;
 
-  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) {}
+  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) { }
 
-  getNewsByPlatform(platform: string): Observable<ApiResponse<GameNewsResponse[]>> {
-    return this.http.get<ApiResponse<GameNewsResponse[]>>(`${this.baseUrl}/${platform}`).pipe(
+  getNewsByPlatform(platform: string): Observable<ApiResponse<GameNewsResponse>> {
+    return this.http.get<ApiResponse<GameNewsResponse>>(`${this.baseUrl}/${platform}`).pipe(
       map((response) => {
         if (!response.success || !response.data) {
           throw new Error('Erro ao carregar notícias.');

@@ -162,7 +162,7 @@ export class AddTierListComponent implements OnInit {
   }
 
   getRedirectRoute(): string {
-    return '/nav-bar/tier-list';
+    return '/manage-games/tier-list';
   }
 
   goBack(): void {

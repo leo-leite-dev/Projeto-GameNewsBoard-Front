@@ -66,21 +66,21 @@ export class GameTierListComponent implements OnInit {
   }
 
   onDeleteConfirmed(): void {
-    if (!this.confirmTierId)
-      return;
+    if (!this.confirmTierId) return;
 
     this.tierListService.deleteTierList(this.confirmTierId).subscribe({
-      next: () => {
-        this.tierLists = this.tierLists.filter((t) => t.id !== this.confirmTierId);
-        this.confirmTierId = null;
-        this.notification.success('Tier deletada com sucesso.');
-      },
+      next: () => this.handleDeleteSuccess(),
       error: (err) => {
-        console.error('[onDeleteConfirmed] Erro ao deletar tier:', err);
         this.handleError(err);
         this.confirmTierId = null;
       },
     });
+  }
+
+  private handleDeleteSuccess(): void {
+    this.tierLists = this.tierLists.filter((t) => t.id !== this.confirmTierId);
+    this.confirmTierId = null;
+    this.notification.success('Tier deletada com sucesso.');
   }
 
   private handleResponse(tiers: TierListResponse[]): void {

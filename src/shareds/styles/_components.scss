@@ -31,6 +31,13 @@
     padding: 20px;
 }
 
+.remove-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
 @include respond(mobile) {
     .global-loading-wrapper {
         font-size: 10px;

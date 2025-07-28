@@ -1,11 +1,10 @@
-<app-gamer-loading *ngIf="isLoading" />
-
 <div *ngIf="!isLoading" class="tier-background">
   <div class="container-global-tier">
     <div class="tier-list-container d-flex space-between center mb-20">
       <h2 class="tier-title fs-24">Suas Tier Lists</h2>
       <app-create-button label="Criar nova tier" [icon]="'plus'" className="back-btn" (click)="goToCreateTier()" />
     </div>
+
     <div class="container-overflow-teste">
       <div *ngIf="tierLists.length" class="container-tier d-flex gap-10 wrap">
         <div class="tier-card" *ngFor="let tier of tierLists" (click)="goToTier(tier.id)">

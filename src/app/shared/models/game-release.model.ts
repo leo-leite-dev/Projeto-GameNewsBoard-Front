@@ -1,7 +1,5 @@
-export interface GameReleaseResponse {
-  id: number;
-  title: string;
-  platform: string;
-  coverImage: string;
-  releaseDate: string;
+import { GameBase } from "./base/game-base.model";
+
+export interface GameReleaseResponse extends GameBase {
+  category: number;
 }

@@ -1,4 +1,5 @@
 @use 'colors' as *;
+@use 'breakpoints' as *;
 
 .game-icon {
   flex-shrink: 0;
@@ -8,16 +9,6 @@
   cursor: grab;
   border-radius: 4px;
   overflow: hidden;
-
-  @media (max-width: 768px) {
-    width: 100px;
-    height: 140px;
-  }
-
-  @media (max-width: 480px) {
-    width: 80px;
-    height: 110px;
-  }
 
   img {
     width: 100%;
@@ -37,6 +28,10 @@
   }
 }
 
+.empty-dropzone {
+  min-height: 160px;
+}
+
 .remove-button {
   position: absolute;
   top: 4px;
@@ -49,7 +44,7 @@
   border: none;
   border-radius: 50%;
   color: $pure-white;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: $overlay-bg;
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -57,11 +52,15 @@
 }
 
 .empty-dropzone {
-  font-style: italic;
-  color: $neutral-gray;
-  width: 100%;
-  height: 100%;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-style: italic;
+  color: $pure-white;
+  opacity: 0.6;
+  height: 100%;
+  grid-column: 1 / -1;
 }
 
 .cdk-drag-placeholder {
@@ -71,3 +70,5 @@
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+@include respond(mobile) {}

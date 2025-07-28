@@ -1,8 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, OnDestroy, AfterViewInit, TemplateRef, ContentChild, OnChanges, SimpleChanges } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, OnDestroy, AfterViewInit, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GamerLoadingComponent } from '../gamer-loading/gamer-loading.component';
-import { CarouselItem } from '../../models/commons/game-carousel-tem.model';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ViewportService } from '../../services/commons/viewport.service';
 
@@ -11,30 +9,31 @@ import { ViewportService } from '../../services/commons/viewport.service';
   standalone: true,
   imports: [
     GenericModule,
-    FontAwesomeModule,
     DragDropModule,
-    GamerLoadingComponent
+    GamerLoadingComponent,
   ],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
 })
-export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class CarouselComponent<T> implements AfterViewInit, OnDestroy, OnChanges {
   @Input() title: string = 'Carousel';
-  @Input() games: CarouselItem[] = [];
+  @Input() items: T[] = [];
   @Input() isLoading: boolean = false;
   @Input() enableDrag: boolean = false;
   @Input() connectedDropLists: string[] = [];
   @Input() autoReverse: boolean = false;
-  @Input() itemTemplate?: TemplateRef<any>;
+  @Input() itemTemplate?: TemplateRef<T>;
   @Input() category!: 'today' | 'upcoming' | 'recent';
 
-  @Output() dragStarted = new EventEmitter<CarouselItem>();
+  @Output() dragStarted = new EventEmitter<T>();
   @Output() seeAllClicked = new EventEmitter<void>();
+  @Output() itemClicked = new EventEmitter<T>();
 
   @ViewChild('carouselContainer', { static: false })
-
   carouselContainerRef!: ElementRef<HTMLDivElement>;
+
   isPaused = false;
+  isMobile = false;
   canScroll: boolean = false;
 
   private scrollInterval: any;
@@ -44,32 +43,31 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
   constructor(private viewport: ViewportService) { }
 
   ngAfterViewInit(): void {
-    this.tryStartAutoScroll();
+    setTimeout(() => {
+      this.isMobile = this.viewport.isMobile();
+      this.tryStartAutoScroll();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['games'] && !changes['games'].isFirstChange()) {
+    if (changes['items'] && !changes['items'].isFirstChange()) {
       if (this.scrollInterval) {
         clearInterval(this.scrollInterval);
         this.scrollInterval = null;
       }
-
       this.tryStartAutoScroll();
     }
   }
 
   ngOnDestroy(): void {
-    if (this.scrollInterval)
-      clearInterval(this.scrollInterval);
-
-    if (this.autoScrollRetryInterval)
-      clearInterval(this.autoScrollRetryInterval);
+    clearInterval(this.scrollInterval);
+    clearInterval(this.autoScrollRetryInterval);
   }
 
   private tryStartAutoScroll(): void {
     this.autoScrollRetryInterval = setInterval(() => {
       const containerReady = !!this.carouselContainerRef?.nativeElement;
-      const dataReady = !this.isLoading && this.games.length > 0;
+      const dataReady = !this.isLoading && this.items.length > 0;
 
       if (containerReady && dataReady) {
         const container = this.carouselContainerRef.nativeElement;
@@ -99,13 +97,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
       const scrollAmount = this.direction === 'forward' ? 1.5 : -1.5;
       container.scrollLeft += scrollAmount;
 
-      if (this.autoReverse) {
-        const maxScroll = container.scrollWidth - container.clientWidth;
+      const maxScroll = container.scrollWidth - container.clientWidth;
 
+      if (this.autoReverse) {
         if (container.scrollLeft >= maxScroll) this.direction = 'backward';
         if (container.scrollLeft <= 0) this.direction = 'forward';
       } else {
-        const maxScroll = container.scrollWidth - container.clientWidth;
         if (container.scrollLeft >= maxScroll) container.scrollLeft = 0;
       }
     }, 20);
@@ -113,8 +110,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   toggleScroll(): void {
     this.isPaused = !this.isPaused;
-    if (!this.isPaused)
-      this.startAutoScroll();
+    if (!this.isPaused) this.startAutoScroll();
   }
 
   scrollLeft(): void {
@@ -125,17 +121,20 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnChanges {
     this.carouselContainerRef.nativeElement.scrollLeft += 100;
   }
 
-  getFullCoverUrl(imageUrl: string): string {
-    return imageUrl?.replace('t_thumb', 't_cover_big');
+  onDragStarted(item: T): void {
+    this.dragStarted.emit(item);
   }
 
-  onDragStarted(game: CarouselItem): void {
-    this.dragStarted.emit(game);
+  onItemClick(item: T): void {
+    this.itemClicked.emit(item);
   }
 
   onSeeAllClick(event: MouseEvent): void {
     event.preventDefault();
-    console.log('[Carousel] Ver tudo clicado - categoria:', this.category);
     this.seeAllClicked.emit();
+  }
+
+  getFullCoverUrl(imageUrl: string): string {
+    return imageUrl?.replace('t_thumb', 't_cover_big') ?? '';
   }
 }

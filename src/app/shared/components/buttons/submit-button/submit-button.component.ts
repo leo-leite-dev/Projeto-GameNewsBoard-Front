@@ -12,11 +12,12 @@ export class SubmitButtonComponent {
   @Input() disabled: boolean = false;
   @Input() routeAfterSubmit?: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   onClick(): void {
     if (this.routeAfterSubmit) {
-      setTimeout(() => this.router.navigate([this.routeAfterSubmit]), 300);
+      console.log('Navegando para:', this.routeAfterSubmit);
+      setTimeout(() => this.router.navigateByUrl(this.routeAfterSubmit!), 300);
     }
   }
 }

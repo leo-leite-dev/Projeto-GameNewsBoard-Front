@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { GenericModule } from "../../../../shareds/commons/GenericModule";
 import { GamerLoadingComponent } from "../gamer-loading/gamer-loading.component";
 import { GameSearchFilterComponent } from "../../forms/game-search-filter/game-search-filter.component";
@@ -12,6 +12,7 @@ import { Platform } from "../../enums/platform.enum";
 import { YearCategory } from "../../enums/year-category.enum";
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs";
 import { GameDataService } from "../../services/commons/game-data.service";
+import { CarouselItem } from "../../models/commons/carousel-item.model";
 
 @Component({
   selector: 'app-game-carousel',
@@ -30,8 +31,10 @@ import { GameDataService } from "../../services/commons/game-data.service";
 export class GameCarouselComponent implements OnInit {
   @Input() connectedDropLists: string[] = [];
 
-  games: GameResponse[] = [];
-  filteredGames: GameResponse[] = [];
+  @Output() gameClicked = new EventEmitter<CarouselItem>();
+
+  games: CarouselItem[] = [];
+  filteredGames: CarouselItem[] = [];
   isLoading = true;
 
   page = DEFAULT_PAGE;
@@ -46,7 +49,7 @@ export class GameCarouselComponent implements OnInit {
   private loadSubscription?: Subscription;
   private filtersChanged$ = new Subject<GameFilters>();
 
-  constructor(private gameDataService: GameDataService) {}
+  constructor(private gameDataService: GameDataService) { }
 
   ngOnInit(): void {
     this.loadGames();
@@ -62,6 +65,14 @@ export class GameCarouselComponent implements OnInit {
       });
   }
 
+  private toCarouselItem(game: GameResponse): CarouselItem {
+    return {
+      id: game.id,
+      title: game.title,
+      coverImage: game.coverImage
+    };
+  }
+
   private loadGames(): void {
     this.isLoading = true;
 
@@ -69,10 +80,12 @@ export class GameCarouselComponent implements OnInit {
       .loadGames(1, 100, Platform.All, YearCategory.All, '')
       .subscribe({
         next: (response) => {
-          const newGames = response.data.items;
+          const newGames = response.data.items.map(this.toCarouselItem);
           this.games = [...newGames, ...newGames];
           this.filteredGames = [...this.games];
           this.isLoading = false;
+
+          console.log('[loadGames] filteredGames:', this.filteredGames);
         },
         error: (error) => {
           console.error('[Carousel] Erro ao carregar jogos:', error);
@@ -96,7 +109,7 @@ export class GameCarouselComponent implements OnInit {
       .loadGames(this.page, this.pageSize, platform, yearCategory, searchTerm)
       .subscribe({
         next: (response) => {
-          this.filteredGames = response.data.items;
+          this.filteredGames = response.data.items.map(this.toCarouselItem);
           this.isLoading = false;
         },
         error: (error) => {
@@ -109,5 +122,9 @@ export class GameCarouselComponent implements OnInit {
 
   onFiltersChanged(filters: GameFilters): void {
     this.filtersChanged$.next(filters);
+  }
+
+  onGameClicked(game: CarouselItem): void {
+    this.gameClicked.emit(game);
   }
 }

@@ -15,7 +15,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background: linear-gradient(145deg, $void-black);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid $white-overlay-05;
   box-shadow: 0 0 20px $overlay-bg, 0 0 8px $pure-purple;
   border-radius: 16px;
   color: $pure-white;

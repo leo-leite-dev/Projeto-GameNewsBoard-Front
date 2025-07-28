@@ -1,0 +1,26 @@
+
+@use 'colors' as *;
+@use 'breakpoints' as *;
+
+.game-dashboard {
+  @include respond(mobile) {
+    padding: 1rem;
+
+    .search-filter {
+      margin-bottom: 1rem;
+    }
+
+    .game-carousel {
+      .carousel-wrapper {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+
+        .carousel-item {
+          scroll-snap-align: start;
+          min-width: 80%;
+          max-width: 90%;
+        }
+      }
+    }
+  }
+}

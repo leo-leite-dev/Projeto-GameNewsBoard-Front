@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameReleaseResponse } from '../../shared/models/game-release.model';
 import { PlatformFamily } from '../../shared/enums/platform.enum';
-import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PlatformFilterComponent } from '../../shared/components/platform-filter/platform-filter.component';
 import { GamerLoadingComponent } from '../../shared/components/gamer-loading/gamer-loading.component';
 import { GenericModule } from '../../../shareds/commons/GenericModule';
-import { GameReleaseLoaderService } from '../../shared/services/commons/game-release-loader.service';
 import { PLATFORM_FILTER_OPTIONS } from '../../shared/utils/platform-options';
+import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
+import { finalize } from 'rxjs';
+import { GameReleaseService } from '../../shared/services/game-release.service';
 
 @Component({
   selector: 'app-game-releases',
@@ -39,7 +40,7 @@ export class GameReleasesComponent implements OnInit {
   platforms = PLATFORM_FILTER_OPTIONS;
 
   constructor(
-    private loader: GameReleaseLoaderService,
+    private gameReleaseService: GameReleaseService,
     private router: Router
   ) { }
 
@@ -50,27 +51,26 @@ export class GameReleasesComponent implements OnInit {
   loadReleases(): void {
     this.isLoading = true;
     this.errorMessage = '';
+    this.message = '';
 
-    this.loader.loadAllGrouped(this.selectedPlatform).subscribe({
-      next: (res) => {
-        this.todayGames = res.today;
-        this.upcomingGames = res.upcoming;
-        this.recentGames = res.recent;
+    this.gameReleaseService.loadGroupedReleases(this.selectedPlatform)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (res) => {
+          this.todayGames = res.today.data ?? [];
+          this.upcomingGames = res.upcoming.data ?? [];
+          this.recentGames = res.recent.data ?? [];
 
-        this.message = (!res.today.length) ? 'Nenhum jogo lançado hoje.' : '';
-        this.errorMessage = '';
-        this.isLoading = false;
-      },
-      error: () => {
-        this.todayGames = [];
-        this.upcomingGames = [];
-        this.recentGames = [];
+          this.message = res.today.message;
+        },
+        error: () => {
+          this.todayGames = [];
+          this.upcomingGames = [];
+          this.recentGames = [];
 
-        this.message = '';
-        this.errorMessage = 'Erro ao carregar lançamentos.';
-        this.isLoading = false;
-      },
-    });
+          this.errorMessage = 'Erro ao carregar lançamentos.';
+        },
+      });
   }
 
   getCoverImage(game: GameReleaseResponse): string {

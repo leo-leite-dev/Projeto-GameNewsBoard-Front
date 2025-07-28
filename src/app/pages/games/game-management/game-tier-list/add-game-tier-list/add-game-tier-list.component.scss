@@ -2,25 +2,9 @@
 @use 'breakpoints' as *;
 
 .add-game-tier-list-container {
-  .tier-list-header {
-    .view-toggle-btn {
-      background: none;
-      border: none;
-      color: $pure-white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 4px;
-      transition: transform 0.2s ease;
-
-      &:hover {
-        transform: scale(1.15);
-      }
-    }
-  }
-
   .container-overflow {
-    width: 52.5%;
-    height: calc(100vh - 400px);
+    width: 60%;
+    height: calc(96vh - 400px);
     transition: height 0.3s ease;
 
     .tier-row {
@@ -39,27 +23,25 @@
     }
 
     .tier-dropzone {
-      flex: 1;
-      padding: 0;
-      gap: 2px;
+      display: grid;
+      align-content: start;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      padding: 10px;
+      flex-grow: 1;
       border: 1px dashed $pure-white;
-      box-sizing: border-box;
+      border-radius: 6px;
+      background-color: $white-overlay-05;
 
       &.cdk-drop-list-dragging {
         background-color: $overlay-bg;
-
-        .empty-dropzone {
-          display: none;
-        }
       }
     }
   }
 
   @include respond(mobile) {
+
     .container-overflow {
       width: 100%;
-      height: auto;
-      display: flex;
       flex-direction: column;
       gap: 16px;
 
@@ -77,21 +59,17 @@
       }
 
       .tier-dropzone {
-        width: 100%;
-        padding: 10px;
-        min-height: 120px;
-        border-radius: 6px;
-      }
+        grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+        gap: 5px;
 
-      .game-icon {
-        width: 80px;
-        height: 110px;
+        .game-icon {
+          max-width: 32%;
+          min-width: 90px;
+          height: auto;
+          aspect-ratio: 2 / 3;
+          position: relative;
+        }
       }
-    }
-
-    .game-icon {
-      width: 80px;
-      height: 110px;
     }
   }
 }

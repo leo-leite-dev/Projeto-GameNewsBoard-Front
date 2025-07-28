@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, map, catchError } from 'rxjs';
+import { Observable, map, catchError, forkJoin, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { ErrorHandlingService } from './commons/error-handling.service';
 import { ApiResponse } from '../models/commons/api-response.model';
@@ -60,5 +60,60 @@ export class GameReleaseService {
       .pipe(
         catchError(this.errorHandler.handleWithThrow.bind(this.errorHandler))
       );
+  }
+
+  loadGroupedReleases(platform: PlatformFamily, limit = 7): Observable<{
+    today: ApiResponse<GameReleaseResponse[]>;
+    upcoming: ApiResponse<GameReleaseResponse[]>;
+    recent: ApiResponse<GameReleaseResponse[]>;
+  }> {
+    return forkJoin({
+      today: this.getTodayGames(platform).pipe(
+        catchError(() =>
+          of({ success: false, message: 'Erro ao carregar lançamentos de hoje.', data: [] })
+        )
+      ),
+      upcoming: this.getUpcomingGames(limit, platform).pipe(
+        catchError(() =>
+          of({ success: false, message: 'Erro ao carregar lançamentos futuros.', data: [] })
+        )
+      ),
+      recent: this.getRecentGames(limit, platform).pipe(
+        catchError(() =>
+          of({ success: false, message: 'Erro ao carregar lançamentos recentes.', data: [] })
+        )
+      ),
+    });
+  }
+
+  loadAllByCategory(
+    category: 'upcoming' | 'today' | 'recent',
+    platform: PlatformFamily,
+    limit = 30
+  ): Observable<ApiResponse<GameReleaseResponse[]>> {
+    let source$: Observable<ApiResponse<GameReleaseResponse[]>>;
+
+    switch (category) {
+      case 'recent':
+        source$ = this.getRecentGames(limit, platform);
+        break;
+      case 'today':
+        source$ = this.getTodayGames(platform);
+        break;
+      default:
+        source$ = this.getUpcomingGames(limit, platform);
+        break;
+    }
+
+    return source$.pipe(
+      catchError(err => {
+        console.error(`Erro ao carregar jogos (${category})`, err);
+        return of({
+          success: false,
+          message: 'Erro ao carregar os jogos.',
+          data: [],
+        });
+      })
+    );
   }
 }

@@ -51,7 +51,7 @@
       </div>
     </ng-template>
 
-    <app-carousel [title]="'Lançamentos Do Dia'" [games]="todayGames" [isLoading]="false" [autoReverse]="true"
+    <app-carousel [title]="'Lançamentos Do Dia'" [items]="todayGames" [isLoading]="false" [autoReverse]="true"
       [itemTemplate]="todayTemplate" [category]="'today'" (seeAllClicked)="goToAllReleases('today')">
     </app-carousel>
 
@@ -61,11 +61,11 @@
       </div>
     </ng-container>
 
-    <app-carousel [title]="'Lançamentos Futuros'" [games]="upcomingGames" [isLoading]="false" [autoReverse]="true"
+    <app-carousel [title]="'Lançamentos Futuros'" [items]="upcomingGames" [isLoading]="false" [autoReverse]="true"
       [itemTemplate]="upcomingTemplate" [category]="'upcoming'" (seeAllClicked)="goToAllReleases('upcoming')">
     </app-carousel>
 
-    <app-carousel [title]="'Lançamentos Recentes'" [games]="recentGames" [isLoading]="false" [autoReverse]="true"
+    <app-carousel [title]="'Lançamentos Recentes'" [items]="recentGames" [isLoading]="false" [autoReverse]="true"
       [itemTemplate]="recentTemplate" [category]="'recent'" (seeAllClicked)="goToAllReleases('recent')">
     </app-carousel>
   </ng-template>

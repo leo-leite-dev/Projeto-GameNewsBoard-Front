@@ -1,18 +1,32 @@
 @use 'breakpoints' as *;
 
 .search {
+  display: flex;
   justify-content: center;
+  align-items: flex-end;
   gap: 1rem;
   margin-bottom: 1rem;
 
-
   .search-input {
     flex: 1;
-    width: 10px;
+    min-width: 200px;
   }
 
   .filter-button {
     width: 100px;
     flex-shrink: 0;
+  }
+
+  @include respond(mobile) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 0 1rem;
+
+    .search-input,
+    .filter-button {
+      width: 100%;
+    }
   }
 }

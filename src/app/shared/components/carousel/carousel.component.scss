@@ -100,4 +100,13 @@
       margin-right: 10px;
     }
   }
+
+  .carousel-container {
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-arrow {
+    display: none;
+  }
 }

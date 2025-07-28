@@ -1,4 +1,18 @@
-<app-game-search-filter (filtersChanged)="onFiltersChanged($event)" />
+<div class="game-dashboard d-flex column">
+  <app-gamer-loading *ngIf="isLoading" />
 
-<app-carousel *ngIf="!isLoading" [title]="'Jogos Disponíveis'" [games]="filteredGames" [isLoading]="isLoading"
-  [enableDrag]="true" [connectedDropLists]="connectedDropLists" />
+  <app-game-search-filter
+    class="search-filter"
+    (filtersChanged)="onFiltersChanged($event)" />
+
+  <app-carousel
+    *ngIf="!isLoading"
+    class="game-carousel"
+    [title]="'Jogos Disponíveis'"
+    [items]="filteredGames"
+    [isLoading]="isLoading"
+    [enableDrag]="true"
+    [connectedDropLists]="connectedDropLists"
+    (itemClicked)="onGameClicked($event)">
+  </app-carousel>
+</div>

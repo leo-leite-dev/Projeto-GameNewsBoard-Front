@@ -1,18 +1,61 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, fromEvent } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ViewportService {
-    private mobileQuery = window.matchMedia('(max-width: 768px)');
+  private readonly mobileBreakpoint = 768;
+  private readonly tabletBreakpoint = 1024;
 
-    isMobile(): boolean {
-        return this.mobileQuery.matches;
-    }
+  private _isMobile$ = new BehaviorSubject<boolean>(this.checkIsMobile());
+  private _isTablet$ = new BehaviorSubject<boolean>(this.checkIsTablet());
+  private _isDesktop$ = new BehaviorSubject<boolean>(this.checkIsDesktop());
 
-    isTablet(): boolean {
-        return window.matchMedia('(max-width: 1024px)').matches;
-    }
+  constructor() {
+    fromEvent(window, 'resize')
+      .pipe(startWith(null))
+      .subscribe(() => {
+        this._isMobile$.next(this.checkIsMobile());
+        this._isTablet$.next(this.checkIsTablet());
+        this._isDesktop$.next(this.checkIsDesktop());
+      });
+  }
 
-    isDesktop(): boolean {
-        return !this.mobileQuery.matches;
-    }
+  private checkIsMobile(): boolean {
+    return window.innerWidth <= this.mobileBreakpoint;
+  }
+
+  private checkIsTablet(): boolean {
+    return window.innerWidth <= this.tabletBreakpoint;
+  }
+
+  private checkIsDesktop(): boolean {
+    return window.innerWidth > this.tabletBreakpoint;
+  }
+
+  // Métodos síncronos (uso pontual)
+  isMobile(): boolean {
+    return this._isMobile$.getValue();
+  }
+
+  isTablet(): boolean {
+    return this._isTablet$.getValue();
+  }
+
+  isDesktop(): boolean {
+    return this._isDesktop$.getValue();
+  }
+
+  // Observables para uso com reatividade
+  isMobile$() {
+    return this._isMobile$.asObservable();
+  }
+
+  isTablet$() {
+    return this._isTablet$.asObservable();
+  }
+
+  isDesktop$() {
+    return this._isDesktop$.asObservable();
+  }
 }

@@ -1,18 +1,21 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { GameCarouselComponent } from '../../../../../shared/components/game-carousel/game-carousel.component';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { GenericModule } from '../../../../../../shareds/commons/GenericModule';
-import { TierListService } from '../../../../../shared/services/tier-list-service';
 import { MatTableModule } from '@angular/material/table';
+import { GameCarouselComponent } from '../../../../../shared/components/game-carousel/game-carousel.component';
+import { GenericModule } from '../../../../../../shareds/commons/GenericModule';
+import { NavigateButtonComponent } from '../../../../../shared/components/buttons/navigate-button/navigate-button.component';
+import { AssignTierComponent } from '../../../../../shared/modais/assign-tier/assign-tier.component';
 import { GameResponse } from '../../../../../shared/models/game.model';
-import { TierLevel } from '../../../../../shared/enums/tier-level.enum';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ToastrService } from 'ngx-toastr';
+import { TierListService } from '../../../../../shared/services/tier-list-service';
 import { ErrorHandlingService } from '../../../../../shared/services/commons/error-handling.service';
 import { TierListEntryRequest } from '../../../../../shared/models/tier-list-entry.model';
-import { NavigateButtonComponent } from '../../../../../shared/components/buttons/navigate-button/navigate-button.component';
 import { ViewportService } from '../../../../../shared/services/commons/viewport.service';
+import { TierLevel } from '../../../../../shared/enums/tier-level.enum';
+import { TIER_CONFIG, getTierLevelByLabel, initTierGamesMap } from '../../../../../shared/utils/tier-utils';
+import { ToastrService } from 'ngx-toastr';
+import { CarouselItem } from '../../../../../shared/models/commons/carousel-item.model';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-add-game-tier-list',
@@ -22,49 +25,45 @@ import { ViewportService } from '../../../../../shared/services/commons/viewport
     GameCarouselComponent,
     DragDropModule,
     MatTableModule,
-    FontAwesomeModule,
     NavigateButtonComponent,
+    AssignTierComponent
   ],
   templateUrl: './add-game-tier-list.component.html',
-  styleUrls: ['./add-game-tier-list.component.scss'],
+  styleUrls: ['./add-game-tier-list.component.scss']
 })
 export class AddGameTierListComponent implements OnInit {
   tierId: string | null = null;
-  dropListIds: string[] = [];
-  tierTitle: string = '';
-  errorMessage: string = '';
-  viewOnlyMode = false;
+  selectedGameTier: string | null = null;
+  tierTitle = '';
+  errorMessage = '';
 
+  dropListIds: string[] = [];
   tierGames: { [tierLevel: number]: GameResponse[] } = {};
   gameTierMapping: { [gameId: number]: TierLevel } = {};
 
+  selectedGame: CarouselItem | null = null;
+  showAssignTierModal = false;
   isMobileView = false;
 
-  readonly tiers = [
-    { level: TierLevel.SSS, label: 'SSS' },
-    { level: TierLevel.SS, label: 'SS' },
-    { level: TierLevel.S, label: 'S' },
-    { level: TierLevel.A, label: 'A' },
-    { level: TierLevel.C, label: 'C' },
-    { level: TierLevel.D, label: 'D' },
-    { level: TierLevel.F, label: 'F' },
-  ];
+  readonly tiers = TIER_CONFIG;
+  availableTiers = this.tiers.map(t => t.label);
+
+  icon: IconProp = 'times';
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private tierListService: TierListService,
     private toastr: ToastrService,
     private errorHandler: ErrorHandlingService,
-    private viewport: ViewportService,
-    private router: Router
+    private viewport: ViewportService
   ) { }
 
   ngOnInit(): void {
     this.updateViewMode();
-
     window.addEventListener('resize', this.updateViewMode.bind(this));
 
-    this.route.paramMap.subscribe((params) => {
+    this.route.paramMap.subscribe(params => {
       this.tierId = params.get('tierId');
       this.prepareDropListIds();
       this.initializeTierGames();
@@ -74,53 +73,44 @@ export class AddGameTierListComponent implements OnInit {
       }
     });
   }
+
   private updateViewMode(): void {
     this.isMobileView = this.viewport.isMobile();
   }
 
   private loadTierListGames(tierId: string): void {
     this.tierListService.getTierById(tierId).subscribe({
-      next: (tierList) => {
+      next: tierList => {
         this.tierTitle = tierList.title;
         for (const entry of tierList.entries) {
           const tier = entry.tier;
           const game = entry.game;
 
-          if (!this.tierGames[tier]) {
-            this.tierGames[tier] = [];
-          }
-
+          this.tierGames[tier] ||= [];
           this.tierGames[tier].push(game);
           this.gameTierMapping[game.id] = tier;
         }
       },
-      error: (err) => {
+      error: err => {
         this.errorMessage = this.errorHandler.handleHttpError(err);
         this.toastr.error(this.errorMessage);
-      },
+      }
     });
   }
 
   private prepareDropListIds(): void {
-    this.dropListIds = this.tiers.map((t) => `tier-drop-${t.level}`);
+    this.dropListIds = this.tiers.map(t => `tier-drop-${t.level}`);
   }
 
   private initializeTierGames(): void {
-    this.tiers.forEach((tier) => {
-      this.tierGames[tier.level] = [];
-    });
+    this.tierGames = initTierGamesMap();
   }
 
   onDrop(event: CdkDragDrop<GameResponse[]>, tierLevel: TierLevel): void {
     const game: GameResponse = event.item.data;
-
-    if (!game) {
-      console.warn('Nenhum jogo encontrado no drop.');
-      return;
-    }
+    if (!game) return;
 
     const previousTier = this.gameTierMapping[game.id];
-
     if (previousTier !== undefined) {
       this.moveGameBetweenTiers(game, previousTier, tierLevel);
     } else {
@@ -129,21 +119,36 @@ export class AddGameTierListComponent implements OnInit {
   }
 
   private addGameToTier(game: GameResponse, tierLevel: TierLevel): void {
-    if (!this.tierGames[tierLevel]) {
-      this.tierGames[tierLevel] = [];
-    }
-
+    this.tierGames[tierLevel] ||= [];
     this.tierGames[tierLevel].push(game);
     this.gameTierMapping[game.id] = tierLevel;
 
     const request: TierListEntryRequest = {
       gameId: game.id,
-      tier: tierLevel,
+      tier: tierLevel
     };
 
     this.tierListService.setGameTier(this.tierId!, request).subscribe({
       next: () => { },
-      error: (err) => this.handleError(err, 'Erro ao adicionar jogo'),
+      error: err => this.handleError(err, 'Erro ao adicionar jogo')
+    });
+  }
+
+  private moveGameBetweenTiers(game: GameResponse, oldTier: TierLevel, newTier: TierLevel): void {
+    this.tierGames[oldTier] = this.tierGames[oldTier].filter(g => g.id !== game.id);
+
+    this.tierGames[newTier] ||= [];
+    this.tierGames[newTier].push(game);
+    this.gameTierMapping[game.id] = newTier;
+
+    const request: TierListEntryRequest = {
+      gameId: game.id,
+      tier: newTier
+    };
+
+    this.tierListService.setGameTier(this.tierId!, request).subscribe({
+      next: () => { },
+      error: err => this.handleError(err, 'Erro ao mover jogo')
     });
   }
 
@@ -153,31 +158,10 @@ export class AddGameTierListComponent implements OnInit {
 
     this.tierListService.removeGameFromTier(this.tierId, game.id).subscribe({
       next: () => {
-        this.tierGames[tierLevel] = this.tierGames[tierLevel].filter((g) => g.id !== game.id);
+        this.tierGames[tierLevel] = this.tierGames[tierLevel].filter(g => g.id !== game.id);
         delete this.gameTierMapping[game.id];
       },
-      error: (err) => this.handleError(err, 'Erro ao remover jogo'),
-    });
-  }
-
-  private moveGameBetweenTiers(game: GameResponse, oldTier: TierLevel, newTier: TierLevel): void {
-    this.tierGames[oldTier] = this.tierGames[oldTier].filter((g) => g.id !== game.id);
-
-    if (!this.tierGames[newTier]) {
-      this.tierGames[newTier] = [];
-    }
-
-    this.tierGames[newTier].push(game);
-    this.gameTierMapping[game.id] = newTier;
-
-    const request: TierListEntryRequest = {
-      gameId: game.id,
-      tier: newTier,
-    };
-
-    this.tierListService.setGameTier(this.tierId!, request).subscribe({
-      next: () => { },
-      error: (err) => this.handleError(err, 'Erro ao carregar tier'),
+      error: err => this.handleError(err, 'Erro ao remover jogo')
     });
   }
 
@@ -188,17 +172,33 @@ export class AddGameTierListComponent implements OnInit {
   }
 
   getFullCoverUrl(coverImage: string): string {
-    if (!coverImage) {
-      return '';
-    }
-    return coverImage.replace('t_thumb', 't_cover_big');
-  }
-
-  toggleViewMode(): void {
-    this.viewOnlyMode = !this.viewOnlyMode;
+    return coverImage?.replace('t_thumb', 't_cover_big') ?? '';
   }
 
   goBack(): void {
     this.router.navigate(['/manage-games']);
+  }
+
+  onGameClicked(game: CarouselItem): void {
+    this.selectedGame = game;
+    const tierLevel = this.gameTierMapping[game.id];
+    const foundTier = this.tiers.find(t => t.level === tierLevel);
+    this.selectedGameTier = foundTier?.label ?? null;
+    this.showAssignTierModal = true;
+  }
+
+  onTierSelected(data: { tier: string; game: CarouselItem }): void {
+    this.showAssignTierModal = false;
+
+    const newTier = getTierLevelByLabel(data.tier);
+    const gameId = data.game.id;
+
+    const request: TierListEntryRequest = {
+      gameId,
+      tier: newTier
+    };
+
+    this.tierListService.setGameTier(this.tierId!, request).subscribe(() => {
+    });
   }
 }
