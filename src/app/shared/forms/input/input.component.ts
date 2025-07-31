@@ -1,15 +1,13 @@
 import { Component, Input, Output, EventEmitter, forwardRef, OnInit, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ViewportService } from '../../services/commons/viewport.service';
+import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, FormsModule, GenericModule, FontAwesomeModule],
+  imports: [FaIconComponent, GenericModule],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   providers: [
@@ -26,19 +24,19 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
   @Input() type: string = 'text';
   @Input() useMobileModal: boolean = true;
 
+  @Output() valueChange = new EventEmitter<string>();
+  @Output() filterToggle = new EventEmitter<void>();
+
   value: string = '';
   showPassword = false;
-
-  @Output() valueChange = new EventEmitter<string>();
-
   isDisabled = false;
   isSearchModalOpen = false;
   isMobile = false;
 
-  constructor(private viewport: ViewportService) { }
-
   private onChange: (value: string) => void = () => { };
   private onTouchedFn: () => void = () => { };
+
+  constructor(private viewport: ViewportService) { }
 
   get computedInputType(): string {
     if (this.type !== 'password') return this.type;
@@ -75,7 +73,6 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
   }
 
   onInputChange(): void {
-    console.log('[InputComponent] valor digitado (web):', this.value);
     this.onChange(this.value);
     this.valueChange.emit(this.value);
   }
@@ -84,5 +81,15 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
     this.onChange(this.value);
     this.valueChange.emit(this.value);
     this.isSearchModalOpen = false;
+  }
+
+  toggleFilter(): void {
+    this.filterToggle.emit();
+  }
+
+  openModal(): void {
+    if (this.isMobile && this.useMobileModal) {
+      this.isSearchModalOpen = true;
+    }
   }
 }

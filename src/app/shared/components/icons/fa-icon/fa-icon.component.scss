@@ -1,0 +1,9 @@
+@use 'colors' as *;
+
+:host ::ng-deep fa-icon {
+    color: $pure-white;
+}
+
+.black-icon {
+    color: $pure-black !important;
+}

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { GameDataService } from '../../../shared/services/commons/game-data.service';
-import { GameResponse } from '../../../shared/models/game.model';
+import { GameResponse } from '../../../shared/models/game-reponse.model';
 import { GameFilters } from '../../../shared/models/commons/game-filters.model';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../../shared/constants/pagination.constants';
 import { GamerLoadingComponent } from '../../../shared/components/gamer-loading/gamer-loading.component';
@@ -11,28 +10,25 @@ import { Platform } from '../../../shared/enums/platform.enum';
 import { YearCategory } from '../../../shared/enums/year-category.enum';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { ErrorHandlingService } from '../../../shared/services/commons/error-handling.service';
-import { ApiResponse } from '../../../shared/models/commons/api-response.model';
-import { PaginatedResult } from '../../../shared/models/commons/paginated-result.model';
-import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../../../shared/services/commons/notification.service';
 import { getPaginatedFallback } from '../../../shared/utils/http-utils';
 import { isEqual } from 'lodash';
 import { Router } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DecimalPipe } from '@angular/common';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ViewportService } from '../../../shared/services/commons/viewport.service';
+import { GenericModule } from '../../../../shareds/commons/GenericModule';
+import { FaIconComponent } from '../../../shared/components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-all-games-list',
   standalone: true,
   imports: [
-    CommonModule,
+    GenericModule,
     GamerLoadingComponent,
     PaginationComponent,
     GameSearchFilterComponent,
-    FontAwesomeModule,
-    DecimalPipe
+    DecimalPipe,
+    FaIconComponent
   ],
   templateUrl: './all-games-list.component.html',
   styleUrls: ['./all-games-list.component.scss'],
@@ -60,8 +56,6 @@ export class AllGamesListComponent implements OnInit {
 
   private filtersChanged$ = new Subject<GameFilters>();
   private destroy$ = new Subject<void>();
-
-  icon: IconProp = 'info-circle';
 
   constructor(
     private gameDataService: GameDataService,

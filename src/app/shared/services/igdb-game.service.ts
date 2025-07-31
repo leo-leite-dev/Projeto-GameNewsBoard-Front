@@ -7,7 +7,7 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../constants/pagination.constan
 import { ApiResponse } from '../models/commons/api-response.model';
 import { Platform } from '../enums/platform.enum';
 import { YearCategory } from '../enums/year-category.enum';
-import { GameResponse } from '../models/game.model';
+import { GameResponse } from '../models/game-reponse.model';
 import { environment } from '../../../environments/environments';
 
 @Injectable({

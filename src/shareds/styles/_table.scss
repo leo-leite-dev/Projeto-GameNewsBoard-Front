@@ -22,7 +22,7 @@
     transform: scale(1.05);
     z-index: 2;
 
-    .remove-button {
+    .times-icon-button {
       opacity: 1;
     }
   }
@@ -32,24 +32,7 @@
   min-height: 160px;
 }
 
-.remove-button {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 20px;
-  border: none;
-  border-radius: 50%;
-  color: $pure-white;
-  background-color: $overlay-bg;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  z-index: 3;
-}
+
 
 .empty-dropzone {
   display: flex;
@@ -70,5 +53,3 @@
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
-@include respond(mobile) {}

@@ -1,20 +1,21 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.container-overflow {
-  padding-top: 56px;
+.global-loading-wrapper {
+  width: 90vw;
+}
 
+.container-wrapper {
   .filter-wrapper {
-    max-width: 1700px;
-    margin: 0 auto 1px 200px;
-    padding: 0 2rem;
-    justify-content: flex-end;
+    margin: 0 auto;
+    max-width: 1200px;
+    position: relative;
   }
 
   .release-item {
     position: relative;
-    width: 240px;
-    height: 320px;
+    width: 200px;
+    height: 250px;
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s ease;
@@ -65,13 +66,10 @@
 }
 
 @include respond(mobile) {
-  .container-overflow {
+  .container-wrapper {
     .filter-wrapper {
-      justify-content: center;
-      padding: 0 1rem;
-      margin: 40px auto auto auto;
+      margin: 60px auto auto auto;
     }
-
 
     .release-item {
       width: 180px;

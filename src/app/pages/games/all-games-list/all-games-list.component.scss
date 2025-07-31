@@ -1,82 +1,82 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.game-grid-wrapper {
+.game-management-wrapper {
+  position: relative;
+  margin: 100px auto 0;
+  max-width:1450px;
+  background: linear-gradient(135deg, #1e1e1e91, $black-overlay-light);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
   padding: 2rem;
-  margin-left: 100px;
 
-  .game-card {
-    .rating {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      padding: 8px;
-      border-radius: 6px;
-      box-shadow: $overlay-bg;
-      z-index: 2;
-
-      &.green {
-        background-color: $pure-green;
-      }
-
-      &.yellow {
-        background-color: $pure-yellow;
-      }
-
-      &.orange {
-        background-color: $pure-orange;
-      }
-
-      &.red {
-        background-color: $pure-red;
-      }
-    }
-  }
-}
-
-@mixin all-games-list-responsive {
   .game-grid-wrapper {
-    margin-left: 0;
+    display: flex;
+    justify-content: center;
 
     .game-grid {
-      padding: 0;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1400px;
 
       .game-card {
-        .rating {
-          padding: 4px;
-          font-size: 10px;
+        position: relative;
+        cursor: pointer;
+
+        .cover-container {
+          position: relative;
+
+          .cover {
+            width: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+          }
+
+          .rating {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            color: #000;
+            font-weight: bold;
+            font-size: 12px;
+            z-index: 2;
+
+            &.green {
+              background-color: $pure-green;
+            }
+
+            &.yellow {
+              background-color: $pure-yellow;
+            }
+
+            &.orange {
+              background-color: $pure-orange;
+            }
+
+            &.red {
+              background-color: $pure-red;
+            }
+          }
         }
 
         .overlay {
-          pointer-events: none;
-        }
-
-        .toggle-overlay-icon {
-          position: absolute;
-          bottom: 5px;
-          right: 5px;
+          margin-top: 10px;
+          background: rgba(0, 0, 0, 0.6);
+          padding: 10px;
+          border-radius: 8px;
+          text-align: center;
           color: $pure-white;
-          background: $overlay-bg;
-          padding: 5px;
-          border-radius: 50%;
-          z-index: 2;
         }
       }
     }
   }
 }
 
-@include respond(mobile) {
-  @include all-games-list-responsive;
-}
-
-@include respond(laptop) {
-  @include all-games-list-responsive;
-}
-
-
-//arrumar modal
+// Modal fix
 .game-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -121,6 +121,26 @@
 
       .modal-info {
         text-align: center;
+      }
+    }
+  }
+}
+
+@include respond(mobile) {
+  .game-grid-wrapper {
+    .game-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 0.8rem;
+
+      .game-card {
+        .rating {
+          font-size: 10px;
+          padding: 4px 6px;
+        }
+
+        .overlay {
+          font-size: 11px;
+        }
       }
     }
   }

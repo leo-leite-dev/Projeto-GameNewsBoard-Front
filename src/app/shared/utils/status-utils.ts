@@ -1,5 +1,5 @@
 import { Status } from '../enums/status-game.enum';
-import { GameResponse } from '../models/game.model';
+import { GameResponse } from '../models/game-reponse.model';
 
 export const MAX_GAMES_PER_DRAWER = 6;
 

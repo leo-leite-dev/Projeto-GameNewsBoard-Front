@@ -24,6 +24,7 @@ export class CarouselComponent<T> implements AfterViewInit, OnDestroy, OnChanges
   @Input() autoReverse: boolean = false;
   @Input() itemTemplate?: TemplateRef<T>;
   @Input() category!: 'today' | 'upcoming' | 'recent';
+  @Input() showSeeAll: boolean = true;
 
   @Output() dragStarted = new EventEmitter<T>();
   @Output() seeAllClicked = new EventEmitter<void>();

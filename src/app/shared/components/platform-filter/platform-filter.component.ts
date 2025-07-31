@@ -11,8 +11,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
   imports: [CommonModule, FontAwesomeModule]
 })
 export class PlatformFilterComponent {
-  @Input()
-  platforms: { value: any; icon: IconDefinition; label?: string; key: string; }[] = [];
+  @Input() platforms: { value: any; icon: IconDefinition; label?: string; key: string; }[] = [];
   @Input() selected: any = null;
   @Output() platformChange = new EventEmitter<any>();
 

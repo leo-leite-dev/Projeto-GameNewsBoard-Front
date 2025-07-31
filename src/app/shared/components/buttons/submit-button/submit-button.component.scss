@@ -1,7 +1,7 @@
 @use 'colors' as *;
 
 .create-button {
-  background: linear-gradient(90deg, #6a00f4, #8e2de2);
+  background: linear-gradient(90deg, #6a00f4, $mage-purple);
   color: $pure-white;
   padding: 14px 20px;
   font-size: 1rem;
@@ -15,7 +15,7 @@
 
   &:hover {
     transform: scale(1.03);
-    box-shadow: 0 0 10px #8e2de2;
+    box-shadow: 0 0 10px $mage-purple;
   }
 
   &:disabled {

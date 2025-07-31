@@ -33,21 +33,24 @@
 
               <div class="tier-dropzone d-flex wrap gap-5" cdkDropList [id]="'tier-drop-' + tier.level"
                 [cdkDropListData]="tierGames[tier.level]" [cdkDropListConnectedTo]="dropListIds"
-                cdkDropListSortingDisabled="true" (cdkDropListDropped)="onDrop($event, tier.level)">
-                <div *ngFor="let game of tierGames[tier.level]" class="game-icon" cdkDrag [cdkDragData]="game">
+                cdkDropListSortingDisabled="true" (cdkDropListDropped)="onDrop($event, tier.level)"
+                (cdkDropListEntered)="onDropListEnter(tier.level)" (cdkDropListExited)="onDropListExit(tier.level)">
+
+                <div *ngFor="let game of tierGames[tier.level]" class="game-icon" cdkDrag [cdkDragData]="game"
+                  [cdkDragDisabled]="isMobileView" (click)="isMobileView && onGameClicked(game)">
                   <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
-
-                  <button class="remove-button" (click)="removeGame(game)">
-                    <fa-icon [icon]="icon"></fa-icon>
+                  <button class="times-icon-button" (click)="removeGame(game)">
+                    <app-fa-icon icon="times" />
                   </button>
-
                   <ng-template cdkDragPlaceholder>
                     <div class="game-icon placeholder-preview">
                       <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
                     </div>
                   </ng-template>
                 </div>
-                <div *ngIf="tierGames[tier.level]?.length === 0" class="empty-dropzone d-flex center">
+
+                <div *ngIf="tierGames[tier.level]?.length === 0 && !hoveredTiers[tier.level]"
+                  class="empty-dropzone d-flex center">
                   <span>Arraste jogos para aqui</span>
                 </div>
               </div>

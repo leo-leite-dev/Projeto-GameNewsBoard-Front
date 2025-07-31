@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Status } from '../../enums/status-game.enum';
 import { STATUS_CONFIG, getStatusClass, getStatusLabel } from '../../utils/status-utils';
-import { GameResponse } from '../../models/game.model';
+import { GameResponse } from '../../models/game-reponse.model';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { CarouselItem } from '../../models/commons/carousel-item.model';
 

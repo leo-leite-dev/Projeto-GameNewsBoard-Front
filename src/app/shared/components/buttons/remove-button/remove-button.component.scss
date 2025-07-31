@@ -26,12 +26,3 @@
     font-size: 1rem;
   }
 }
-
-@include respond(mobile) {
-
-  .remove-button,
-  .edit-button {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-}

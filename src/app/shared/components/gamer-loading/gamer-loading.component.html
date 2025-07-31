@@ -1,6 +1,8 @@
-<div class="gamer-loader d-flex center">
-  <div class="spinner mb-20 mt-40"></div>
-  <span class="loading-text">
-    {{ text }}<span class="dots">...</span>
-  </span>
+<div class="loading-wrapper">
+  <div class="gamer-loader d-flex align-center gap-10">
+    <div class="spinner"></div>
+    <span class="loading-text">
+      {{ text || 'Carregando jogos' }}<span class="dots">...</span>
+    </span>
+  </div>
 </div>

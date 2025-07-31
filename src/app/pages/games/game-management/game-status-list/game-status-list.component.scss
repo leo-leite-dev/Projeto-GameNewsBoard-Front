@@ -1,20 +1,16 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.status-list-container {
-  margin-left: 200px;
-
-  .carousel-container {
-    margin-bottom: 16px;
-  }
+.game-management-wrapper {
+  margin-top: 0;
 
   .container-overflow {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 16px;
-    width: 80%;
+    width: 100%;
     padding-bottom: 12px;
-    height: 66vh;
+    height: 60vh;
 
     .status-column {
       background-color: $white-overlay-05;
@@ -29,7 +25,7 @@
         background-color: $white-overlay-08;
         border-radius: 6px;
         border: 2px dashed $white-overlay-02;
-        min-height: 140px;  
+        min-height: 140px;
 
         .game-icon {
           width: 100%;
@@ -39,10 +35,6 @@
           &:hover {
             transform: scale(1.05);
             z-index: 2;
-
-            .remove-button {
-              opacity: 1;
-            }
           }
         }
       }
@@ -62,7 +54,7 @@
 }
 
 @include respond(mobile) {
-  .status-list-container {
+  .game-management-wrapper {
     margin-left: 0;
 
     .container-overflow {

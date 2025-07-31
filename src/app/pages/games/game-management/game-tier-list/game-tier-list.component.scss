@@ -1,114 +1,110 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.container-overflow-teste {
-  min-height: 80vh;
-}
-
-.container-global-tier {
-  max-width: 1720px;
-  margin: 5px auto 0;
+.game-management-wrapper {
+  margin-top: 0;
   padding: 2rem;
-  border-radius: 1rem;
-  background: linear-gradient(135deg, #1e1e1e91, $black-overlay-light);
-  backdrop-filter: blur(8px);
 
-  .tier-title {
-    color: $pure-white;
-    margin: 0;
-  }
+  .tier-cards-wrapper {
+    min-height: 82vh;
 
-  .create-button {
-    white-space: nowrap;
-  }
+    .tier-title {
+      color: $pure-white;
+      margin: 0;
+    }
 
-  .container-tier {
-    padding: 0.8rem;
-    border-radius: 1rem;
-    backdrop-filter: blur(8px);
-    background: linear-gradient(135deg, #1e1e1e2f, $black-overlay-light);
+    .create-button {
+      white-space: nowrap;
+    }
+
+    .container-tier {
+      padding: 0.8rem;
+      border-radius: 1rem;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(135deg, #1e1e1e2f, $black-overlay-light);
 
 
-    .tier-card {
-      width: 400px;
-      height: 250px;
-      background-color: $void-black;
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-      transition: transform 0.2s ease-in-out;
-      cursor: pointer;
-
-      &:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 10px $pure-white;
-
-        ::ng-deep .remove-button,
-        ::ng-deep .edit-button {
-          opacity: 1 !important;
-          pointer-events: auto !important;
-        }
-      }
-
-      .tier-image {
-        width: 100%;
-        height: 100%;
-
-        background: {
-          size: contain;
-          position: center;
-          repeat: no-repeat;
-        }
-
+      .tier-card {
+        width: 400px;
+        height: 250px;
+        background-color: $void-black;
+        border-radius: 12px;
+        overflow: hidden;
         position: relative;
-
-        .tier-info-overlay {
-          position: absolute;
-          bottom: 0;
-          width: 100%;
-          background: $overlay-bg;
-
-          .tier-sub {
-            color: $neutral-gray;
-            margin-top: 4px;
-          }
-        }
-      }
-
-      .remove-button,
-      .edit-button {
-        position: absolute;
-        z-index: 2;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s ease-in-out;
-      }
-
-      .remove-button {
-        top: 10px;
-        right: 10px;
-        z-index: 10;
-        background-color: transparent;
-      }
-
-      .edit-button {
-        top: 10px;
-        left: 10px;
-        color: $pure-white;
-        font-size: 1.2rem;
-        background-color: $overlay-bg;
-        border-radius: 50%;
-        padding: 8px;
+        transition: transform 0.2s ease-in-out;
         cursor: pointer;
 
         &:hover {
-          background: $steam-gray;
-        }
-      }
+          transform: scale(1.05);
+          box-shadow: 0 0 10px $pure-white;
 
-      .mobile-settings,
-      .mobile-menu {
-        display: none;
+          ::ng-deep .remove-button,
+          ::ng-deep .edit-button {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+          }
+        }
+
+        .tier-image {
+          width: 100%;
+          height: 100%;
+
+          background: {
+            size: contain;
+            position: center;
+            repeat: no-repeat;
+          }
+
+          position: relative;
+
+          .tier-info-overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: $overlay-bg;
+
+            .tier-sub {
+              color: $neutral-gray;
+              margin-top: 4px;
+            }
+          }
+        }
+
+        .remove-button,
+        .edit-button {
+          position: absolute;
+          z-index: 2;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s ease-in-out;
+        }
+
+        .remove-button {
+          top: 10px;
+          right: 10px;
+          z-index: 10;
+          background-color: transparent;
+        }
+
+        .edit-button {
+          top: 10px;
+          left: 10px;
+          color: $pure-white;
+          font-size: 1.2rem;
+          background-color: $overlay-bg;
+          border-radius: 50%;
+          padding: 8px;
+          cursor: pointer;
+
+          &:hover {
+            background: $steam-gray;
+          }
+        }
+
+        .mobile-settings,
+        .mobile-menu {
+          display: none;
+        }
       }
     }
   }
@@ -124,55 +120,60 @@
       gap: 0.5rem;
     }
 
-    .container-tier .tier-card {
-      width: 100% !important;
+    .container-tier {
+      width: 100%;
 
-      .remove-button,
-      .edit-button {
-        display: none !important;
-      }
+      .tier-card {
+        width: 100% !important;
+        position: relative;
 
-      .mobile-settings {
-        display: block;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 10;
-        font-size: 1.3rem;
-        color: $pure-white;
-        background: $overlay-bg;
-        border-radius: 50%;
-        padding: 6px;
-        cursor: pointer;
-
-        &:hover {
-          background: $steam-gray;
+        .remove-button,
+        .edit-button {
+          display: none !important;
         }
-      }
 
-      .mobile-menu {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 45px;
-        right: 10px;
-        z-index: 15;
-        background: $overlay-bg;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 0 8px $overlay-bg;
-
-        .menu-option {
-          padding: 8px 12px;
+        .mobile-settings {
+          display: block !important;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          z-index: 10;
+          font-size: 1.3rem;
           color: $pure-white;
-          background: transparent;
-          border: none;
-          text-align: left;
+          background: $overlay-bg;
+          border-radius: 50%;
+          padding: 6px;
           cursor: pointer;
-          font-size: 14px;
 
           &:hover {
-            background-color: $steam-gray;
+            background: $steam-gray;
+          }
+        }
+
+        .mobile-menu {
+          display: flex !important;
+          flex-direction: column;
+          position: absolute;
+          top: 45px;
+          right: 10px;
+          z-index: 15;
+          background: $overlay-bg;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 0 8px $overlay-bg;
+
+          .menu-option {
+            padding: 8px 12px;
+            color: $pure-white;
+            background: transparent;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+
+            &:hover {
+              background-color: $steam-gray;
+            }
           }
         }
       }

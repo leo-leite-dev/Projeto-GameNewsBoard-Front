@@ -17,7 +17,7 @@
             </app-input>
         </div>
 
-        <div class="form-group d-flex gap-10 column">
+        <div class="form-group d-flex gap-10 pd-2 column">
             <label class="upload-label mb-5">Selecione uma imagem</label>
 
             <label class="upload-dropzone d-flex align-center jc-center column" [class.has-preview]="previewUrl">
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <app-submit-button [label]="isEditMode ? 'Atualizar Tier' : 'Criar Tier'"
+        <app-submit-button [label]="isEditMode ? 'Atualizar Tier' : 'Criar Tier'" class="pd-2"
             [disabled]="form.invalid || uploading || !imageId" [routeAfterSubmit]="getRedirectRoute()">
         </app-submit-button>
     </form>

@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { YearCategory } from '../../enums/year-category.enum';
 import { Platform } from '../../enums/platform.enum';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ViewportService } from '../../services/commons/viewport.service';
 
 @Component({
   selector: 'app-filter-menu',
   standalone: true,
-  imports: [GenericModule, FontAwesomeModule],
+  imports: [GenericModule],
   templateUrl: './filter-menu.component.html',
   styleUrls: ['./filter-menu.component.scss'],
 })
@@ -24,7 +24,8 @@ export class FilterMenuComponent {
   }>();
 
   faTimes = faTimes;
-  
+
+  isMobile = false;
   showFilterMenu = false;
 
   Platform = Platform;
@@ -33,7 +34,10 @@ export class FilterMenuComponent {
   currentPlatform!: Platform;
   currentYearCategory!: YearCategory;
 
+  constructor(private viewportService: ViewportService) { }
+
   ngOnInit(): void {
+    this.isMobile = this.viewportService.isMobile();
     this.currentPlatform = this.selectedPlatform;
     this.currentYearCategory = this.selectedYearCategory;
   }

@@ -1,8 +1,6 @@
-<ion-content class="container-overflow" [fullscreen]="true">
+<ion-content class="container-wrapper" [fullscreen]="true">
   <ng-container *ngIf="isLoading; else content">
-    <div class="global-loading-wrapper">
-      <app-gamer-loading *ngIf="isLoading"></app-gamer-loading>
-    </div>
+    <app-gamer-loading class="global-loading-wrapper"></app-gamer-loading>
   </ng-container>
 
   <ng-template #content>

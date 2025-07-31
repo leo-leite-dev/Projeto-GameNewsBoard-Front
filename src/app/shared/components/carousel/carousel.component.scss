@@ -1,10 +1,8 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.carousel-wrapper {
-  margin: 0 auto;
-  max-width: 1200px;
-  position: relative;
+.container-wrapper {
+  padding: 1.5rem;
 
   .carousel-header {
     .right-header {
@@ -84,10 +82,13 @@
 }
 
 @include respond(mobile) {
+  .container-wrapper {
+    padding: 1rem;
+  }
+
   .carousel-header {
     font-size: 12px;
     white-space: nowrap;
-    margin-left: 5px;
     margin-bottom: 0px;
 
     .right-header {
@@ -95,15 +96,6 @@
         font-size: 10px;
       }
     }
-
-    .btn-toggle-scroll {
-      margin-right: 10px;
-    }
-  }
-
-  .carousel-container {
-    touch-action: pan-x;
-    -webkit-overflow-scrolling: touch;
   }
 
   .scroll-arrow {

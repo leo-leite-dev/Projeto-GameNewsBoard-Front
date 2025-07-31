@@ -1,15 +1,9 @@
-
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.game-dashboard {
-  @include respond(mobile) {
-    padding: 1rem;
 
-    .search-filter {
-      margin-bottom: 1rem;
-    }
-
+@include respond(mobile) {
+  .game-dashboard {
     .game-carousel {
       .carousel-wrapper {
         overflow-x: auto;

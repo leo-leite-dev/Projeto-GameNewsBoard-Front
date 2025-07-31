@@ -1,7 +1,7 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.game-release-container {
+.all-releases-wrapper {
     max-width: 1600px;
     margin: 0 auto;
 
@@ -57,7 +57,9 @@
 }
 
 @mixin all-releases-responsive {
-    .game-release-container {
+    .all-releases-wrapper {
+        margin: 0 auto;
+
         .d-grid {
             display: flex;
             flex-direction: column;

@@ -1,0 +1,23 @@
+  .icon {
+      all: unset;
+      background: linear-gradient(145deg, #2b0038, #450066);
+      border: 2px solid #8e2eff;
+      border-radius: 10px;
+      padding: 8px;
+      box-shadow: 0 0 6px #8e2eff77;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+          background: linear-gradient(145deg, #3c0057, #6100aa);
+          box-shadow: 0 0 10px #a74bffcc;
+          transform: scale(1.05);
+      }
+
+      &:active {
+          transform: scale(0.95);
+      }
+  }

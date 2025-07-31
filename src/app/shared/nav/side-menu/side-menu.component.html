@@ -69,10 +69,12 @@
   <app-header *ngIf="!(modalView$ | async)" [isSmallScreen]="isSmallScreen" [menuExpanded]="menuExpanded"
     (menuToggle)="toggleMenu()"></app-header>
 
-  <div class="content" [class.menu-pushed]="menuExpanded && isSmallScreen"
-    [class.menu-collapsed]="!menuExpanded && !isSmallScreen">
-    <router-outlet></router-outlet>
-  </div>
+<div class="content"
+     [class.menu-collapsed]="!menuExpanded && !isSmallScreen"
+     [class.menu-expanded]="menuExpanded && !isSmallScreen"
+     [class.menu-pushed]="menuExpanded && isSmallScreen">
+  <router-outlet></router-outlet>
+</div>
 </div>
 
 <app-login-modal *ngIf="(modalView$ | async) === 'login'" (loginSuccess)="handleLoginSuccess()"

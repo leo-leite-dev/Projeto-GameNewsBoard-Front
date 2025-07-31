@@ -1,13 +1,20 @@
-<div class="form-wrapper d-flex">
-  <input class="input" [type]="type" [placeholder]="placeholder" [(ngModel)]="value"
-    [readonly]="isMobile && useMobileModal" (click)="(isMobile && useMobileModal) ? isSearchModalOpen = true : null"
-    (ngModelChange)="onInputChange()" />
+<div *ngIf="isMobile && useMobileModal; else desktopInput" class="mobile-actions d-flex gap-10 mt-10">
+  <button class="icon" (click)="openModal()">
+    <app-fa-icon icon="search"></app-fa-icon>
+  </button>
 </div>
 
-<div class="mobile-search-modal" *ngIf="isMobile && isSearchModalOpen">
+<ng-template #desktopInput>
+  <div class="form-wrapper d-flex">
+    <input class="input" [type]="computedInputType" [placeholder]="placeholder" [(ngModel)]="value"
+      [readonly]="isDisabled" (ngModelChange)="onInputChange()" />
+  </div>
+</ng-template>
+
+<div class="mobile-search-modal d-flex align-center jc-center column" *ngIf="isMobile && isSearchModalOpen">
   <input class="input big" [placeholder]="placeholder" [(ngModel)]="value" />
   <button (click)="confirmMobileSearch()">Buscar</button>
   <button class="close-button" (click)="isSearchModalOpen = false">
-    <fa-icon [icon]="['fas', 'times']"></fa-icon>
+    <app-fa-icon icon="times" className="icon-button" title="Filtros"></app-fa-icon>
   </button>
 </div>

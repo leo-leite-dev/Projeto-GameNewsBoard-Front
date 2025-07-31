@@ -1,4 +1,3 @@
-import { extend } from 'lodash';
 import { TierListEntry } from './tier-list-entry.model';
 
 export interface TierList {
