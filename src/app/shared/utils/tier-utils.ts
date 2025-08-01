@@ -1,5 +1,5 @@
 import { TierLevel } from '../enums/tier-level.enum';
-import { GameResponse } from '../models/game-reponse.model';
+import { GameResponse } from '../models/game-response.model';
 
 export interface TierInfo {
     level: TierLevel;

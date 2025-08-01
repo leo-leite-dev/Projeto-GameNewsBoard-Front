@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameDataService } from '../../../shared/services/commons/game-data.service';
-import { GameResponse } from '../../../shared/models/game-reponse.model';
+import { GameResponse } from '../../../shared/models/game-response.model';
 import { GameFilters } from '../../../shared/models/commons/game-filters.model';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../../shared/constants/pagination.constants';
 import { GamerLoadingComponent } from '../../../shared/components/gamer-loading/gamer-loading.component';
@@ -24,11 +24,11 @@ import { FaIconComponent } from '../../../shared/components/icons/fa-icon/fa-ico
   standalone: true,
   imports: [
     GenericModule,
-    GamerLoadingComponent,
-    PaginationComponent,
-    GameSearchFilterComponent,
-    DecimalPipe,
-    FaIconComponent
+    // GamerLoadingComponent,
+    // PaginationComponent,
+    // GameSearchFilterComponent,
+    // DecimalPipe,
+    // FaIconComponent
   ],
   templateUrl: './all-games-list.component.html',
   styleUrls: ['./all-games-list.component.scss'],

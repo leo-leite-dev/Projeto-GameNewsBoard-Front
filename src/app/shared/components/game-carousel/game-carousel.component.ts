@@ -5,7 +5,7 @@ import { GameSearchFilterComponent } from "../../forms/game-search-filter/game-s
 import { CarouselComponent } from "../carousel/carousel.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { GameResponse } from "../../models/game-reponse.model";
+import { GameResponse } from "../../models/game-response.model";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "../../constants/pagination.constants";
 import { GameFilters } from "../../models/commons/game-filters.model";
 import { Platform } from "../../enums/platform.enum";

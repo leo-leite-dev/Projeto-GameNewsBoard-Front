@@ -1,5 +1,5 @@
 import { TierLevel } from '../enums/tier-level.enum';
-import { GameResponse } from './game-reponse.model';
+import { GameResponse } from './game-response.model';
 
 export interface TierListEntry {
   gameId: number;

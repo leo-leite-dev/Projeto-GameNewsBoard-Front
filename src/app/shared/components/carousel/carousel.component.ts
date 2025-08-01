@@ -1,6 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, OnDestroy, AfterViewInit, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { GamerLoadingComponent } from '../gamer-loading/gamer-loading.component';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ViewportService } from '../../services/commons/viewport.service';
 
@@ -10,7 +9,6 @@ import { ViewportService } from '../../services/commons/viewport.service';
   imports: [
     GenericModule,
     DragDropModule,
-    GamerLoadingComponent,
   ],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],

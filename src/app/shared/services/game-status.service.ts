@@ -4,7 +4,7 @@ import { Observable, catchError, map } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { ApiResponse } from '../models/commons/api-response.model';
 import { ErrorHandlingService } from './commons/error-handling.service';
-import { GameResponse } from '../models/game-reponse.model';
+import { GameResponse } from '../models/game-response.model';
 import { Status } from '../enums/status-game.enum';
 
 @Injectable({ providedIn: 'root' })

@@ -5,7 +5,7 @@ import { YearCategory } from '../../enums/year-category.enum';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../models/commons/api-response.model';
 import { PaginatedResult } from '../../models/commons/paginated-result.model';
-import { GameResponse } from '../../models/game-reponse.model';
+import { GameResponse } from '../../models/game-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class GameDataService {

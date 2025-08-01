@@ -1,3 +1,5 @@
+<app-gamer-loading class="global-loading-wrapper" *ngIf="isLoading" />
+
 <div *ngIf="!isLoading" class="tier-background">
   <div class="game-management-wrapper">
     <div class="tier-list-container d-flex space-between center mb-20">
@@ -9,24 +11,20 @@
       <div *ngIf="tierLists.length" class="container-tier d-flex gap-10 wrap">
         <div class="tier-card" *ngFor="let tier of tierLists" (click)="goToTier(tier.id)">
 
-          <!-- BOTÕES VERSÃO DESKTOP -->
           <app-remove-button *ngIf="!isMobileView" class="remove-button" tooltip="Excluir tier" [icon]="'trash'"
             (click)="openConfirmDialog(tier.id); $event.stopPropagation()" />
 
           <fa-icon *ngIf="!isMobileView" [icon]="'pen'" class="edit-button" title="Editar tier"
             (click)="goToEditTier(tier.id); $event.stopPropagation()" />
 
-          <!-- BOTÃO VERSÃO MOBILE -->
           <fa-icon *ngIf="isMobileView" [icon]="'cog'" class="mobile-settings"
             (click)="toggleTierMenu(tier.id); $event.stopPropagation()" />
 
-          <!-- MENU VERSÃO MOBILE -->
           <div *ngIf="isMobileView && activeTierMenuId === tier.id" class="mobile-menu">
             <button class="menu-option" (click)="goToEditTier(tier.id); $event.stopPropagation()">Editar</button>
             <button class="menu-option" (click)="openConfirmDialog(tier.id); $event.stopPropagation()">Excluir</button>
           </div>
 
-          <!-- IMAGEM E INFOS -->
           <div class="tier-image text-center" [style.backgroundImage]="'url(' + tier.imageUrl + ')'">
             <div class="tier-info-overlay">
               <h3 class="tier-name fs-18">{{ tier.title }}</h3>
@@ -37,7 +35,6 @@
       </div>
     </div>
 
-    <!-- CASO NÃO TENHA TIERS -->
     <div *ngIf="!tierLists.length" class="no-tiers mt-20">
       <p class="info-text">Você ainda não criou nenhuma tier list.</p>
     </div>

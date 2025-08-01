@@ -26,6 +26,8 @@
         border-radius: 6px;
         border: 2px dashed $white-overlay-02;
         min-height: 140px;
+        max-height: 54vh;
+        overflow-y: auto;
 
         .game-icon {
           width: 100%;

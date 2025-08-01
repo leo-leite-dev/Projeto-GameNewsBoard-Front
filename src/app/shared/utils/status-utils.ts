@@ -1,15 +1,16 @@
 import { Status } from '../enums/status-game.enum';
-import { GameResponse } from '../models/game-reponse.model';
+import { CarouselItem } from '../models/commons/carousel-item.model';
 
 export const MAX_GAMES_PER_DRAWER = 6;
 
 export const STATUS_CONFIG = [
     { value: Status.InProgress, label: 'Em Progresso', class: 'status-inprogress' },
+    { value: Status.Dropped, label: 'Abandonado', class: 'status-dropped' },
+    { value: Status.Finished, label: 'Finalizado', class: 'status-finished' },
     { value: Status.Platinum, label: 'Platinado', class: 'status-platinum' },
     { value: Status.Replaying, label: 'Rejogando', class: 'status-replaying' },
+    { value: Status.Backlog, label: 'Backlog', class: 'status-backlog' },
     { value: Status.Paused, label: 'Pausado', class: 'status-paused' },
-    { value: Status.Finished, label: 'Finalizado', class: 'status-finished' },
-    { value: Status.Dropped, label: 'Abandonado', class: 'status-dropped' },
 ];
 
 export function getStatusClass(status: Status): string {
@@ -20,22 +21,20 @@ export function getStatusLabel(status: Status): string {
     return STATUS_CONFIG.find(s => s.value === status)?.label || 'Desconhecido';
 }
 
-export function mapStatusFromString(value: string): Status | null {
-    return Object.values(Status).includes(value as unknown as Status)
-        ? (value as unknown as Status)
-        : null;
+export function initStatusGamesMap(): { [key in Status]: CarouselItem[] } {
+    return Object.values(Status)
+        .filter((value) => !isNaN(Number(value)))
+        .reduce((acc, value) => {
+            const status = Number(value) as Status;
+            acc[status] = [];
+            return acc;
+        }, {} as { [key in Status]: CarouselItem[] });
 }
 
-export function initStatusGamesMap(): { [key in Status]: GameResponse[] } {
-    return Object.values(Status).reduce((acc, status) => {
-        acc[status as Status] = [];
-        return acc;
-    }, {} as { [key in Status]: GameResponse[] });
-}
-
-export function initGameDrawerMap(): { [key in Status]: GameResponse[][] } {
-    return Object.values(Status).reduce((acc, status) => {
-        acc[status as Status] = [];
-        return acc;
-    }, {} as { [key in Status]: GameResponse[][] });
+export function getValidStatuses(): Status[] {
+    return Object.values(Status)
+        .filter((value) => typeof value === 'number')
+        .filter((status) =>
+            status !== Status.Platinum
+        ) as Status[];
 }

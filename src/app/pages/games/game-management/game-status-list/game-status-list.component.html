@@ -15,11 +15,10 @@
         (cdkDropListDropped)="onDrop($event, status)" (cdkDropListEntered)="onDropListEnter(status)"
         (cdkDropListExited)="onDropListExit(status)">
 
-
         <div *ngFor="let game of statusGames[status]" class="game-icon" cdkDrag [cdkDragData]="game">
           <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
           <button class="times-icon-button" (click)="removeGame(game)">
-            <app-fa-icon icon="times" />
+            <fa-icon [icon]="'times'"></fa-icon>
           </button>
         </div>
 
@@ -34,11 +33,9 @@
 
         <div *ngFor="let game of statusGames[status]" class="game-icon" cdkDrag [cdkDragData]="game"
           [cdkDragDisabled]="true" (click)="onGameClicked(game)">
-
           <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
-
           <button class="times-icon-button" (click)="removeGame(game); $event.stopPropagation()">
-            <app-fa-icon icon="times" />
+            <fa-icon [icon]="'times'"></fa-icon>
           </button>
         </div>
 
@@ -50,6 +47,7 @@
   </div>
 </div>
 
-<app-assign-status *ngIf="showAssignStatusModal && selectedGame" [game]="selectedGame"
+<app-assign-status *ngIf="showAssignStatusModal && selectedGame() as game" [game]="game"
   [currentStatus]="selectedGameStatus" (statusSelected)="onStatusSelected($event)"
-  (closed)="showAssignStatusModal = false" />
+  (closed)="showAssignStatusModal = false">
+</app-assign-status>

@@ -1,110 +1,63 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { GenericModule } from '../../../../../shareds/commons/GenericModule';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { GameCarouselComponent } from '../../../../shared/components/game-carousel/game-carousel.component';
-import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
-import { Status } from '../../../../shared/enums/status-game.enum';
-import { GameStatusService } from '../../../../shared/services/game-status.service';
-import { ErrorHandlingService } from '../../../../shared/services/commons/error-handling.service';
-import { ToastrService } from 'ngx-toastr';
-import { STATUS_CONFIG, getStatusLabel, initStatusGamesMap } from '../../../../shared/utils/status-utils';
 import { AssignStatusComponent } from '../../../../shared/modais/assign-status/assign-status.component';
+import { Status } from '../../../../shared/enums/status-game.enum';
 import { CarouselItem } from '../../../../shared/models/commons/carousel-item.model';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { GameStatusStore } from '../../../../shared/stores/game-status.store';
 import { ViewportService } from '../../../../shared/services/commons/viewport.service';
-import { Subject, takeUntil } from 'rxjs';
+import { getStatusLabel, getValidStatuses } from '../../../../shared/utils/status-utils';
 
 @Component({
   selector: 'app-game-status-list',
   standalone: true,
   imports: [
-    GenericModule,
-    GameCarouselComponent,
+    CommonModule,
     DragDropModule,
+    FaIconComponent,
+    GameCarouselComponent,
     AssignStatusComponent
   ],
   templateUrl: './game-status-list.component.html',
-  styleUrls: ['./game-status-list.component.scss']
+  styleUrl: './game-status-list.component.scss'
 })
-export class GameStatusListComponent implements OnInit, OnDestroy {
-  readonly statusList: Status[] = STATUS_CONFIG.map(s => s.value);
-  readonly statuses = STATUS_CONFIG;
+export class GameStatusListComponent implements OnInit {
+  protected readonly statusList = getValidStatuses();
+  protected readonly dropListIds = this.statusList.map(s => `status-drop-${s}`);
 
-  dropListIds: string[] = [];
-  statusGames: { [key in Status]: CarouselItem[] } = initStatusGamesMap();
-
-  selectedGame: CarouselItem | null = null;
-  selectedGameStatus: Status | null = null;
-  showAssignStatusModal = false;
-  isMobile = false;
-  
-  hoveredStatus: Record<Status, boolean> = {} as Record<Status, boolean>;
-
-  private destroy$ = new Subject<void>();
+  protected hoveredStatus: { [key in Status]?: boolean } = {};
+  protected selectedGame: WritableSignal<CarouselItem | null> = signal<CarouselItem | null>(null);
+  protected selectedGameStatus: Status | null = null;
+  protected showAssignStatusModal = false;
+  protected isMobile = false;
 
   constructor(
-    private gameStatusService: GameStatusService,
-    private toastr: ToastrService,
-    private errorHandler: ErrorHandlingService,
-    private viewportService: ViewportService
+    private readonly store: GameStatusStore,
+    private readonly viewport: ViewportService
   ) { }
 
   ngOnInit(): void {
-    for (const status of this.statusList) {
-      this.hoveredStatus[status] = false;
-    }
-
-    this.viewportService.isMobile$()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(isMobile => this.isMobile = isMobile);
-
-    this.dropListIds = ['carousel-drop-list', ...this.statusList.map(status => `status-drop-${status}`)];
-
-    this.gameStatusService.getMyGameStatuses()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (statuses) => {
-          for (const { game, status } of statuses) {
-            const minimalGame: CarouselItem = {
-              id: game.id,
-              title: game.title,
-              coverImage: game.coverImage
-            };
-            this.statusGames[status] ||= [];
-            this.statusGames[status].push(minimalGame);
-          }
-        },
-        error: (err) => {
-          const msg = this.errorHandler.handleHttpError(err);
-          this.toastr.error(msg || 'Erro ao carregar status dos jogos.');
-        }
-      });
+    this.isMobile = this.viewport.isMobile();
+    this.store.load();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  protected get statusGames() {
+    return this.store.statusGames();
   }
 
-  onDrop(event: CdkDragDrop<CarouselItem[]>, newStatus: Status): void {
+  protected get isLoading() {
+    return this.store.isLoading();
+  }
+
+  getStatusLabel(status: Status): string {
+    return getStatusLabel(status);
+  }
+
+  onDrop(event: any, newStatus: Status): void {
     const game = event.item.data as CarouselItem;
-    if (!game) return;
-
-    const oldStatus = this.getGameCurrentStatus(game.id);
-    if (oldStatus !== undefined) {
-      this.statusGames[oldStatus] = this.statusGames[oldStatus].filter(g => g.id !== game.id);
-    }
-
-    this.statusGames[newStatus].push(game);
-
-    this.gameStatusService.setGameStatus(game.id, newStatus).subscribe({
-      next: () => {
-        this.toastr.success('Status atualizado com sucesso!');
-      },
-      error: (err) => {
-        const msg = this.errorHandler.handleHttpError(err);
-        this.toastr.error(msg || 'Erro ao atualizar status.');
-      }
-    });
+    this.store.setGameStatus(game.id, newStatus, game);
   }
 
   onDropListEnter(status: Status): void {
@@ -115,60 +68,27 @@ export class GameStatusListComponent implements OnInit, OnDestroy {
     this.hoveredStatus[status] = false;
   }
 
-  removeGame(game: CarouselItem): void {
-    const status = this.getGameCurrentStatus(game.id);
-    if (status === undefined) return;
-
-    this.gameStatusService.removeGameStatus(game.id).subscribe({
-      next: () => {
-        this.statusGames[status] = this.statusGames[status].filter(g => g.id !== game.id);
-        this.toastr.success('Jogo removido do status com sucesso!');
-      },
-      error: (err) => {
-        const msg = this.errorHandler.handleHttpError(err);
-        this.toastr.error(msg || 'Erro ao remover jogo do status.');
-      }
-    });
-  }
-
   onGameClicked(game: CarouselItem): void {
-    this.selectedGame = game;
-    this.selectedGameStatus = this.getGameCurrentStatus(game.id) ?? null;
+    if (!this.isMobile) return;
+    this.selectedGame.set(game);
+    this.selectedGameStatus = this.store.getGameStatusById(game.id) ?? null;
     this.showAssignStatusModal = true;
   }
 
-  onStatusSelected(data: { status: Status; game: CarouselItem }): void {
+  onStatusSelected(event: { status: Status; game: CarouselItem }): void {
+    this.store.setGameStatus(event.game.id, event.status, event.game); // ✅ Agora o signal é atualizado corretamente
     this.showAssignStatusModal = false;
-
-    const game = data.game;
-    const currentStatus = this.getGameCurrentStatus(game.id);
-
-    if (currentStatus === data.status) return;
-
-    if (currentStatus !== undefined) {
-      this.statusGames[currentStatus] = this.statusGames[currentStatus].filter(g => g.id !== game.id);
-    }
-
-    this.statusGames[data.status].push(game);
-
-    this.gameStatusService.setGameStatus(game.id, data.status).subscribe({
-      next: () => this.toastr.success('Status atualizado com sucesso!'),
-      error: (err) => {
-        const msg = this.errorHandler.handleHttpError(err);
-        this.toastr.error(msg || 'Erro ao atualizar status.');
-      }
-    });
   }
 
-  getStatusLabel(status: Status): string {
-    return getStatusLabel(status);
+  removeGame(game: CarouselItem): void {
+    this.store.removeGameStatus(game.id);
   }
 
-  getFullCoverUrl(coverImage: string): string {
-    return coverImage?.replace('t_thumb', 't_cover_big') ?? '';
+  showAssignStatusModalFn(): boolean {
+    return this.isMobile && this.showAssignStatusModal && this.selectedGame() !== null;
   }
 
-  private getGameCurrentStatus(gameId: number): Status | undefined {
-    return this.statusList.find(status => this.statusGames[status].some(g => g.id === gameId));
+  getFullCoverUrl(img: string): string {
+    return img?.replace('/t_thumb/', '/t_cover_big/') ?? '/assets/fallback.jpg';
   }
 }
