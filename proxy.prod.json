@@ -6,7 +6,7 @@
     "logLevel": "debug"
   },
   "/uploads": {
-    "target": "https://projeto-gamenewsboard-back.fly.dev",
+    "target": "https://xkfahqlwbxotkggjfams.supabase.co/storage/v1/object/public/uploads/",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"

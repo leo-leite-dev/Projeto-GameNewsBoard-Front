@@ -93,7 +93,7 @@ export class SideMenuComponent implements OnInit {
       label: 'Jogos',
       icon: 'gamepad',
       submenu: [
-        { label: 'Todos os Jogos', route: '/all-games' },
+        { label: 'GG Ofertas', route: '/all-games' },
         { label: 'Gerenciar Jogos', route: '/manage-games' },
       ],
     },

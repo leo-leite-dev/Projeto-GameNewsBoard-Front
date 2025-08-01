@@ -30,7 +30,7 @@ export const routes: Routes = [
       },
       {
         path: 'all-games',
-        component: AllGamesListComponent,
+        component: ComingSoonComponent,
       },
       {
         path: 'game-releases',

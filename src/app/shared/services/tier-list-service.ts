@@ -4,19 +4,14 @@ import { Observable, catchError, map } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { ApiResponse } from '../models/commons/api-response.model';
 import { ErrorHandlingService } from './commons/error-handling.service';
-import {
-  TierList,
-  TierListRequest,
-  TierListResponse,
-  UpdateTierListRequest,
-} from '../models/tier-list.model';
+import { TierList, TierListRequest, TierListResponse, UpdateTierListRequest} from '../models/tier-list.model';
 import { TierListEntryRequest } from '../models/tier-list-entry.model';
 
 @Injectable({ providedIn: 'root' })
 export class TierListService {
   private readonly baseUrl = `${environment.apiBaseUrl}/TierList`;
 
-  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) {}
+  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) { }
 
   createTierList(request: TierListRequest): Observable<ApiResponse<TierList>> {
     return this.http
