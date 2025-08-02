@@ -55,7 +55,6 @@ export class AllReleasesComponent implements OnInit {
       .loadAllByCategory(this.category, this.selectedPlatform)
       .subscribe({
         next: (res) => {
-          console.log('🔍 Dados recebidos do loadAllByCategory:', res);
           this.games = res.data ?? [];
           this.message = res.message;
           this.isLoading = false;

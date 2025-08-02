@@ -8,13 +8,13 @@
   .tier-cards-wrapper {
     min-height: 82vh;
 
+    &.empty {
+      min-height: 8vh;
+    }
+
     .tier-title {
       color: $pure-white;
       margin: 0;
-    }
-
-    .create-button {
-      white-space: nowrap;
     }
 
     .container-tier {
@@ -109,15 +109,17 @@
     }
   }
 
-  .no-tiers {
-    height: 80vh;
-  }
-
   @include respond(mobile) {
     .tier-list-container {
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    .no-tiers {
+      .info-text {
+        text-align: center;
+      }
     }
 
     .container-tier {
@@ -177,11 +179,6 @@
           }
         }
       }
-    }
-
-    .no-tiers {
-      text-align: center;
-      padding-top: 40px;
     }
   }
 }

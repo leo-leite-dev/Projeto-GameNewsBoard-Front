@@ -1,6 +1,6 @@
 <ion-content>
   <div class="container-news mb-20" *ngFor="let item of news.slice(1)">
-    <div class="news-items d-flex gap-20">
+    <div class="news-items d-flex gap-20 flex-start">
       <img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="Imagem da notícia" class="news-image" />
 
       <div class="news-text">
@@ -10,7 +10,7 @@
 
         <div class="d-flex space-between align-center mt-10 mobile-stack">
           <a class="fs-12" [href]="item.link" target="_blank">Ler mais</a>
-          <span class="date fs-12">
+          <span class="date fs-12 nowrap">
             {{ item.pubDate | date: 'dd/MM/yyyy HH:mm' }}
           </span>
         </div>

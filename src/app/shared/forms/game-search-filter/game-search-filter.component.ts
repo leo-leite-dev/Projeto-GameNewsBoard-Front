@@ -36,7 +36,6 @@ export class GameSearchFilterComponent implements AfterViewInit {
 
   @Output() filtersChanged = new EventEmitter<GameFilters>();
 
-  isMobile$: Observable<boolean>;
   faSearch = faSearch;
   faTimes = faTimes;
 
@@ -53,7 +52,6 @@ export class GameSearchFilterComponent implements AfterViewInit {
   }));
 
   constructor(private viewportService: ViewportService) {
-    this.isMobile$ = this.viewportService.isMobile$();
 
     this.searchTermSubject
       .pipe(debounceTime(300), distinctUntilChanged())

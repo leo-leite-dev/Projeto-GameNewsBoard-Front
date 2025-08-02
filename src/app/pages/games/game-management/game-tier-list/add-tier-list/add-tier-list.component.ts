@@ -126,9 +126,8 @@ export class AddTierListComponent implements OnInit {
       return;
     }
 
-    if (this.isEditMode && !title) {
+    if (this.isEditMode && !title)
       title = 'Sem Título';
-    }
 
     const payload: UpdateTierListRequest = {
       title: title || 'Sem Título',

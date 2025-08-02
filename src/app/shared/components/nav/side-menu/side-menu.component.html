@@ -66,16 +66,13 @@
 
   <div class="menu-overlay" *ngIf="menuExpanded && isSmallScreen" (click)="toggleMenu()"></div>
 
-  <app-header *ngIf="!(modalView$ | async)" [isSmallScreen]="isSmallScreen" [menuExpanded]="menuExpanded"
-    (menuToggle)="toggleMenu()"></app-header>
+  <div class="content" [class.menu-collapsed]="!menuExpanded && !isSmallScreen"
+    [class.menu-expanded]="menuExpanded && !isSmallScreen" [class.menu-pushed]="menuExpanded && isSmallScreen">
+    <router-outlet></router-outlet>
+  </div>
+</div>
 
-<div class="content"
-     [class.menu-collapsed]="!menuExpanded && !isSmallScreen"
-     [class.menu-expanded]="menuExpanded && !isSmallScreen"
-     [class.menu-pushed]="menuExpanded && isSmallScreen">
-  <router-outlet></router-outlet>
-</div>
-</div>
+<app-mobile-footer-nav *ngIf="isSmallScreen" />
 
 <app-login-modal *ngIf="(modalView$ | async) === 'login'" (loginSuccess)="handleLoginSuccess()"
   (close)="modalAuth.closeModal()" (switchToRegister)="modalAuth.openRegister()" />

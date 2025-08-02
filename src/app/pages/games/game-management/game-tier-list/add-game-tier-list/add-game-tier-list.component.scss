@@ -39,7 +39,6 @@
   }
 
   @include respond(mobile) {
-
     .container-overflow {
       width: 100%;
       flex-direction: column;

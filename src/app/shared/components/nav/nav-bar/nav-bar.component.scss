@@ -20,7 +20,6 @@
 
     &:hover {
       background: linear-gradient(135deg, #5f00ba, $mage-purple);
-      transform: scale(1.05);
       border-color: $pure-white;
     }
   }
@@ -34,8 +33,7 @@
 
 @include respond(mobile) {
   .game-management-wrapper {
-    margin-top: 60px;
-    margin-bottom: 0px;
+  
     gap: 0;
 
     .nav-button {

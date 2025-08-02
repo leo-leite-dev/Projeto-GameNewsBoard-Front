@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { RouterModule } from '@angular/router';
-import { NavBarComponent } from '../../../shared/nav/nav-bar/nav-bar.component';
 import { LoginComponent } from '../../../shared/modais/login/login.component';
 import { UserService } from '../../../shared/services/user.service';
+import { NavBarComponent } from '../../../shared/components/nav/nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-game-management',

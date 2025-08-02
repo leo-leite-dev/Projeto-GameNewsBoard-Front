@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
         if (isAuthLogin || isUserMeCheck) 
           return throwError(() => error);
         
-
         if (error.status === 401 || error.status === 403) {
           this.toastr.error('Sessão expirada. Faça login novamente.', 'Acesso negado');
           setTimeout(() => this.router.navigate(['/login']), 1500);

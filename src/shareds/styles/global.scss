@@ -145,4 +145,9 @@ app-root {
   .container-overflow {
     height: 78vh;
   }
+
+  .container-wrapper,
+  .game-management-wrapper {
+    border-radius: 0;
+  }
 }

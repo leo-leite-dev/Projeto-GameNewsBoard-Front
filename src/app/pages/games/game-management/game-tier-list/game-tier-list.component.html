@@ -7,7 +7,11 @@
       <app-create-button label="Criar nova tier" [icon]="'plus'" className="back-btn" (click)="goToCreateTier()" />
     </div>
 
-    <div class="tier-cards-wrapper">
+    <div *ngIf="!tierLists.length" class="no-tiers mt-20">
+      <p class="info-text">Você ainda não criou nenhuma tier list.</p>
+    </div>
+
+    <div class="tier-cards-wrapper" [ngClass]="{ 'empty': !tierLists.length }">
       <div *ngIf="tierLists.length" class="container-tier d-flex gap-10 wrap">
         <div class="tier-card" *ngFor="let tier of tierLists" (click)="goToTier(tier.id)">
 
@@ -33,10 +37,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div *ngIf="!tierLists.length" class="no-tiers mt-20">
-      <p class="info-text">Você ainda não criou nenhuma tier list.</p>
     </div>
   </div>
 </div>

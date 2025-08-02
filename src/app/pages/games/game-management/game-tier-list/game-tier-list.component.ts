@@ -1,19 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { takeUntil, Subject } from 'rxjs';
-
+import { Subject } from 'rxjs';
 import { GenericModule } from '../../../../../shareds/commons/GenericModule';
 import { CreateButtonComponent } from '../../../../shared/components/buttons/create-button/create-button.component';
 import { RemoveButtonComponent } from '../../../../shared/components/buttons/remove-button/remove-button.component';
 import { ConfirmDialogComponent } from '../../../../shared/modais/confirm-dialog/confirm-dialog.component';
 import { GamerLoadingComponent } from '../../../../shared/components/gamer-loading/gamer-loading.component';
-
 import { TierListService } from '../../../../shared/services/tier-list-service';
 import { ErrorHandlingService } from '../../../../shared/services/commons/error-handling.service';
 import { NotificationService } from '../../../../shared/services/commons/notification.service';
 import { ViewportService } from '../../../../shared/services/commons/viewport.service';
-
 import { TierListResponse } from '../../../../shared/models/tier-list.model';
 import { environment } from '../../../../../environments/environments';
 
@@ -42,19 +39,14 @@ export class GameTierListComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private tierListService: TierListService,
-    private router: Router,
-    private errorHandler: ErrorHandlingService,
-    private notification: NotificationService,
-    private viewportService: ViewportService
-  ) { }
+  private tierListService = inject(TierListService);
+  private router = inject(Router);
+  private errorHandler = inject(ErrorHandlingService);
+  private notification = inject(NotificationService);
+  private viewportService = inject(ViewportService);
 
   ngOnInit(): void {
-    this.viewportService.isMobile$()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(isMobile => this.isMobileView = isMobile);
-
+    this.isMobileView = this.viewportService.isMobile();
     this.loadTiers();
   }
 
@@ -122,14 +114,18 @@ export class GameTierListComponent implements OnInit, OnDestroy {
   }
 
   goToTier(tierId: string): void {
-    this.router.navigate(['manage-games/tier-list/add-game-tier-list', tierId]);
+    this.navigateWithAuthGuard(['manage-games/tier-list/add-game-tier-list', tierId]);
   }
 
   goToCreateTier(): void {
-    this.router.navigate(['manage-games/tier-list/create-tier-list']);
+    this.navigateWithAuthGuard(['manage-games/tier-list/create-tier-list']);
   }
 
   goToEditTier(tierId: string): void {
-    this.router.navigate(['manage-games/tier-list/edit-tier-list', tierId]);
+    this.navigateWithAuthGuard(['manage-games/tier-list/edit-tier-list', tierId]);
+  }
+
+  private navigateWithAuthGuard(route: any[]): void {
+    this.router.navigate(route);
   }
 }

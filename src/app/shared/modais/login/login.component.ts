@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputComponent } from '../../../shared/forms/input/input.component';
-import { GenericModule } from '../../../../shareds/commons/GenericModule';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, delayWhen, firstValueFrom, of, retry, retryWhen, take, timer } from 'rxjs';
+import { catchError, of, retry, timer, firstValueFrom } from 'rxjs';
 import { AuthService } from '../../../core/auth/services/auth.service';
 import { UserService } from '../../services/user.service';
+import { InputComponent } from '../../../shared/forms/input/input.component';
+import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
@@ -16,7 +16,6 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
     GenericModule,
     ReactiveFormsModule,
     InputComponent,
-    GenericModule,
     FontAwesomeModule
   ],
   templateUrl: './login.component.html',
@@ -28,7 +27,7 @@ export class LoginComponent {
   @Output() switchToRegister = new EventEmitter<void>();
 
   form: FormGroup;
-  errorMessage!: string;
+  errorMessage = '';
   icon: IconProp = 'user';
 
   constructor(
@@ -43,41 +42,42 @@ export class LoginComponent {
     });
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.form.invalid) return;
 
     const { username, password } = this.form.value;
     this.errorMessage = '';
 
-    this.authService.login({ username, password }).subscribe({
-      next: async (res) => {
-        this.toastr.success(res.message);
+    try {
+      const res = await firstValueFrom(this.authService.login({ username, password }));
 
-        const user = await firstValueFrom(
-          this.userService.getAuthenticatedUserSafe().pipe(
-            retry({
-              count: 5,
-              delay: () => timer(200)
-            }),
-            catchError(() => of(null))
-          )
-        );
+      this.toastr.success(res.message);
 
-        if (user?.username) {
-          this.loginSuccess.emit();
-          this.close.emit();
-        } else {
-          this.toastr.error('Não foi possível confirmar o login. Tente novamente.');
-        }
-      },
-      error: () => {
-        this.errorMessage = 'Usuário ou senha inválidos';
-        this.toastr.error(this.errorMessage);
-      },
-    });
+      const user = await firstValueFrom(
+        this.userService.getAuthenticatedUserSafe().pipe(
+          retry({
+            count: 5,
+            delay: () => timer(200)
+          }),
+          catchError(() => of(null))
+        )
+      );
+
+      if (user?.username) {
+        this.userService.refreshUser(); 
+        this.loginSuccess.emit();
+        this.close.emit();
+      } else {
+        this.toastr.error('Não foi possível confirmar o login. Tente novamente.');
+      }
+
+    } catch (err) {
+      this.errorMessage = 'Usuário ou senha inválidos';
+      this.toastr.error(this.errorMessage);
+    }
   }
 
-  navigateToRegister(event: MouseEvent) {
+  navigateToRegister(event: MouseEvent): void {
     event.stopPropagation();
     this.switchToRegister.emit();
   }

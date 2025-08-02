@@ -56,10 +56,6 @@ export class AddGameTierListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.viewport.isMobile$()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(isMobile => this.isMobileView = isMobile);
-
     this.route.paramMap
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {

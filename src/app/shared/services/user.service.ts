@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environments';
 import { ApiResponse } from '../models/commons/api-response.model';
 import { UserProfileResponse } from '../models/user-profile.model';
@@ -20,11 +20,15 @@ export class UserService {
     this.loginModalSubject.next();
   }
 
-  refreshUser() {
-    this.getAuthenticatedUserSafe().subscribe((user) => this.userSubject.next(user));
+  refreshUser(): void {
+    this.getAuthenticatedUserSafe().pipe(
+      catchError(() => of(null))
+    ).subscribe(user => {
+      this.userSubject.next(user);
+    });
   }
 
-  clearUser() {
+  clearUser(): void {
     this.userSubject.next(null);
   }
 

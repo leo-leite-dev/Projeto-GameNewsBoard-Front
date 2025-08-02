@@ -1,0 +1,59 @@
+@use 'colors' as *;
+@use 'breakpoints' as *;
+
+@include respond(mobile) {
+    .mobile-footer-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: $void-black;
+        border-top: 1px solid $charcoal;
+        padding: 6px 0;
+        justify-content: space-around;
+        z-index: 2000;
+
+        button {
+            background: transparent;
+            border: none;
+            color: $steam-gray;
+            font-size: 24px;
+            position: relative;
+
+            &.active {
+                color: $pure-white;
+            }
+        }
+
+        .profile-wrapper {
+            position: relative;
+
+            .profile-button {
+                font-size: 24px;
+                background: transparent;
+                border: none;
+                color: $steam-gray;
+                padding: 6px;
+                border-radius: 50%;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: $pure-white;
+                }
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+}

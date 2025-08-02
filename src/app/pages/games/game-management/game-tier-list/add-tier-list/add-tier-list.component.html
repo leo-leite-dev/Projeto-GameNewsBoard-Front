@@ -1,5 +1,5 @@
 <ion-content class="form-wrapper d-flex jc-center align-center mt-20">
-    <div class="back-btn-inline" *ngIf="!isMobile">
+    <div class="back-btn-inline mb-10" *ngIf="!isMobile">
         <app-navigate-button [icon]="'arrow-left'" (click)="goBack()"></app-navigate-button>
     </div>
 
@@ -10,7 +10,7 @@
         </p>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" class="create-tier-form d-flex gap-20 column">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="create-tier-form d-flex mt-40 gap-20 column">
         <div class="form-group">
             <app-input formControlName="title" [label]="'Título'" [placeholder]="'Ex: Meus favoritos da franquia Zelda'"
                 [useMobileModal]="false">

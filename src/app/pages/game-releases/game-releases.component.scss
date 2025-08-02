@@ -1,21 +1,17 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.global-loading-wrapper {
-  width: 90vw;
-}
-
 .container-wrapper {
-  .filter-wrapper {
-    margin: 0 auto;
-    max-width: 1200px;
-    position: relative;
+  .carousel-empty-message {
+    height: 300px;
+    color: $steam-gray;
+    font-size: 0.95rem;
   }
 
   .release-item {
     position: relative;
-    width: 200px;
-    height: 250px;
+    width: 250px;
+    height: 300px;
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s ease;
@@ -48,14 +44,14 @@
     }
 
     .game-title {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 600;
       margin-bottom: 4px;
       text-shadow: 0 0 4px $overlay-bg;
     }
 
     .game-extra {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       margin-top: 5px;
       display: flex;
       flex-direction: column;
@@ -68,7 +64,13 @@
 @include respond(mobile) {
   .container-wrapper {
     .filter-wrapper {
-      margin: 60px auto auto auto;
+      margin: 10px;
+    }
+
+    .carousel-empty-message {
+      height: 50px;
+      font-size: 0.85rem;
+      padding: 0 1rem;
     }
 
     .release-item {

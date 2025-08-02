@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { UserProfileResponse } from '../../models/user-profile.model';
-import { UserService } from '../../services/user.service';
-import { LoginComponent } from '../../modais/login/login.component';
-import { RegisterComponent } from '../../modais/register/register.component';
-import { ModalAuthService } from '../../services/commons/modal-auth.service';
-import { AuthService } from '../../../core/auth/services/auth.service';
-import { ConfirmDialogComponent } from '../../modais/confirm-dialog/confirm-dialog.component';
+import { RegisterComponent } from '../../../modais/register/register.component';
+import { LoginComponent } from '../../../modais/login/login.component';
+import { ConfirmDialogComponent } from '../../../modais/confirm-dialog/confirm-dialog.component';
+import { UserProfileResponse } from '../../../models/user-profile.model';
+import { UserService } from '../../../services/user.service';
+import { AuthService } from '../../../../core/auth/services/auth.service';
+import { ModalAuthService } from '../../../services/commons/modal-auth.service';
+import { MobileFooterNavComponent } from '../mobile-footer-nav/mobile-footer-nav.component';
+
 
 @Component({
   selector: 'app-header',
@@ -19,7 +21,7 @@ import { ConfirmDialogComponent } from '../../modais/confirm-dialog/confirm-dial
     MatIconModule,
     LoginComponent,
     RegisterComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -107,7 +109,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout().subscribe(() => {
       this.userService.clearUser();
       this.modalAuth.closeLogout();
-      this.router.navigate(['/']);
+      this.router.navigate(['/comming-son']);
     });
   }
 }

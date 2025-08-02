@@ -1,0 +1,24 @@
+<nav class="mobile-footer-nav">
+    <button (click)="navigate('/news')" [class.active]="isActive('/news')">
+        <mat-icon>article</mat-icon>
+    </button>
+
+    <button (click)="navigate('/game-releases')" [class.active]="isActive('/game-releases')">
+        <mat-icon>event</mat-icon>
+    </button>
+
+    <button (click)="navigate('/all-games')" [class.active]="isActive('/all-games')">
+        <mat-icon>sports_esports</mat-icon>
+    </button>
+
+    <button (click)="handleDashboardClick()" [class.active]="isActive('/manage-games')">
+        <mat-icon>dashboard</mat-icon>
+    </button>
+
+    <div class="profile-wrapper">
+        <button class="profile-button" (click)="handleProfileClick()">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+    </div>
+
+</nav>

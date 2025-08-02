@@ -1,3 +1,5 @@
+@use 'colors' as *;
+
 .scroll {
     &::-webkit-scrollbar {
         width: 5px;
@@ -5,7 +7,7 @@
     }
 
     &::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
+        background: $overlay-light;
         border-radius: 10px;
     }
 

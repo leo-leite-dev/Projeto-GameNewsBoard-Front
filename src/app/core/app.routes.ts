@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
-import { SideMenuComponent } from '../shared/nav/side-menu/side-menu.component';
 import { GameNewsComponent } from '../pages/game-news/game-news.component';
-import { AllGamesListComponent } from '../pages/games/all-games-list/all-games-list.component';
 import { GameManagementComponent } from '../pages/games/game-management/game-management.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { AddGameTierListComponent } from '../pages/games/game-management/game-tier-list/add-game-tier-list/add-game-tier-list.component';
@@ -9,6 +7,7 @@ import { GameReleasesComponent } from '../pages/game-releases/game-releases.comp
 import { AllReleasesComponent } from '../pages/game-releases/all-releases/all-releases.component';
 import { ComingSoonComponent } from '../shared/components/coming-soon/coming-soon.component';
 import { AddTierListComponent } from '../pages/games/game-management/game-tier-list/add-tier-list/add-tier-list.component';
+import { SideMenuComponent } from '../shared/components/nav/side-menu/side-menu.component';
 
 export const routes: Routes = [
   {

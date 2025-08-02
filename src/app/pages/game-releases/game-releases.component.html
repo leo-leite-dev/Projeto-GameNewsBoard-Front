@@ -1,63 +1,22 @@
 <ion-content class="container-wrapper" [fullscreen]="true">
-  <ng-container *ngIf="isLoading; else content">
+  <div class="filter-wrapper align-left">
+    <app-platform-filter [platforms]="platforms" [selected]="selectedPlatform"
+      (platformChange)="filterByPlatform($event)">
+    </app-platform-filter>
+  </div>
+
+  <ng-container *ngIf="isLoading; else carousels">
     <app-gamer-loading class="global-loading-wrapper"></app-gamer-loading>
   </ng-container>
 
-  <ng-template #content>
-    <div class="filter-wrapper align-left">
-      <app-platform-filter [platforms]="platforms" [selected]="selectedPlatform"
-        (platformChange)="filterByPlatform($event)">
-      </app-platform-filter>
-    </div>
-
-    <ng-template #todayTemplate let-game>
-      <div class="release-item" (click)="onCardClick(game.id)">
-        <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
-        <div class="game-overlay">
-          <div class="game-title">{{ game.title }}</div>
-          <div class="game-extra">
-            <small>{{ game.platform }}</small>
-            <small>Lançamento: {{ game.releaseDate | date: 'dd/MM/yyyy' }}</small>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-
-    <ng-template #upcomingTemplate let-game>
-      <div class="release-item" (click)="onCardClick(game.id)">
-        <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
-        <div class="game-overlay">
-          <div class="game-title">{{ game.title }}</div>
-          <div class="game-extra">
-            <small>{{ game.platform }}</small>
-            <small>Lançamento: {{ game.releaseDate | date: 'dd/MM/yyyy' }}</small>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-
-    <ng-template #recentTemplate let-game>
-      <div class="release-item" (click)="onCardClick(game.id)">
-        <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
-        <div class="game-overlay">
-          <div class="game-title">{{ game.title }}</div>
-          <div class="game-extra">
-            <small>{{ game.platform }}</small>
-            <small>Lançamento: {{ game.releaseDate | date: 'dd/MM/yyyy' }}</small>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-
+  <ng-template #carousels>
     <app-carousel [title]="'Lançamentos Do Dia'" [items]="todayGames" [isLoading]="false" [autoReverse]="true"
       [itemTemplate]="todayTemplate" [category]="'today'" (seeAllClicked)="goToAllReleases('today')">
-    </app-carousel>
 
-    <ng-container *ngIf="!isLoading && todayGames.length === 0 && message">
-      <div class="fs-12 text-center mb-40">
+      <div *ngIf="todayGames.length === 0 && message" class="carousel-empty-message fs-12 text-center nowrap">
         {{ message }}
       </div>
-    </ng-container>
+    </app-carousel>
 
     <app-carousel [title]="'Lançamentos Futuros'" [items]="upcomingGames" [isLoading]="false" [autoReverse]="true"
       [itemTemplate]="upcomingTemplate" [category]="'upcoming'" (seeAllClicked)="goToAllReleases('upcoming')">
@@ -66,5 +25,44 @@
     <app-carousel [title]="'Lançamentos Recentes'" [items]="recentGames" [isLoading]="false" [autoReverse]="true"
       [itemTemplate]="recentTemplate" [category]="'recent'" (seeAllClicked)="goToAllReleases('recent')">
     </app-carousel>
+  </ng-template>
+
+  <ng-template #todayTemplate let-game>
+    <div class="release-item" (click)="onCardClick(game.id)">
+      <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
+      <div class="game-overlay">
+        <div class="game-title">{{ game.title }}</div>
+        <div class="game-extra">
+          <small>{{ game.platform }}</small>
+          <small>Lançamento: {{ game.releaseDate | date: 'dd/MM/yyyy' }}</small>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #upcomingTemplate let-game>
+    <div class="release-item" (click)="onCardClick(game.id)">
+      <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
+      <div class="game-overlay">
+        <div class="game-title">{{ game.title }}</div>
+        <div class="game-extra">
+          <small>{{ game.platform }}</small>
+          <small>Lançamento: {{ game.releaseDate | date: 'dd/MM/yyyy' }}</small>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #recentTemplate let-game>
+    <div class="release-item" (click)="onCardClick(game.id)">
+      <img [src]="getCoverImage(game)" [alt]="game.title" class="game-cover" />
+      <div class="game-overlay">
+        <div class="game-title">{{ game.title }}</div>
+        <div class="game-extra">
+          <small>{{ game.platform }}</small>
+          <small>Lançamento: {{ game.releaseDate | date: 'dd/MM/yyyy' }}</small>
+        </div>
+      </div>
+    </div>
   </ng-template>
 </ion-content>
