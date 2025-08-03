@@ -42,5 +42,5 @@
 </div>
 
 <app-confirm-dialog *ngIf="confirmTierId" [message]="'Tem certeza que deseja excluir esta tier list?'"
-  [confirmText]="'Excluir'" [cancelText]="'Cancelar'" [iconConfirm]="['fas', 'trash']" [iconCancel]="['fas', 'times']"
-  (confirmed)="onDeleteConfirmed()" (cancelled)="onDeleteCancelled()" />
+  [confirmText]="'Excluir'" [cancelText]="'Cancelar'" (confirmed)="onDeleteConfirmed()"
+  (cancelled)="onDeleteCancelled()" />

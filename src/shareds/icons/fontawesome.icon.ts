@@ -1,6 +1,6 @@
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
-  faArrowLeft, faArrowRight, faChevronLeft, faChevronRight, faCog, faExpand, faEye, faGamepad, faImage, faInfoCircle, faPause, faPen,
+  faArrowLeft, faArrowRight, faCheck, faChevronLeft, faChevronRight, faCog, faExpand, faEye, faGamepad, faImage, faInfoCircle, faPause, faPen,
   faPenToSquare, faPlay, faPlus, faRankingStar, faSearch, faSignOutAlt, faSliders, faSpinner, faTimes,
   faTrash,
   faUser,
@@ -31,6 +31,7 @@ export function registerIcons(library: FaIconLibrary): void {
     faSearch,
     faSliders,
     faRankingStar,
-    faGamepad
+    faGamepad,
+    faCheck,
   );
 }

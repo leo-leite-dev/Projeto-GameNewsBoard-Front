@@ -36,5 +36,4 @@
   (close)="modalAuth.closeModal()" (switchToLogin)="modalAuth.openLogin()" />
 
 <app-confirm-dialog *ngIf="showLogoutModal$ | async" [message]="'Tem certeza que deseja sair?'" [confirmText]="'Sair'"
-  [cancelText]="'Cancelar'" [iconConfirm]="['fas', 'sign-out-alt']" [iconCancel]="['fas', 'times']"
-  (confirmed)="logout()" (cancelled)="modalAuth.closeLogout()" />
+  [cancelText]="'Cancelar'" (confirmed)="logout()" (cancelled)="modalAuth.closeLogout()" />

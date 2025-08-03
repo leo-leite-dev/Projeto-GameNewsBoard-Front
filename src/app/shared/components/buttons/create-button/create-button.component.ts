@@ -11,8 +11,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 })
 export class CreateButtonComponent {
   @Input() label: string = 'Ir';
-  @Input() icon: IconProp = 'plus';
   @Input() className = '';
 
-  @Output() click = new EventEmitter<void>();
+  @Output() buttonClick = new EventEmitter<void>();
 }

@@ -3,11 +3,11 @@
     <p class="dialog-message">{{ message }}</p>
     <div class="dialog-actions d-flex jc-center gap-10">
       <button class="btn cancel" (click)="cancelled.emit()">
-        <fa-icon [icon]="iconCancel" class="mr-5"></fa-icon>
+        <app-fa-icon icon="times" class="mr-5" />
         {{ cancelText }}
       </button>
       <button class="btn confirm" (click)="confirmed.emit()">
-        <fa-icon [icon]="iconConfirm" class="mr-5"></fa-icon>
+        <app-fa-icon icon="check" class="mr-5" />
         {{ confirmText }}
       </button>
     </div>
