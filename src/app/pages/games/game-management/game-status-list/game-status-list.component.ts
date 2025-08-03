@@ -1,7 +1,6 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { GameCarouselComponent } from '../../../../shared/components/game-carousel/game-carousel.component';
 import { AssignStatusComponent } from '../../../../shared/modais/assign-status/assign-status.component';
 import { Status } from '../../../../shared/enums/status-game.enum';
@@ -9,6 +8,7 @@ import { CarouselItem } from '../../../../shared/models/commons/carousel-item.mo
 import { GameStatusStore } from '../../../../shared/stores/game-status.store';
 import { ViewportService } from '../../../../shared/services/commons/viewport.service';
 import { getStatusLabel, getValidStatuses } from '../../../../shared/utils/status-utils';
+import { FaIconComponent } from '../../../../shared/components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-game-status-list',

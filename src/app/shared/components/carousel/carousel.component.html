@@ -1,11 +1,19 @@
 <div class="container-wrapper" *ngIf="!isLoading">
-  <div class="carousel-header fs-20 d-flex space-between mb-40">
-    <h2 class="carousel-title">{{ title }}</h2>
+  <div class="carousel-header d-flex space-between mb-40">
+    <h2 class="carousel-title">
+      {{ title }}
+
+      <button *ngIf="isMobile" class="icon-button search-button" (click)="onSearchIconClicked.emit()"
+        title="Buscar jogo">
+        <app-fa-icon icon="search" />
+      </button>
+    </h2>
 
     <div class="right-header d-flex align-center gap-20">
       <a *ngIf="showSeeAll && items.length > 0" class="see-all-link fs-14" href="#" (click)="onSeeAllClick($event)">
         Ver tudo
       </a>
+
       <button *ngIf="canScroll && items.length > 0" class="btn-toggle-scroll" (click)="toggleScroll()"
         title="Iniciar/Pausar">
         <fa-icon [icon]="isPaused ? 'play' : 'pause'" />

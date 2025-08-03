@@ -18,7 +18,7 @@
         <div *ngFor="let game of statusGames[status]" class="game-icon" cdkDrag [cdkDragData]="game">
           <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
           <button class="times-icon-button" (click)="removeGame(game)">
-            <fa-icon [icon]="'times'"></fa-icon>
+            <app-fa-icon icon="times" />
           </button>
         </div>
 
@@ -35,7 +35,7 @@
           [cdkDragDisabled]="true" (click)="onGameClicked(game)">
           <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
           <button class="times-icon-button" (click)="removeGame(game); $event.stopPropagation()">
-            <fa-icon [icon]="'times'"></fa-icon>
+            <app-fa-icon icon="times" />
           </button>
         </div>
 

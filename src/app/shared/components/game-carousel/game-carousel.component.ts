@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { GenericModule } from "../../../../shareds/commons/GenericModule";
 import { GamerLoadingComponent } from "../gamer-loading/gamer-loading.component";
 import { CarouselComponent } from "../carousel/carousel.component";
@@ -32,6 +32,9 @@ export class GameCarouselComponent implements OnInit {
   @Input() connectedDropLists: string[] = [];
 
   @Output() gameClicked = new EventEmitter<CarouselItem>();
+
+  @ViewChild(GameSearchFilterComponent)
+  searchFilterComponent!: GameSearchFilterComponent;
 
   games: CarouselItem[] = [];
   filteredGames: CarouselItem[] = [];
@@ -127,4 +130,11 @@ export class GameCarouselComponent implements OnInit {
   onGameClicked(game: CarouselItem): void {
     this.gameClicked.emit(game);
   }
+
+  onOpenSearchModal(): void {
+    setTimeout(() => {
+      this.searchFilterComponent?.onOpenMobileSearch();
+    });
+  }
+
 }

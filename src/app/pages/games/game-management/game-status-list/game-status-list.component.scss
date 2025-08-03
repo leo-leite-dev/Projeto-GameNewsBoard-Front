@@ -17,40 +17,37 @@
       border-radius: 6px;
       padding: 10px;
 
-      .status-dropzone {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-        padding: 8px;
-        overflow-y: auto;
-        background-color: $white-overlay-08;
-        border-radius: 6px;
-        border: 2px dashed $white-overlay-02;
-        min-height: 140px;
-        max-height: 54vh;
-
-        .game-icon {
-          width: 100%;
-          aspect-ratio: 11 / 16;
-          position: relative;
-
-          &:hover {
-            transform: scale(1.05);
-            z-index: 2;
-          }
-        }
-      }
-
+      .status-dropzone,
       .game-drawer {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        justify-content: start;
         gap: 10px;
         padding: 8px;
         background-color: $white-overlay-08;
         border-radius: 6px;
         border: 2px dashed $white-overlay-02;
-        overflow-y: auto;
+      }
+
+      .status-dropzone {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        min-height: 140px;
         max-height: 54vh;
+        overflow-y: auto;
+      }
+
+      .game-drawer {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        justify-content: start;
+      }
+
+      .game-icon {
+        width: 100%;
+        aspect-ratio: 11 / 16;
+        position: relative;
+
+        &:hover {
+          transform: scale(1.05);
+          z-index: 2;
+        }
       }
     }
   }
@@ -64,15 +61,23 @@
       grid-template-columns: 1fr;
       padding-bottom: 80px;
 
-      .status-dropzone {
-        display: none;
-      }
+      .status-column {
+        .status-dropzone {
+          max-height: unset;
+          overflow-y: visible;
+        }
 
-      .game-icon {
-        max-width: 32%;
-        min-width: 90px;
-        height: auto;
-        aspect-ratio: 2 / 3;
+        .game-drawer {
+          max-height: unset;
+          overflow-y: visible;
+        }
+
+        .game-icon {
+          max-width: 32%;
+          min-width: 90px;
+          height: auto;
+          aspect-ratio: 2 / 3;
+        }
       }
     }
   }

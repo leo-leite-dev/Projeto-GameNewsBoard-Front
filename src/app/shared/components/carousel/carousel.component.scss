@@ -1,6 +1,27 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
+@mixin arrow-base {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  background: rgba($overlay-bg, 0.6);
+  border: none;
+  color: $pure-white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba($pure-white, 0.1);
+  }
+}
+
 .container-wrapper {
   padding: 2rem;
   border-radius: 1rem;
@@ -9,12 +30,11 @@
   max-width: 1400px;
 
   .carousel-header {
-    margin-top: 0;
 
-    .see-all-link {
+    .see-all-link,
+    .btn-toggle-scroll {
       color: $pure-white;
       font-weight: 600;
-      text-decoration: underline;
       cursor: pointer;
 
       &:hover {
@@ -25,12 +45,33 @@
     .btn-toggle-scroll {
       background: none;
       border: none;
-      color: $pure-white;
       font-size: 1.2rem;
+    }
+
+    .search-button {
+      padding: 6px;
+      margin-left: 10px;
+      background: rgba($highlight-purple, 0.1);
+      border-radius: 50%;
+      border: none;
       cursor: pointer;
 
+      box-shadow: 0 0 8px rgba($highlight-purple, 0.6);
+      transition: background 0.2s, transform 0.2s;
+
+      app-fa-icon {
+        font-size: 18px;
+        color: $highlight-purple;
+        text-shadow: 0 0 6px rgba($highlight-purple, 0.8);
+      }
+
       &:hover {
-        opacity: 0.8;
+        background: rgba($highlight-purple, 0.25);
+        transform: scale(1.1);
+
+        app-fa-icon {
+          text-shadow: 0 0 12px rgba($highlight-purple, 1);
+        }
       }
     }
   }
@@ -58,8 +99,8 @@
         height: 190px;
         border-radius: 10px;
         overflow: hidden;
-        transition: transform 0.3s;
         box-shadow: 0 0 10px rgba($pure-white, 0.06);
+        transition: transform 0.3s;
         cursor: grab;
 
         &:hover {
@@ -76,24 +117,7 @@
     }
 
     .scroll-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1;
-      background: rgba($overlay-bg, 0.6);
-      border: none;
-      color: $pure-white;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-
-      &:hover {
-        background: rgba($pure-white, 0.1);
-      }
+      @include arrow-base;
 
       &.arrow-left {
         left: -16px;
@@ -109,17 +133,31 @@
     padding: 0.5rem;
 
     .carousel-header {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+
       .carousel-title {
         font-size: 1.1rem;
+        grid-column: 1;
+        justify-self: start;
+      }
+
+      .search-button {
+        grid-column: 2;
+        justify-self: center;
+      }
+
+      .btn-toggle-scroll {
+        grid-column: 3;
+        justify-self: end;
       }
     }
 
     .carousel-outer {
-      .carousel-container {
-        .game-icon {
-          width: 100px;
-          height: 130px;
-        }
+      .carousel-container .game-icon {
+        width: 100px;
+        height: 130px;
       }
 
       .scroll-arrow {

@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, OnDestro
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ViewportService } from '../../services/commons/viewport.service';
+import { FaIconComponent } from '../icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-carousel',
@@ -9,6 +10,7 @@ import { ViewportService } from '../../services/commons/viewport.service';
   imports: [
     GenericModule,
     DragDropModule,
+    FaIconComponent
   ],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
@@ -27,6 +29,7 @@ export class CarouselComponent<T> implements AfterViewInit, OnDestroy, OnChanges
   @Output() dragStarted = new EventEmitter<T>();
   @Output() seeAllClicked = new EventEmitter<void>();
   @Output() itemClicked = new EventEmitter<T>();
+  @Output() onSearchIconClicked = new EventEmitter<void>();
 
   @ViewChild('carouselContainer', { static: false })
   carouselContainerRef!: ElementRef<HTMLDivElement>;

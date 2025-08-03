@@ -1,7 +1,6 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-
 @include respond(mobile) {
   .game-dashboard {
     .game-carousel {
