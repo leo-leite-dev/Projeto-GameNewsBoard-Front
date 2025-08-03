@@ -7,7 +7,6 @@ import { UserService } from '../../services/user.service';
 import { InputComponent } from '../../../shared/forms/input/input.component';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-login-modal',
@@ -28,7 +27,6 @@ export class LoginComponent {
 
   form: FormGroup;
   errorMessage = '';
-  icon: IconProp = 'user';
 
   constructor(
     private fb: FormBuilder,

@@ -3,11 +3,11 @@
 
   <div class="modal-content" (click)="$event.stopPropagation()">
     <button class="modal-close-btn" (click)="close.emit()" aria-label="Fechar">
-      <fa-icon [icon]="'times'"></fa-icon>
+      <app-fa-icon icon="times" />
     </button>
 
     <h1 class="title d-flex align-center mb-20 gap-10">
-      <fa-icon [icon]="faUser"></fa-icon>Criar conta
+      <app-fa-icon icon="user" />Criar conta
     </h1>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">

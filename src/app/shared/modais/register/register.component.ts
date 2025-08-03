@@ -4,13 +4,16 @@ import { InputComponent } from '../../../shared/forms/input/input.component';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/auth/services/auth.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-register-modal',
   standalone: true,
-  imports: [GenericModule, ReactiveFormsModule, InputComponent, GenericModule, FontAwesomeModule],
+  imports: [
+    ReactiveFormsModule,
+    InputComponent,
+    GenericModule
+  ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
@@ -21,7 +24,6 @@ export class RegisterComponent {
 
   form: FormGroup;
   errorMessage!: string;
-  faUser = faUser;
 
   constructor(
     private fb: FormBuilder,
