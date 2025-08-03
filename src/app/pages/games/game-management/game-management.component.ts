@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from '../../../shared/modais/login/login.component';
 import { UserService } from '../../../shared/services/user.service';
 import { NavBarComponent } from '../../../shared/components/nav/nav-bar/nav-bar.component';
+import { RegisterComponent } from '../../../shared/modais/register/register.component';
 
 @Component({
   selector: 'app-game-management',
@@ -12,7 +13,8 @@ import { NavBarComponent } from '../../../shared/components/nav/nav-bar/nav-bar.
     GenericModule,
     RouterModule,
     NavBarComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   templateUrl: './game-management.component.html',
   styleUrl: './game-management.component.scss',
