@@ -4,7 +4,7 @@ import { InputComponent } from '../../../shared/forms/input/input.component';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/auth/services/auth.service';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-register-modal',
@@ -12,7 +12,8 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
   imports: [
     ReactiveFormsModule,
     InputComponent,
-    GenericModule
+    GenericModule,
+    FaIconComponent
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],

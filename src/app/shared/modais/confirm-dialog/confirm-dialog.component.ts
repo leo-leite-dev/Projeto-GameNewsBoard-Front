@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
+import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-confirm-dialog',
   standalone: true,
-  imports: [GenericModule],
+  imports: [GenericModule, FaIconComponent],
   templateUrl: './confirm-dialog.component.html',
   styleUrl: './confirm-dialog.component.scss',
 })

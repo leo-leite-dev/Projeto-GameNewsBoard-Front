@@ -3,7 +3,7 @@ import { Platform } from '../../enums/platform.enum';
 import { YearCategory } from '../../enums/year-category.enum';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { FilterMenuComponent } from '../../filters/filter-menu/filter-menu.component';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-filter-modal',
@@ -11,6 +11,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   imports: [
     GenericModule,
     FilterMenuComponent,
+    FaIconComponent
   ],
   templateUrl: './filter-modal.component.html',
   styleUrls: ['./filter-modal.component.scss'],

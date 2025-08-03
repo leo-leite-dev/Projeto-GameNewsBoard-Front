@@ -9,15 +9,17 @@ import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FilterModalComponent } from '../../modais/filter-modal/filter-modal.component';
 import { FilterInputComponent } from '../filter-input/filter-input.component';
+import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-game-search-filter',
   standalone: true,
   imports: [
+    GenericModule,
     FilterMenuComponent,
     FilterModalComponent,
     FilterInputComponent,
-    GenericModule
+    FaIconComponent
   ],
   templateUrl: './game-search-filter.component.html',
   styleUrl: './game-search-filter.component.scss',

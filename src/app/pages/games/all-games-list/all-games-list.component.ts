@@ -3,9 +3,6 @@ import { GameDataService } from '../../../shared/services/commons/game-data.serv
 import { GameResponse } from '../../../shared/models/game-response.model';
 import { GameFilters } from '../../../shared/models/commons/game-filters.model';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../../shared/constants/pagination.constants';
-import { GamerLoadingComponent } from '../../../shared/components/gamer-loading/gamer-loading.component';
-import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
-import { GameSearchFilterComponent } from '../../../shared/forms/game-search-filter/game-search-filter.component';
 import { Platform } from '../../../shared/enums/platform.enum';
 import { YearCategory } from '../../../shared/enums/year-category.enum';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
@@ -14,10 +11,8 @@ import { NotificationService } from '../../../shared/services/commons/notificati
 import { getPaginatedFallback } from '../../../shared/utils/http-utils';
 import { isEqual } from 'lodash';
 import { Router } from '@angular/router';
-import { DecimalPipe } from '@angular/common';
 import { ViewportService } from '../../../shared/services/commons/viewport.service';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
-import { FaIconComponent } from '../../../shared/components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-all-games-list',

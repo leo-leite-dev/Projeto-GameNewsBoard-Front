@@ -15,6 +15,7 @@ import { ErrorHandlingService } from '../../../../../shared/services/commons/err
 import { ViewportService } from '../../../../../shared/services/commons/viewport.service';
 import { TierListEntryRequest } from '../../../../../shared/models/tier-list-entry.model';
 import { CarouselItem } from '../../../../../shared/models/commons/carousel-item.model';
+import { FaIconComponent } from '../../../../../shared/components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-add-game-tier-list',
@@ -25,7 +26,8 @@ import { CarouselItem } from '../../../../../shared/models/commons/carousel-item
     DragDropModule,
     MatTableModule,
     NavigateButtonComponent,
-    AssignTierComponent
+    AssignTierComponent,
+    FaIconComponent
   ],
   templateUrl: './add-game-tier-list.component.html',
   styleUrls: ['./add-game-tier-list.component.scss']

@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GenericModule } from '../../../../../shareds/commons/GenericModule';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FaIconComponent } from '../../icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-create-button',
   standalone: true,
-  imports: [GenericModule],
+  imports: [GenericModule, FaIconComponent],
   templateUrl: './create-button.component.html',
   styleUrl: './create-button.component.scss'
 })

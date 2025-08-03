@@ -3,11 +3,12 @@ import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ViewportService } from '../../services/commons/viewport.service';
+import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-filter-input',
   standalone: true,
-  imports: [GenericModule],
+  imports: [GenericModule, FaIconComponent],
   templateUrl: './filter-input.component.html',
   styleUrls: ['./filter-input.component.scss']
 })

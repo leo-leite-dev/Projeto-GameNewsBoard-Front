@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { InputComponent } from '../../../shared/forms/input/input.component';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
 
 @Component({
   selector: 'app-login-modal',
@@ -15,7 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     GenericModule,
     ReactiveFormsModule,
     InputComponent,
-    FontAwesomeModule
+    FaIconComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -62,7 +63,7 @@ export class LoginComponent {
       );
 
       if (user?.username) {
-        this.userService.refreshUser(); 
+        this.userService.refreshUser();
         this.loginSuccess.emit();
         this.close.emit();
       } else {
