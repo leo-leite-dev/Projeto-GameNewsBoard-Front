@@ -7,7 +7,6 @@ import { GameFilters } from '../../models/commons/game-filters.model';
 import { ViewportService } from '../../services/commons/viewport.service';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { InputComponent } from '../../forms/input/input.component';
 import { FilterModalComponent } from '../../modais/filter-modal/filter-modal.component';
 import { FilterInputComponent } from '../filter-input/filter-input.component';
 
@@ -15,7 +14,6 @@ import { FilterInputComponent } from '../filter-input/filter-input.component';
   selector: 'app-game-search-filter',
   standalone: true,
   imports: [
-    InputComponent,
     FilterMenuComponent,
     FilterModalComponent,
     FilterInputComponent,
