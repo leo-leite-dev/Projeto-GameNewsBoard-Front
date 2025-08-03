@@ -4,7 +4,7 @@
   <div class="game-management-wrapper">
     <div class="tier-list-container d-flex space-between center mb-20">
       <h2 class="tier-title fs-24">Suas Tier Lists</h2>
-      <app-create-button label="Criar nova tier" [icon]="'plus'" className="back-btn" (click)="goToCreateTier()" />
+      <app-create-button label="Criar nova tier" className="back-btn" (click)="goToCreateTier()" />
     </div>
 
     <div *ngIf="!tierLists.length" class="no-tiers mt-20">
