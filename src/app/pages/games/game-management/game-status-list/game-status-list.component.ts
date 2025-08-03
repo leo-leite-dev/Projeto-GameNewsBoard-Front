@@ -26,20 +26,23 @@ import { FaIconComponent } from '../../../../shared/components/icons/fa-icon/fa-
 export class GameStatusListComponent implements OnInit {
   protected readonly statusList = getValidStatuses();
   protected readonly dropListIds = this.statusList.map(s => `status-drop-${s}`);
-
   protected hoveredStatus: { [key in Status]?: boolean } = {};
   protected selectedGame: WritableSignal<CarouselItem | null> = signal<CarouselItem | null>(null);
   protected selectedGameStatus: Status | null = null;
   protected showAssignStatusModal = false;
   protected isMobile = false;
 
+  collapsedStatusColumns = new Set<Status>();
+  private readonly collapsedStorageKey = 'collapsedStatusColumns';
+
   constructor(
     private readonly store: GameStatusStore,
-    private readonly viewport: ViewportService
+    public readonly viewport: ViewportService
   ) { }
 
   ngOnInit(): void {
     this.isMobile = this.viewport.isMobile();
+    this.loadCollapsedColumnsFromStorage();
     this.store.load();
   }
 
@@ -76,8 +79,43 @@ export class GameStatusListComponent implements OnInit {
   }
 
   onStatusSelected(event: { status: Status; game: CarouselItem }): void {
-    this.store.setGameStatus(event.game.id, event.status, event.game); // ✅ Agora o signal é atualizado corretamente
+    this.store.setGameStatus(event.game.id, event.status, event.game);
     this.showAssignStatusModal = false;
+
+    if (this.isMobile && this.collapsedStatusColumns.has(event.status)) {
+      this.collapsedStatusColumns.delete(event.status);
+      this.saveCollapsedColumnsToStorage();
+    }
+  }
+
+  toggleCollapse(status: Status): void {
+    if (this.collapsedStatusColumns.has(status)) {
+      this.collapsedStatusColumns.delete(status);
+    } else {
+      this.collapsedStatusColumns.add(status);
+    }
+    this.saveCollapsedColumnsToStorage();
+  }
+
+  isCollapsed(status: Status): boolean {
+    return this.collapsedStatusColumns.has(status);
+  }
+
+  private saveCollapsedColumnsToStorage(): void {
+    const array = Array.from(this.collapsedStatusColumns);
+    localStorage.setItem(this.collapsedStorageKey, JSON.stringify(array));
+  }
+
+  private loadCollapsedColumnsFromStorage(): void {
+    const raw = localStorage.getItem(this.collapsedStorageKey);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw) as Status[];
+        this.collapsedStatusColumns = new Set(parsed);
+      } catch {
+        this.collapsedStatusColumns.clear();
+      }
+    }
   }
 
   removeGame(game: CarouselItem): void {

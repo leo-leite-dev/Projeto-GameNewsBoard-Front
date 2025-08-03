@@ -62,21 +62,18 @@ export class SideMenuComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
 
-ngOnInit(): void {
-  this.modalView$ = this.modalAuth.modalView$;
-  this.showLogoutModal$ = this.modalAuth.showLogoutModal$;
+  ngOnInit(): void {
+    this.modalView$ = this.modalAuth.modalView$;
+    this.showLogoutModal$ = this.modalAuth.showLogoutModal$;
 
-  this.authenticatedUser$.subscribe((user) => {
-    console.log('[SideMenuComponent] authenticatedUser$', user);
-  });
+    this.authenticatedUser$.subscribe((user) => {
+    });
 
-  combineLatest([this.modalAuth.modalView$, this.authenticatedUser$]).subscribe(([modalView, user]) => {
-    console.log('[SideMenuComponent] modalView:', modalView, 'user:', user);
-    if (this.isSmallScreen && (modalView === 'login' || modalView === 'register'))
-      this.menuExpanded = false;
-  });
-}
-
+    combineLatest([this.modalAuth.modalView$, this.authenticatedUser$]).subscribe(([modalView, user]) => {
+      if (this.isSmallScreen && (modalView === 'login' || modalView === 'register'))
+        this.menuExpanded = false;
+    });
+  }
 
   handleClickOutside(event: Event) {
     if (
@@ -164,18 +161,18 @@ ngOnInit(): void {
       this.menuExpanded = false;
   }
 
-handleLoginSuccess() {
-  console.log('[SideMenuComponent] Login success! Refreshing user...');
-  this.userService.refreshUser();
-  this.modalAuth.closeModal();
-  this.isDropdownOpen = false;
+  handleLoginSuccess() {
+    console.log('[SideMenuComponent] Login success! Refreshing user...');
+    this.userService.refreshUser();
+    this.modalAuth.closeModal();
+    this.isDropdownOpen = false;
 
-  const redirect = this.modalAuth.getPendingNavigation();
-  if (redirect) {
-    this.router.navigate([redirect]);
-    this.modalAuth.clearPendingNavigation();
+    const redirect = this.modalAuth.getPendingNavigation();
+    if (redirect) {
+      this.router.navigate([redirect]);
+      this.modalAuth.clearPendingNavigation();
+    }
   }
-}
 
 
   handleRegisterSuccess() {

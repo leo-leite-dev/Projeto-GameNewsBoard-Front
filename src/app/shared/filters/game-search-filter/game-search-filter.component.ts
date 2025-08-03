@@ -83,6 +83,14 @@ export class GameSearchFilterComponent implements AfterViewInit {
     this.emitFilters();
   }
 
+    onPlatformSelected(platform: Platform): void {
+    this.filters.platform = platform;
+  }
+
+  onYearCategorySelected(category: YearCategory): void {
+    this.filters.yearCategory = category;
+  }
+
   onConfirmSearchFromModal(searchTerm: string): void {
     this.filters.searchTerm = searchTerm;
     this.emitFilters();

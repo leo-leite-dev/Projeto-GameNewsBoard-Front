@@ -49,6 +49,10 @@
                 position: relative;
                 width: 100%;
 
+                form {
+                    width: 100%;
+                }
+
                 .input.big {
                     width: 100%;
                     font-size: 1.1rem;
@@ -57,9 +61,19 @@
                     background: rgba($pure-white, 0.05);
                     color: $pure-white;
                     border: 1px solid rgba($pure-white, 0.2);
+                    transition: border 0.2s;
 
                     &::placeholder {
                         color: rgba($pure-white, 0.5);
+                    }
+
+                    &:focus {
+                        outline: none;
+                        border-color: $highlight-blue;
+                    }
+
+                    &:invalid.ng-touched {
+                        border-color: $pure-red;
                     }
                 }
 
@@ -80,6 +94,47 @@
 
                     app-fa-icon {
                         pointer-events: none;
+                    }
+                }
+            }
+
+            .chip-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+                margin-top: 0.5rem;
+
+                .chip {
+                    background-color: #ffffff1a;
+                    color: $pure-white;
+                    padding: 4px 10px;
+                    border-radius: 20px;
+                    display: flex;
+                    align-items: center;
+                    font-size: 0.95rem;
+                    font-weight: 500;
+                    backdrop-filter: blur(4px);
+                    border: 1px solid rgba($pure-white, 0.2);
+                    transition: background-color 0.2s ease;
+
+                    .chip-remove {
+                        background: none;
+                        border: none;
+                        color: $pure-white;
+                        margin-left: 8px;
+                        cursor: pointer;
+                        font-size: 1rem;
+                        padding: 0;
+
+                        app-fa-icon {
+                            font-size: 0.9rem;
+                            pointer-events: none;
+                        }
+
+                        &:hover {
+                            color: $pure-orange;
+                        }
                     }
                 }
             }
@@ -115,10 +170,16 @@
                 color: $pure-white;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                transition: background 0.3s;
+                transition: background 0.3s, opacity 0.3s;
 
                 &:hover {
                     background: linear-gradient(90deg, $rare-deep-blue, $highlight-blue);
+                }
+
+                &:disabled {
+                    opacity: 0.4;
+                    background: linear-gradient(90deg, $highlight-blue, $rare-deep-blue);
+                    cursor: not-allowed;
                 }
             }
         }

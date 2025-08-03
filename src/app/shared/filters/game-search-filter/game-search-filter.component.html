@@ -26,7 +26,9 @@
       <div class="filter-menu-container" *ngIf="filtersOpen">
         <app-filter-menu [selectedPlatform]="filters.platform" [selectedYearCategory]="filters.yearCategory"
           [platformOptions]="platformOptions" [yearCategoryOptions]="yearCategoryOptions"
-          (filterApplied)="onFilterApplied($event)" (close)="filtersOpen = false"></app-filter-menu>
+          (filterApplied)="onFilterApplied($event)" (close)="filtersOpen = false">
+        </app-filter-menu>
+
       </div>
     </div>
   </div>

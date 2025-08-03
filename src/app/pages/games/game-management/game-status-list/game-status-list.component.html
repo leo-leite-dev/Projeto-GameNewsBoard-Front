@@ -6,30 +6,38 @@
 
   <div class="container-overflow">
     <div class="status-column" *ngFor="let status of statusList">
-      <div class="status-header fs-18 text-center mb-10 bold">
+      <div class="status-header fs-18 text-center mb-10 bold d-flex jc-between align-center gap-10 clickable-header"
+        *ngIf="viewport.isMobile()" (click)="toggleCollapse(status)">
+        <span>{{ getStatusLabel(status) }}</span>
+        <app-fa-icon class="collapse-icon" [ngClass]="{ 'rotated': !isCollapsed(status) }"
+          [icon]="isCollapsed(status) ? 'chevron-down' : 'chevron-up'" />
+      </div>
+
+      <div class="status-header fs-18 text-center mb-10 bold" *ngIf="!viewport.isMobile()">
         {{ getStatusLabel(status) }}
       </div>
 
-      <div class="status-dropzone gap-10" *ngIf="!isMobile" cdkDropList [id]="'status-drop-' + status"
+      <div class="status-dropzone gap-10" *ngIf="!viewport.isMobile()" cdkDropList [id]="'status-drop-' + status"
         [cdkDropListData]="statusGames[status]" [cdkDropListConnectedTo]="dropListIds" cdkDropListSortingDisabled="true"
         (cdkDropListDropped)="onDrop($event, status)" (cdkDropListEntered)="onDropListEnter(status)"
         (cdkDropListExited)="onDropListExit(status)">
 
-        <div *ngFor="let game of statusGames[status]" class="game-icon" cdkDrag [cdkDragData]="game">
+        <div *ngFor="let game of statusGames[status]" class="game-icon" cdkDrag [cdkDragData]="game"
+          (click)="onGameClicked(game)">
           <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
-          <button class="times-icon-button" (click)="removeGame(game)">
+          <button class="times-icon-button" (click)="removeGame(game); $event.stopPropagation()">
             <app-fa-icon icon="times" />
           </button>
         </div>
 
-        <div *ngIf="statusGames[status].length === 0 && !hoveredStatus[status]" class="empty-dropzone text-center">
+        <div *ngIf="statusGames[status].length === 0" class="empty-dropzone text-center">
           <span>Arraste jogos para aqui</span>
         </div>
       </div>
 
-      <div class="game-drawer" *ngIf="isMobile" cdkDropList [id]="'status-drop-' + status"
-        [cdkDropListData]="statusGames[status]" [cdkDropListConnectedTo]="dropListIds" cdkDropListSortingDisabled="true"
-        (cdkDropListDropped)="onDrop($event, status)">
+      <div class="game-drawer" *ngIf="viewport.isMobile() && !isCollapsed(status)" cdkDropList
+        [id]="'status-drop-' + status" [cdkDropListData]="statusGames[status]" [cdkDropListConnectedTo]="dropListIds"
+        cdkDropListSortingDisabled="true" (cdkDropListDropped)="onDrop($event, status)">
 
         <div *ngFor="let game of statusGames[status]" class="game-icon" cdkDrag [cdkDragData]="game"
           [cdkDragDisabled]="true" (click)="onGameClicked(game)">

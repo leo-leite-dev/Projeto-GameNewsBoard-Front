@@ -1,27 +1,32 @@
 <div class="filter-menu d-flex column gap-12">
+  <!-- Botão fechar visível só no mobile -->
+  <button class="close-button" (click)="close.emit()">×</button>
+
+  <!-- PLATAFORMAS -->
   <label class="filter-label">Plataformas</label>
   <div class="filter-options">
     <label *ngFor="let option of platformOptions">
-      <input type="radio" name="platform" [disabled]="currentYearCategory !== YearCategory.All"
-        [checked]="currentPlatform === option.platform" (change)="onPlatformChange(option.platform)" />
+      <input type="radio" name="platform" [disabled]="tempYear !== YearCategory.All"
+        [checked]="tempPlatform === option.platform" (change)="selectPlatform(option.platform)" />
       {{ option.name }}
     </label>
   </div>
 
-  <label class="filter-label mt-20">Ano</label>
+  <!-- ANO -->
+  <label class="filter-label">Ano</label>
   <div class="filter-options">
     <label *ngFor="let option of yearCategoryOptions">
-      <input type="radio" name="yearCategory" [disabled]="currentPlatform !== Platform.All"
-        [checked]="currentYearCategory === option.category" (change)="onYearCategoryChange(option.category)" />
+      <input type="radio" name="yearCategory" [disabled]="tempPlatform !== Platform.All"
+        [checked]="tempYear === option.category" (change)="selectYearCategory(option.category)" />
       {{ option.name }}
     </label>
   </div>
 
-  <button (click)="applyFilters()" class="apply-button mt-10 bold">
-    Aplicar Filtros
-  </button>
-
-  <button (click)="resetFilters()" class="reset-button mt-5">
-    Resetar Filtros
-  </button>
+  <!-- Ações (somente para web) -->
+  <ng-container *ngIf="!viewport.isMobile()">
+    <div class="web-filter-actions">
+      <button class="btn-apply" (click)="emitFilters()">Aplicar Filtros</button>
+      <button class="btn-reset" (click)="resetFilters()">Resetar</button>
+    </div>
+  </ng-container>
 </div>

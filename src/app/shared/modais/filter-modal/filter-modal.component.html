@@ -7,19 +7,39 @@
     </div>
 
     <div class="modal-body d-flex column gap-20 align-center">
-        <div class="input-wrapper">
-            <input class="input big" [placeholder]="placeholder" [(ngModel)]="value" />
-            <button class="filter-button" (click)="toggleFilterMenu()" title="Abrir filtros">
-                <app-fa-icon icon="sliders" />
-            </button>
+
+        <form [formGroup]="searchForm" (ngSubmit)="confirmMobileSearch()">
+            <div class="input-wrapper">
+                <input class="input big" type="text" placeholder="Buscar jogos..." formControlName="search" />
+                <button class="filter-button" type="button" (click)="toggleFilterMenu()" title="Abrir filtros">
+                    <app-fa-icon icon="sliders" />
+                </button>
+            </div>
+        </form>
+
+        <div class="chip-container d-flex gap-10 wrap mt-5">
+            <div class="chip" *ngIf="selectedPlatform !== Platform.All">
+                {{ getPlatformName(selectedPlatform) }}
+                <button class="chip-remove" (click)="clearPlatform()">
+                    <app-fa-icon icon="times" />
+                </button>
+            </div>
+
+            <div class="chip" *ngIf="selectedYearCategory !== YearCategory.All">
+                {{ getYearCategoryName(selectedYearCategory) }}
+                <button class="chip-remove" (click)="clearYearCategory()">
+                    <app-fa-icon icon="times" />
+                </button>
+            </div>
         </div>
 
         <app-filter-menu *ngIf="isFilterOpen" class="full-filter-menu" [selectedPlatform]="selectedPlatform"
             [selectedYearCategory]="selectedYearCategory" [platformOptions]="platformOptions"
-            [yearCategoryOptions]="yearCategoryOptions" (filterApplied)="handleFiltersApplied($event)"
-            (close)="isFilterOpen = false"></app-filter-menu>
+            [yearCategoryOptions]="yearCategoryOptions" (filterApplied)="onFilterApplied($event)"
+            (close)="isFilterOpen = false">
+        </app-filter-menu>
 
-        <button class="confirm-button" (click)="confirmMobileSearch()">
+        <button class="confirm-button" [disabled]="!isSearchEnabled()" (click)="confirmMobileSearch()">
             <app-fa-icon icon="search" /> Buscar Jogos
         </button>
     </div>
