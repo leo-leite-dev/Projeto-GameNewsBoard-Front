@@ -11,23 +11,40 @@ $pure-cyan: #00ffc3;
 $pure-purple: #8000ff;
 
 // =============================================
+// Cores do Tema Visual Gamer
+// =============================================
+$rare-deep-blue: #1c0b32; // fundo principal
+$overlay-bg: #25104a; // fundo secundário sobreposto
+$highlight-purple: #9e78f1; // destaque roxo moderno
+$highlight-blue: #3fa9f5; // destaque azul moderno
+$neon-blue: #00e0ff; // efeitos glow azul ciano
+$cyber-glow: 0 0 20px rgba(0, 255, 200, 0.15);
+$deep-violet: #6a00f4;
+
+// =============================================
 // Escala de Cinza
 // =============================================
 $void-black: #1b1b1b;
-$cloud-gray: #888;
-$mist-gray: #67686952;
+$charcoal: #333333;
 $dark-gray: #2c2c2c;
-$light-gray: #999;
-$charcoal: #333;
-$light-gray: rgb(59, 58, 58);
-$rare-deep-blue: #0070f3;
-$neutral-gray: #bbb;
-$cyber-glow: 0 0 20px rgba(0, 255, 200, 0.15);
+$light-gray: #999999;
+$cloud-gray: #888888;
+$neutral-gray: #bbbbbb;
+$mist-gray: #67686952;
 $light-gray-transparent: #eeeeee2c;
-$mage-purple: #8e2de2;
-$deep-violet: #6a00f4;
+
 // =============================================
-// Escala de Plataformas
+// Overlays / Transparências
+// =============================================
+$black-overlay-light: rgba(0, 0, 0, 0.16);
+$overlay-h-bg: rgba(0, 0, 0, 0.9);
+$overlay-light: rgba(255, 255, 255, 0.1);
+$white-overlay-02: rgba(255, 255, 255, 0.2);
+$white-overlay-05: rgba(255, 255, 255, 0.05);
+$white-overlay-08: rgba(255, 255, 255, 0.08);
+
+// =============================================
+// Paleta de Plataformas
 // =============================================
 $xbox-green: #107c10;
 $playstation-blue: #00439c;
@@ -35,26 +52,22 @@ $steam-gray: #9e9e9e;
 $nintendo-red: #e60012;
 $soft-pink: #ffb3b3;
 
-$orange-overlay: #ff5e0088;
-
+// =============================================
+// Feedback / Sucesso
+// =============================================
 $success-green: #28a745;
 $success-green-dark: #218838;
+$orange-overlay: rgba(255, 94, 0, 0.53);
 
-$black-overlay-light: #0000002a;
-
-$overlay-bg: rgba(0, 0, 0, 0.7);
-$overlay-h-bg: rgba(0, 0, 0, 0.9);
-$overlay-light: rgba(255, 255, 255, 0.1);
-$white-overlay-02: rgba(255, 255, 255, 0.2);
-$white-overlay-05: rgba(255, 255, 255, 0.05);
-$white-overlay-08: rgba(255, 255, 255, 0.08);
-
+// =============================================
+// Cores dos Tiers
+// =============================================
 $tier-colors: (
-  sss: #ffa500,
-  ss: #e83e8c,
-  s: #6f42c1,
-  a: #007bff,
-  c: #28a745,
-  d: #6c757d,
-  f: #dc3545,
+  sss: #ffa500,     // laranja
+  ss: #e83e8c,       // rosa vibrante
+  s: #6f42c1,        // roxo escuro
+  a: #007bff,        // azul
+  c: #28a745,        // verde
+  d: #6c757d,        // cinza
+  f: #dc3545         // vermelho
 );

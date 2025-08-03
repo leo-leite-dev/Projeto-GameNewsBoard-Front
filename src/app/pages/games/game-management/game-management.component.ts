@@ -8,14 +8,19 @@ import { NavBarComponent } from '../../../shared/components/nav/nav-bar/nav-bar.
 @Component({
   selector: 'app-game-management',
   standalone: true,
-  imports: [GenericModule, RouterModule, NavBarComponent, LoginComponent],
+  imports: [
+    GenericModule,
+    RouterModule,
+    NavBarComponent,
+    LoginComponent
+  ],
   templateUrl: './game-management.component.html',
   styleUrl: './game-management.component.scss',
 })
 export class GameManagementComponent implements OnInit {
   modalView: 'login' | 'register' | null = null;
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService) { }
 
   ngOnInit(): void {
     this.userService.loginModal$.subscribe(() => {

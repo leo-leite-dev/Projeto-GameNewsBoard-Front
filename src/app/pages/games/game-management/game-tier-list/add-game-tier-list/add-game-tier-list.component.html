@@ -1,11 +1,12 @@
 <ion-content class="add-game-tier-list-container" fullscreen>
   <div>
     <ion-grid>
-      <ion-row>
+      <ion-row *ngIf="!viewport.isMobile">
         <ion-col size="auto">
           <app-navigate-button [icon]="'arrow-left'" (click)="goBack()"></app-navigate-button>
         </ion-col>
       </ion-row>
+
 
       <ion-row>
         <ion-col>

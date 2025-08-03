@@ -18,15 +18,13 @@ export class FilterMenuComponent {
   @Input() platformOptions: { platform: Platform; name: string }[] = [];
   @Input() yearCategoryOptions: { category: YearCategory; name: string }[] = [];
 
+  @Output() close = new EventEmitter<void>();
   @Output() filterApplied = new EventEmitter<{
     platforms: Platform;
     yearCategory: YearCategory;
   }>();
 
   faTimes = faTimes;
-
-  isMobile = false;
-  showFilterMenu = false;
 
   Platform = Platform;
   YearCategory = YearCategory;
@@ -37,18 +35,8 @@ export class FilterMenuComponent {
   constructor(private viewportService: ViewportService) { }
 
   ngOnInit(): void {
-    this.isMobile = this.viewportService.isMobile();
     this.currentPlatform = this.selectedPlatform;
     this.currentYearCategory = this.selectedYearCategory;
-  }
-
-  toggleFilterMenu() {
-    this.showFilterMenu = !this.showFilterMenu;
-
-    if (this.showFilterMenu) {
-      this.currentPlatform = this.selectedPlatform;
-      this.currentYearCategory = this.selectedYearCategory;
-    }
   }
 
   onPlatformChange(platform: Platform) {
@@ -68,10 +56,13 @@ export class FilterMenuComponent {
   }
 
   applyFilters() {
-    this.showFilterMenu = false;
     this.filterApplied.emit({
       platforms: this.currentPlatform,
       yearCategory: this.currentYearCategory,
     });
+  }
+
+  onClose() {
+    this.close.emit();
   }
 }

@@ -22,7 +22,6 @@ import { MobileFooterNavComponent } from '../mobile-footer-nav/mobile-footer-nav
     GenericModule,
     RouterModule,
     MatIconModule,
-    HeaderComponent,
     LoginComponent,
     RegisterComponent,
     ConfirmDialogComponent,

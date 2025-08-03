@@ -1,3 +1,6 @@
+  @use 'breakpoints' as *;
+
+
   .icon {
       all: unset;
       background: linear-gradient(145deg, #2b0038, #450066);
@@ -19,5 +22,11 @@
 
       &:active {
           transform: scale(0.95);
+      }
+  }
+
+  @include respond(mobile) {
+      .icon {
+          margin: 0.5rem;
       }
   }

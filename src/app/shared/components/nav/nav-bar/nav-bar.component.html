@@ -1,5 +1,4 @@
 <div class="game-management-wrapper d-flex jc-start gap-5">
-
   <ng-container *ngIf="!viewport.isMobile()">
     <button class="nav-button" routerLink="tier-list" routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }">
@@ -11,17 +10,18 @@
       Gerenciar Status
     </button>
   </ng-container>
-
-  <ng-container *ngIf="viewport.isMobile()">
-    <button class="nav-button" routerLink="tier-list" routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }">
-      <app-fa-icon icon="ranking-star" size="2x" />
-    </button>
-
-    <button class="nav-button" routerLink="status-list" routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }">
-      <app-fa-icon icon="gamepad" size="2x" />
-    </button>
-  </ng-container>
-
 </div>
+
+<ng-container *ngIf="viewport.isMobile()">
+  <div class="tab-nav-mobile">
+    <button routerLink="tier-list" routerLinkActive="active-tab" [routerLinkActiveOptions]="{ exact: true }"
+      title="Tier List">
+      <app-fa-icon icon="ranking-star"></app-fa-icon>
+    </button>
+
+    <button routerLink="status-list" routerLinkActive="active-tab" [routerLinkActiveOptions]="{ exact: true }"
+      title="Gerenciar Status">
+      <app-fa-icon icon="gamepad"></app-fa-icon>
+    </button>
+  </div>
+</ng-container>

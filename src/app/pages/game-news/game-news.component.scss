@@ -10,8 +10,11 @@
   margin: 50px auto 0;
   padding: 34px;
   border-radius: 12px;
+}
 
-  @include respond(mobile) {
+@include respond(mobile) {
+  .container-overflow {
+    margin: 0;
     height: 100%;
     padding: 20px;
     border-radius: 0;

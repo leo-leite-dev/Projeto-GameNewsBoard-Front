@@ -1,0 +1,26 @@
+<div class="mobile-filter-modal d-flex column">
+    <div class="modal-header d-flex space-between align-center">
+        <h2 class="modal-title">Filtrar Jogos</h2>
+        <button class="icon-button close-button" (click)="closeModal()">
+            <app-fa-icon icon="times" title="Fechar" />
+        </button>
+    </div>
+
+    <div class="modal-body d-flex column gap-20 align-center">
+        <div class="input-wrapper">
+            <input class="input big" [placeholder]="placeholder" [(ngModel)]="value" />
+            <button class="filter-button" (click)="toggleFilterMenu()" title="Abrir filtros">
+                <app-fa-icon icon="sliders" />
+            </button>
+        </div>
+
+        <app-filter-menu *ngIf="isFilterOpen" class="full-filter-menu" [selectedPlatform]="selectedPlatform"
+            [selectedYearCategory]="selectedYearCategory" [platformOptions]="platformOptions"
+            [yearCategoryOptions]="yearCategoryOptions" (filterApplied)="handleFiltersApplied($event)"
+            (close)="isFilterOpen = false"></app-filter-menu>
+
+        <button class="confirm-button" (click)="confirmMobileSearch()">
+            <app-fa-icon icon="search" /> Buscar Jogos
+        </button>
+    </div>
+</div>

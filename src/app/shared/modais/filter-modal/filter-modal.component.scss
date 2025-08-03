@@ -1,0 +1,125 @@
+@use 'colors' as *;
+@use 'breakpoints' as *;
+
+@include respond(mobile) {
+  .mobile-filter-modal {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba($pure-black, 0.9), rgba($rare-deep-blue, 0.95));
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    padding: 1.5rem 1rem;
+    border-radius: 20px 20px 0 0;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .modal-header {
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+
+      .modal-title {
+        color: $pure-white;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        color: $light-gray;
+        font-size: 1.8rem;
+        padding: 0.25rem;
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .modal-body {
+      width: 100%;
+
+      .input-wrapper {
+        position: relative;
+        width: 100%;
+
+        .input.big {
+          width: 100%;
+          font-size: 1.1rem;
+          padding: 1rem 3rem 1rem 1rem;
+          border-radius: 10px;
+          background: rgba($pure-white, 0.05);
+          color: $pure-white;
+          border: 1px solid rgba($pure-white, 0.2);
+
+          &::placeholder {
+            color: rgba($pure-white, 0.5);
+          }
+        }
+
+        .filter-button {
+          position: absolute;
+          top: 50%;
+          right: 0.75rem;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: $highlight-blue;
+          font-size: 1.3rem;
+          cursor: pointer;
+
+          &:hover {
+            color: lighten($highlight-blue, 10%);
+          }
+
+          app-fa-icon {
+            pointer-events: none;
+          }
+        }
+      }
+
+      .full-filter-menu {
+        width: 100%;
+        margin-top: 1rem;
+        background: rgba($pure-black, 0.9);
+        border: 1px solid rgba($pure-white, 0.1);
+        border-radius: 12px;
+        padding: 1rem;
+        max-height: 300px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+        }
+      }
+
+      .confirm-button {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        background: linear-gradient(90deg, $highlight-blue, $rare-deep-blue);
+        color: $pure-white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: background 0.3s;
+
+        &:hover {
+          background: linear-gradient(90deg, $rare-deep-blue, $highlight-blue);
+        }
+      }
+    }
+  }
+}

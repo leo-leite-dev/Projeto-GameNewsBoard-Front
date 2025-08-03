@@ -27,7 +27,6 @@
         border: 2px dashed $white-overlay-02;
         min-height: 140px;
         max-height: 54vh;
-        overflow-y: auto;
 
         .game-icon {
           width: 100%;
@@ -50,6 +49,8 @@
         background-color: $white-overlay-08;
         border-radius: 6px;
         border: 2px dashed $white-overlay-02;
+        overflow-y: auto;
+        max-height: 54vh;
       }
     }
   }
@@ -61,7 +62,7 @@
 
     .container-overflow {
       grid-template-columns: 1fr;
-      width: 100%;
+      padding-bottom: 80px;
 
       .status-dropzone {
         display: none;

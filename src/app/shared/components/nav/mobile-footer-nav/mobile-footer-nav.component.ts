@@ -7,9 +7,6 @@ import { UserProfileResponse } from '../../../models/user-profile.model';
 import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { ModalAuthService } from '../../../services/commons/modal-auth.service';
-import { LoginComponent } from '../../../modais/login/login.component';
-import { RegisterComponent } from '../../../modais/register/register.component';
-import { ConfirmDialogComponent } from '../../../modais/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mobile-footer-nav',
@@ -17,9 +14,6 @@ import { ConfirmDialogComponent } from '../../../modais/confirm-dialog/confirm-d
   imports: [
     CommonModule,
     MatIconModule,
-    LoginComponent,
-    RegisterComponent,
-    ConfirmDialogComponent,
   ],
   templateUrl: './mobile-footer-nav.component.html',
   styleUrls: ['./mobile-footer-nav.component.scss'],

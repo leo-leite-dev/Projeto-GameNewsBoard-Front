@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FaIconComponent, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
 import { GenericModule } from '../../../../../shareds/commons/GenericModule';
 import { NavigationService } from '../../../services/commons/navigation.service';
 import { ViewportService } from '../../../services/commons/viewport.service';
@@ -12,10 +12,8 @@ import { ViewportService } from '../../../services/commons/viewport.service';
   imports: [
     RouterModule,
     GenericModule,
-    FaIconComponent,
     FontAwesomeModule,
-    AsyncPipe,
-    NgIf,
+    NgIf
   ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss',
@@ -24,5 +22,5 @@ export class NavBarComponent {
   constructor(
     public navigation: NavigationService,
     public viewport: ViewportService
-  ) {}
+  ) { }
 }

@@ -1,58 +1,54 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
-.input {
-  padding: 0.8rem 1rem;
-  background: rgba(0, 0, 0, 0.185);
-  border: 1px solid $pure-yellow;
-  border-radius: 8px;
-  color: $pure-white;
-  outline: none;
-  transition: box-shadow 0.3s ease;
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: auto;
 
-  &::placeholder {
+  .input {
+    width: 100%;
+    padding: 0.8rem 2.8rem 0.8rem 1.2rem;
+    background: linear-gradient(135deg, rgba($rare-deep-blue, 0.8), rgba($overlay-bg, 0.9));
+    border: 2px solid transparent;
+    border-radius: 999px;
+    color: $pure-white;
+    font-size: 1rem;
+    font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 2px rgba($pure-yellow, 0.6);
+
+    &::placeholder {
+      color: rgba($cloud-gray, 0.7);
+      letter-spacing: 0.5px;
+    }
+
+    &:hover {
+      box-shadow: 0 0 0 2px rgba($rare-deep-blue, 0.6);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $rare-deep-blue;
+      box-shadow: 0 0 8px 2px rgba($rare-deep-blue, 0.7);
+      background: linear-gradient(135deg, rgba($rare-deep-blue, 0.95), rgba($overlay-bg, 0.95));
+    }
+
+    &:disabled {
+      background: $dark-gray;
+      color: $steam-gray;
+      cursor: not-allowed;
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
     color: $cloud-gray;
-  }
-
-  &:hover,
-  &:focus {
-    border-color: $rare-deep-blue;
-  }
-}
-
-
-@include respond(mobile) {
-  .mobile-search-modal {
-    position: fixed;
-    inset: 0;
-    background: $overlay-bg;
-    backdrop-filter: blur(8px);
-    z-index: 2000;
-    padding: 2rem 1rem;
-    gap: 1.5rem;
-    border-radius: 12px;
-
-    .input.big {
-      width: 80%;
-      font-size: 1.2rem;
-      padding: 1rem;
-    }
-
-    button {
-      width: 80%;
-      padding: 0.75rem;
-      font-weight: bold;
-      border-radius: 8px;
-      background: $rare-deep-blue;
-      color: $pure-white;
-      border: none;
-      cursor: pointer;
-    }
-
-    .close-button {
-      background: none;
-      color: $pure-white;
-      font-size: 1.4rem;
-    }
+    font-size: 1rem;
+    pointer-events: none;
   }
 }

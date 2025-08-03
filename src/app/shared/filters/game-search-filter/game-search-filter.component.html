@@ -1,0 +1,35 @@
+<ng-container *ngIf="viewportService.isMobile(); else desktopSearch">
+  <div class="mobile-filter-bar">
+    <app-filter-input class="search-input" [placeholder]="'Buscar jogo...'" [value]="filters.searchTerm"
+      (valueChange)="onSearch($event)" [useMobileModal]="true" (openMobileSearch)="onOpenMobileSearch()" />
+  </div>
+
+  <app-filter-modal *ngIf="isSearchModalOpen" [placeholder]="'Buscar jogos...'" [initialValue]="filters.searchTerm"
+    [selectedPlatform]="filters.platform" [selectedYearCategory]="filters.yearCategory"
+    [platformOptions]="platformOptions" [yearCategoryOptions]="yearCategoryOptions"
+    (filtersApplied)="onFilterApplied($event)" (searchConfirmed)="onConfirmSearchFromModal($event)"
+    (close)="isSearchModalOpen = false">
+  </app-filter-modal>
+</ng-container>
+
+<ng-template #desktopSearch>
+  <div class="filters-wrapper">
+    <div class="search d-flex center jc-center end gap-10 mb-20 mt-20 position-relative">
+      <app-filter-input [placeholder]="'Buscar jogos...'" [value]="filters.searchTerm" (valueChange)="onSearch($event)"
+        [useMobileModal]="true" (openMobileSearch)="onOpenMobileSearch()" />
+
+      <button class="filter-button d-flex align-center gap-10 bold" (click)="toggleDesktopFilters()" title="Filtros">
+        <app-fa-icon icon="sliders" />
+        <span class="ml-5">Filtros</span>
+      </button>
+
+      <!-- MENU FLUTUANTE -->
+      <div class="filter-menu-container" *ngIf="filtersOpen">
+        <app-filter-menu [selectedPlatform]="filters.platform" [selectedYearCategory]="filters.yearCategory"
+          [platformOptions]="platformOptions" [yearCategoryOptions]="yearCategoryOptions"
+          (filterApplied)="onFilterApplied($event)" (close)="filtersOpen = false"></app-filter-menu>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

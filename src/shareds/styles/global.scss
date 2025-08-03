@@ -26,26 +26,6 @@ app-root {
   scrollbar-color: #7f00ff transparent;
 }
 
-*::-webkit-scrollbar {
-  width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #2f243b, #e100ff);
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-  transition: background-color 0.3s ease;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #a100ff, #ff00d4);
-}
-
 .container-wrapper,
 .game-management-wrapper {
   position: relative;
@@ -74,12 +54,10 @@ app-root {
   overflow-x: hidden;
   padding: 20px;
 
-  background: radial-gradient(circle at top left, #2a004f 0%, #3d0074 35%, #1c002e 80%);
-  background-color: #2a004f;
+  background: linear-gradient(135deg, #1e103e 0%, #2a1453 100%);
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
-
   transition: margin-left 0.3s ease, filter 0.3s ease;
 
   &.menu-expanded {
@@ -149,5 +127,6 @@ app-root {
   .container-wrapper,
   .game-management-wrapper {
     border-radius: 0;
+    margin: 4px;
   }
 }

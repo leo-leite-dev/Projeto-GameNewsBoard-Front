@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { GenericModule } from "../../../../shareds/commons/GenericModule";
 import { GamerLoadingComponent } from "../gamer-loading/gamer-loading.component";
-import { GameSearchFilterComponent } from "../../forms/game-search-filter/game-search-filter.component";
 import { CarouselComponent } from "../carousel/carousel.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
@@ -13,6 +12,7 @@ import { YearCategory } from "../../enums/year-category.enum";
 import { debounceTime, distinctUntilChanged, Subject, Subscription } from "rxjs";
 import { GameDataService } from "../../services/commons/game-data.service";
 import { CarouselItem } from "../../models/commons/carousel-item.model";
+import { GameSearchFilterComponent } from "../../filters/game-search-filter/game-search-filter.component";
 
 @Component({
   selector: 'app-game-carousel',

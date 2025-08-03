@@ -1,0 +1,12 @@
+<div *ngIf="isMobile && useMobileModal; else desktopInput" class="mt-10">
+    <button class="icon" (click)="openModal()">
+        <app-fa-icon icon="search"></app-fa-icon>
+    </button>
+</div>
+
+<ng-template #desktopInput>
+    <div class="input-wrapper">
+        <input class="input" type="text" [placeholder]="placeholder" [value]="value" (input)="onInputChange($event)" />
+        <app-fa-icon icon="search" class="search-icon" />
+    </div>
+</ng-template>

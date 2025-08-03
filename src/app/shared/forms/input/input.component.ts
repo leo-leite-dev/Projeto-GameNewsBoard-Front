@@ -1,13 +1,14 @@
 import { Component, Input, Output, EventEmitter, forwardRef, OnInit, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ViewportService } from '../../services/commons/viewport.service';
-import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
+import { fromEvent, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [FaIconComponent, GenericModule],
+  imports: [GenericModule],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   providers: [
@@ -26,35 +27,38 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   @Output() valueChange = new EventEmitter<string>();
   @Output() filterToggle = new EventEmitter<void>();
+  @Output() openMobileSearch = new EventEmitter<void>();
 
   value: string = '';
   showPassword = false;
   isDisabled = false;
-  isSearchModalOpen = false;
   isMobile = false;
 
+  private destroy$ = new Subject<void>();
   private onChange: (value: string) => void = () => { };
   private onTouchedFn: () => void = () => { };
 
   constructor(private viewport: ViewportService) { }
 
   get computedInputType(): string {
-    if (this.type !== 'password') return this.type;
-    return this.showPassword ? 'text' : 'password';
+    return this.type === 'password' && this.showPassword ? 'text' : this.type;
   }
 
   ngOnInit(): void {
-    this.checkIfMobile();
-    window.addEventListener('resize', this.checkIfMobile);
+    this.updateMobileState();
+    fromEvent(window, 'resize')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateMobileState());
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('resize', this.checkIfMobile);
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  checkIfMobile = (): void => {
+  private updateMobileState(): void {
     this.isMobile = this.viewport.isMobile();
-  };
+  }
 
   writeValue(value: string): void {
     this.value = value ?? '';
@@ -77,19 +81,13 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
     this.valueChange.emit(this.value);
   }
 
-  confirmMobileSearch(): void {
-    this.onChange(this.value);
-    this.valueChange.emit(this.value);
-    this.isSearchModalOpen = false;
-  }
-
   toggleFilter(): void {
     this.filterToggle.emit();
   }
 
   openModal(): void {
     if (this.isMobile && this.useMobileModal) {
-      this.isSearchModalOpen = true;
+      this.openMobileSearch.emit();
     }
   }
 }

@@ -1,0 +1,73 @@
+// @use 'colors' as *;
+// @use 'breakpoints' as *;
+
+// .game-management-wrapper {
+//   display: flex;
+//   justify-content: center;
+//   gap: 1rem;
+//   padding: 1.2rem 2rem 0.5rem;
+//   background: linear-gradient(135deg, rgba($rare-deep-blue, 0.85), rgba($overlay-bg, 0.9));
+//   border-radius: 20px;
+//   box-shadow: 0 0 12px rgba($rare-deep-blue, 0.4);
+//   margin: 1.5rem auto 2rem;
+//   width: fit-content;
+//   max-width: 100%;
+
+//   @include respond(mobile) {
+//     display: none;
+//   }
+
+//   .nav-button {
+//     padding: 0.6rem 1.6rem;
+//     font-family: 'Orbitron', sans-serif;
+//     font-size: 0.95rem;
+//     font-weight: 600;
+//     border-radius: 999px;
+//     border: 2px solid transparent;
+//     background: transparent;
+//     color: $pure-white;
+//     cursor: pointer;
+//     transition: all 0.3s ease;
+
+//     &:hover {
+//       border-color: rgba($pure-yellow, 0.4);
+//       box-shadow: 0 0 8px rgba($pure-yellow, 0.2);
+//     }
+
+//     &.active {
+//       background: linear-gradient(135deg, $pure-purple, $pure-purple);
+//       color: $pure-white;
+//       box-shadow: 0 0 10px 2px rgba($pure-purple, 0.4);
+//       border: none;
+//     }
+//   }
+// }
+
+// .tab-nav-mobile {
+//   display: none;
+
+//   @include respond(mobile) {
+//     display: flex;
+//     position: fixed;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     justify-content: space-around;
+//     background: rgba($overlay-bg, 0.9);
+//     border-top: 2px solid $rare-deep-blue;
+//     padding: 0.7rem 1rem;
+//     z-index: 100;
+
+//     button {
+//       background: none;
+//       border: none;
+//       color: $cloud-gray;
+//       font-size: 1.4rem;
+//       cursor: pointer;
+
+//       &.active-tab {
+//         color: $pure-purple;
+//       }
+//     }
+//   }
+// }

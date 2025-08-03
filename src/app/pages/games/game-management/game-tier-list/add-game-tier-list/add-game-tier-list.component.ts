@@ -52,7 +52,7 @@ export class AddGameTierListComponent implements OnInit, OnDestroy {
     private tierListService: TierListService,
     private toastr: ToastrService,
     private errorHandler: ErrorHandlingService,
-    private viewport: ViewportService
+    public viewport: ViewportService
   ) { }
 
   ngOnInit(): void {

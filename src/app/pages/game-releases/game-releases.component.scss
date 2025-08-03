@@ -1,9 +1,23 @@
 @use 'colors' as *;
 @use 'breakpoints' as *;
 
+.global-loading-wrapper {
+  width: 90vw;
+}
+
 .container-wrapper {
+  .filter-wrapper {
+    margin: 0 auto;
+    max-width: 1200px;
+    position: relative;
+  }
+
+  .release-item,
   .carousel-empty-message {
     height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: $steam-gray;
     font-size: 0.95rem;
   }
@@ -11,7 +25,6 @@
   .release-item {
     position: relative;
     width: 250px;
-    height: 300px;
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s ease;
@@ -67,13 +80,8 @@
       margin: 10px;
     }
 
+    .release-item,
     .carousel-empty-message {
-      height: 50px;
-      font-size: 0.85rem;
-      padding: 0 1rem;
-    }
-
-    .release-item {
       width: 180px;
       height: 260px;
 

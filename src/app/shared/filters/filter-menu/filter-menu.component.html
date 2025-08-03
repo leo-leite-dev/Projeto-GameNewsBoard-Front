@@ -1,0 +1,27 @@
+<div class="filter-menu d-flex column gap-12">
+  <label class="filter-label">Plataformas</label>
+  <div class="filter-options">
+    <label *ngFor="let option of platformOptions">
+      <input type="radio" name="platform" [disabled]="currentYearCategory !== YearCategory.All"
+        [checked]="currentPlatform === option.platform" (change)="onPlatformChange(option.platform)" />
+      {{ option.name }}
+    </label>
+  </div>
+
+  <label class="filter-label mt-20">Ano</label>
+  <div class="filter-options">
+    <label *ngFor="let option of yearCategoryOptions">
+      <input type="radio" name="yearCategory" [disabled]="currentPlatform !== Platform.All"
+        [checked]="currentYearCategory === option.category" (change)="onYearCategoryChange(option.category)" />
+      {{ option.name }}
+    </label>
+  </div>
+
+  <button (click)="applyFilters()" class="apply-button mt-10 bold">
+    Aplicar Filtros
+  </button>
+
+  <button (click)="resetFilters()" class="reset-button mt-5">
+    Resetar Filtros
+  </button>
+</div>
