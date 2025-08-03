@@ -1,17 +1,4 @@
-<div *ngIf="isMobile && useMobileModal; else desktopInput" class="mt-10">
-  <button class="icon" (click)="openModal()" aria-label="Abrir filtro">
-    <app-fa-icon icon="search"></app-fa-icon>
-  </button>
+<div class="form-wrapper d-flex">
+  <input class="input" [type]="computedInputType" [placeholder]="placeholder" [(ngModel)]="value"
+    [readonly]="isDisabled" (ngModelChange)="onInputChange()" (blur)="onBlur()" />
 </div>
-
-<ng-template #desktopInput>
-  <div class="form-wrapper">
-    <div class="input-wrapper">
-      <input class="input" [type]="computedInputType" [placeholder]="placeholder" [(ngModel)]="value"
-        [readonly]="isDisabled" (ngModelChange)="onInputChange()" [attr.aria-label]="placeholder" />
-      <span class="search-icon">
-        <app-fa-icon icon="search"></app-fa-icon>
-      </span>
-    </div>
-  </div>
-</ng-template>

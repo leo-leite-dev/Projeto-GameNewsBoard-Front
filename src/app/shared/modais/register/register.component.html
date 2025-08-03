@@ -16,13 +16,12 @@
       </div>
 
       <div class="form-group  mb-20">
-        <app-input formControlName="username" [label]="'Usuário'" [placeholder]="'Digite seu nome de usuário'"
-          [useMobileModal]="false"></app-input>
+        <app-input formControlName="username" [label]="'Usuário'" [placeholder]="'Digite seu nome de usuário'" />
       </div>
 
       <div class="form-group mb-20">
         <app-input formControlName="password" [label]="'Senha'" [placeholder]="'Crie uma senha segura'"
-          [type]="'password'" [useMobileModal]="false"></app-input>
+          [type]="'password'" />
       </div>
 
       <button type="submit" [disabled]="form.invalid" class="auth-button">Registrar</button>
