@@ -25,6 +25,7 @@
         border-radius: 16px;
         backdrop-filter: blur(12px);
         box-shadow: 0 0 15px $overlay-light;
+        padding: 2rem;
     }
 
     .upload-label {
@@ -80,7 +81,7 @@
         padding: 10px;
 
         .create-tier-form {
-            padding: 20px;
+            padding: 1rem;
         }
 
         .tier-header {
@@ -101,6 +102,10 @@
 
         .upload-icon {
             font-size: 1.5rem;
+        }
+
+        .button-create {
+            padding: 0;
         }
     }
 }

@@ -6,15 +6,16 @@
 
   <div class="container-overflow">
     <div class="status-column" *ngFor="let status of statusList">
-      <div class="status-header fs-18 text-center mb-10 bold d-flex jc-between align-center gap-10 clickable-header"
-        *ngIf="viewport.isMobile()" (click)="toggleCollapse(status)">
-        <span>{{ getStatusLabel(status) }}</span>
-        <app-fa-icon class="collapse-icon" [ngClass]="{ 'rotated': !isCollapsed(status) }"
-          [icon]="isCollapsed(status) ? 'chevron-down' : 'chevron-up'" />
-      </div>
 
-      <div class="status-header fs-18 text-center mb-10 bold" *ngIf="!viewport.isMobile()">
-        {{ getStatusLabel(status) }}
+      <div class="status-header fs-18 text-center mb-10 bold d-flex jc-between align-center gap-10"
+        [ngClass]="{ 'clickable-header': viewport.isMobile() }" (click)="viewport.isMobile() && toggleCollapse(status)">
+        <span>
+          {{ getStatusLabel(status) }}
+          <span class="game-count">({{ statusGames[status]?.length || 0 }})</span>
+        </span>
+
+        <app-fa-icon *ngIf="viewport.isMobile()" class="collapse-icon" [ngClass]="{ 'rotated': !isCollapsed(status) }"
+          [icon]="isCollapsed(status) ? 'chevron-down' : 'chevron-up'" />
       </div>
 
       <div class="status-dropzone gap-10" *ngIf="!viewport.isMobile()" cdkDropList [id]="'status-drop-' + status"
@@ -30,7 +31,7 @@
           </button>
         </div>
 
-        <div *ngIf="statusGames[status].length === 0" class="empty-dropzone text-center">
+        <div class="empty-dropzone text-center" *ngIf="statusGames[status].length === 0 && !hoveredStatus[status]">
           <span>Arraste jogos para aqui</span>
         </div>
       </div>
@@ -47,9 +48,10 @@
           </button>
         </div>
 
-        <div *ngIf="statusGames[status].length === 0" class="empty-dropzone text-center">
+        <div class="empty-dropzone text-center" *ngIf="statusGames[status].length === 0 && !hoveredStatus[status]">
           <span>Arraste jogos para aqui</span>
         </div>
+
       </div>
     </div>
   </div>

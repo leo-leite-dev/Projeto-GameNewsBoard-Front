@@ -6,6 +6,7 @@
 @use 'scrollbar' as *;
 @use 'table' as *;
 @use 'components' as *;
+@use 'game-card' as *;
 @use 'game-grid' as *;
 @use 'icon' as *;
 @use 'modal' as *;
@@ -120,9 +121,6 @@ app-root {
 }
 
 @include respond(mobile) {
-  .container-overflow {
-    height: 78vh;
-  }
 
   .container-wrapper,
   .game-management-wrapper {

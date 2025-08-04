@@ -71,12 +71,14 @@ export class GameStatusListComponent implements OnInit {
     this.hoveredStatus[status] = false;
   }
 
-  onGameClicked(game: CarouselItem): void {
-    if (!this.isMobile) return;
-    this.selectedGame.set(game);
-    this.selectedGameStatus = this.store.getGameStatusById(game.id) ?? null;
-    this.showAssignStatusModal = true;
-  }
+onGameClicked(game: CarouselItem): void {
+  if (!this.isMobile) return;
+  this.selectedGame.set(game);
+  this.selectedGameStatus = this.store.getGameStatusById(game.id) ?? null;
+  console.log(`🧪 Jogo clicado: ${game.title}, Status atual: ${this.selectedGameStatus}`);
+  this.showAssignStatusModal = true;
+}
+
 
   onStatusSelected(event: { status: Status; game: CarouselItem }): void {
     this.store.setGameStatus(event.game.id, event.status, event.game);
@@ -119,7 +121,11 @@ export class GameStatusListComponent implements OnInit {
   }
 
   removeGame(game: CarouselItem): void {
+    const status = this.store.getGameStatusById(game.id);
     this.store.removeGameStatus(game.id);
+
+    if (status)
+      this.hoveredStatus[status] = false;
   }
 
   showAssignStatusModalFn(): boolean {

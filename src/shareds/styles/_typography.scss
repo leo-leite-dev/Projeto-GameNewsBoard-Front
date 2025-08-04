@@ -39,12 +39,12 @@ p {
 }
 
 a {
-  color: $rare-deep-blue;
+  color: $pure-white;
   font-weight: bold;
   transition: color 0.2s ease;
 
   &:hover {
-    color: lighten($rare-deep-blue, 10%);
+    color: lighten($steam-gray, 10%);
     text-decoration: underline;
   }
 }

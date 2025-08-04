@@ -4,8 +4,8 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: $overlay-bg;
-  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px) saturate(160%);
   z-index: 999;
 }
 

@@ -1,19 +1,22 @@
-<div class="assign-status-modal-backdrop" (click)="dismiss()">
-    <div class="assign-status-modal" (click)="$event.stopPropagation()">
+<div class="modal-backdrop" (click)="dismiss()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
         <button class="close-btn" (click)="dismiss()">
             <fa-icon [icon]="'times'"></fa-icon>
         </button>
 
-        <div class="game-preview mb-20">
+        <div class="modal-game-preview mb-20">
             <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
-            <h2 class="text-center fs-18">{{ game.title }}</h2>
+            <h2 class="text-center fs-16">{{ game.title }}</h2>
         </div>
 
-        <div class="status-grid">
-            <div class="status-item" *ngFor="let status of statuses" [class.disabled]="status.value === currentStatus"
+        <div class="modal-option-list status-grid gap-10">
+            <div class="option-item d-flex align-center fs-14 gap-10 nowrap" *ngFor="let status of statuses"
+                [class.active]="status.value.toString() === currentStatus?.toString()"
+                [class.checked]="status.value.toString() === currentStatus?.toString()"
+                [class.disabled]="status.value.toString() === currentStatus?.toString()"
                 (click)="status.value !== currentStatus && selectStatus(status.value)">
-                <input type="checkbox" [checked]="status.value === currentStatus" disabled />
-                <span>{{ getStatusLabel(status.value) }}</span>
+                <div class="custom-checkbox"></div>
+                <span>{{ status.label }}</span>
             </div>
         </div>
     </div>

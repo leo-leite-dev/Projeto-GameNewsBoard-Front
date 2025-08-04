@@ -19,6 +19,10 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 
+    @include respond(tablet) {
+      height: 25vh;
+    }
+
     .featured-image {
       position: absolute;
       top: 0;
@@ -35,16 +39,8 @@
     background-color: $void-black;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-  }
 
-  @include respond(tablet) {
-    .featured-image-wrapper {
-      height: 25vh;
-    }
-  }
-
-  @include respond(mobile) {
-    .featured-content {
+    @include respond(mobile) {
       h1 {
         font-size: 20px;
       }
@@ -52,10 +48,6 @@
       p {
         font-size: 12px;
       }
-    }
-
-    .featured-image-wrapper {
-      height: 16vh;
     }
   }
 }

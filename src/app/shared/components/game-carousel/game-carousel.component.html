@@ -5,6 +5,7 @@
 
   <app-carousel *ngIf="!isLoading" class="game-carousel" [title]="'Jogos Disponíveis'" [items]="filteredGames"
     [isLoading]="isLoading" [enableDrag]="true" [connectedDropLists]="connectedDropLists"
-    (itemClicked)="onGameClicked($event)" (onSearchIconClicked)="onOpenSearchModal()" [showSeeAll]="false">
+    (itemClicked)="onGameClicked($event)" (onSearchIconClicked)="onOpenSearchModal()" [showSeeAll]="false"
+    [showSearchIcon]="true">
   </app-carousel>
 </div>

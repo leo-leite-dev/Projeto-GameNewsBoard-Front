@@ -1,26 +1,26 @@
 @use 'colors' as *;
 
-// .create-button {
-//   background: linear-gradient(90deg, #6a00f4, $mage-purple);
-//   color: $pure-white;
-//   padding: 14px 20px;
-//   font-size: 1rem;
-//   border: none;
-//   border-radius: 10px;
-//   font-weight: bold;
-//   text-transform: uppercase;
-//   letter-spacing: 1px;
-//   cursor: pointer;
-//   transition: all 0.3s ease;
+.create-button {
+  background: linear-gradient(90deg, #6a00f4, $mage-purple);
+  color: $pure-white;
+  padding: 14px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 
-//   &:hover {
-//     transform: scale(1.03);
-//     box-shadow: 0 0 10px $mage-purple;
-//   }
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px $mage-purple;
+  }
 
-//   &:disabled {
-//     background-color: $charcoal;
-//     cursor: not-allowed;
-//     opacity: 0.6;
-//   }
-// }
+  &:disabled {
+    background-color: $charcoal;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

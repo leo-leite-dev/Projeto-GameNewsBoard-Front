@@ -23,7 +23,7 @@
 }
 
 .container-wrapper {
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 1rem;
   background-color: $rare-deep-blue;
   box-shadow: 0 0 4px rgba($pure-white, 0.05);
@@ -33,8 +33,7 @@
 
     .see-all-link,
     .btn-toggle-scroll {
-      color: $pure-white;
-      font-weight: 600;
+      color: $steam-gray;
       cursor: pointer;
 
       &:hover {
@@ -93,6 +92,13 @@
         border-radius: 10px;
       }
 
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
       .game-icon {
         flex: 0 0 auto;
         width: 140px;
@@ -128,11 +134,18 @@
       }
     }
   }
+}
 
-  @include respond(mobile) {
-    padding: 0.5rem;
+@include respond(mobile) {
+  .container-wrapper {
+    padding-bottom: 30px;
 
     .carousel-header {
+
+      .see-all-link {
+        font-size: 10px;
+      }
+
       display: grid;
       grid-template-columns: 1fr auto auto;
       gap: 10px;

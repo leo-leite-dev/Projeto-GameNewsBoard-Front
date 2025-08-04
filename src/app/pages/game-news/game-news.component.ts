@@ -3,7 +3,6 @@ import { GameNewsArticle } from '../../shared/models/games-news.model';
 import { GenericModule } from '../../../shareds/commons/GenericModule';
 import { GameNewsFeaturedComponent } from './game-news-featured/game-news-featured.component';
 import { GameNewsListComponent } from './game-news-list/game-news-list.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faXbox, faPlaystation, faSteam } from '@fortawesome/free-brands-svg-icons';
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
 import { GameNewsService } from '../../shared/services/game-news.service';
@@ -17,7 +16,6 @@ import { GamerLoadingComponent } from '../../shared/components/gamer-loading/gam
   imports: [
     GenericModule,
     GameNewsListComponent,
-    FontAwesomeModule,
     GameNewsFeaturedComponent,
     PlatformFilterComponent,
     GamerLoadingComponent

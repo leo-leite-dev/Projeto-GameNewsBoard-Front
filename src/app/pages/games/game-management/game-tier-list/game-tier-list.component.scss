@@ -108,74 +108,74 @@
       }
     }
   }
+}
 
-  @include respond(mobile) {
-    .tier-list-container {
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
+@include respond(mobile) {
+  .tier-list-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .no-tiers {
+    .info-text {
+      text-align: center;
     }
+  }
 
-    .no-tiers {
-      .info-text {
-        text-align: center;
+  .container-tier {
+    width: 100%;
+
+    .tier-card {
+      width: 100% !important;
+      position: relative;
+
+      .remove-button,
+      .edit-button {
+        display: none !important;
       }
-    }
 
-    .container-tier {
-      width: 100%;
+      .mobile-settings {
+        display: block !important;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+        font-size: 1.3rem;
+        color: $pure-white;
+        background: $overlay-bg;
+        border-radius: 50%;
+        padding: 6px;
+        cursor: pointer;
 
-      .tier-card {
-        width: 100% !important;
-        position: relative;
-
-        .remove-button,
-        .edit-button {
-          display: none !important;
+        &:hover {
+          background: $steam-gray;
         }
+      }
 
-        .mobile-settings {
-          display: block !important;
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          z-index: 10;
-          font-size: 1.3rem;
+      .mobile-menu {
+        display: flex !important;
+        flex-direction: column;
+        position: absolute;
+        top: 45px;
+        right: 10px;
+        z-index: 15;
+        background: $overlay-bg;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 8px $overlay-bg;
+
+        .menu-option {
+          padding: 8px 12px;
           color: $pure-white;
-          background: $overlay-bg;
-          border-radius: 50%;
-          padding: 6px;
+          background: transparent;
+          border: none;
+          text-align: left;
           cursor: pointer;
+          font-size: 14px;
 
           &:hover {
-            background: $steam-gray;
-          }
-        }
-
-        .mobile-menu {
-          display: flex !important;
-          flex-direction: column;
-          position: absolute;
-          top: 45px;
-          right: 10px;
-          z-index: 15;
-          background: $overlay-bg;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 0 8px $overlay-bg;
-
-          .menu-option {
-            padding: 8px 12px;
-            color: $pure-white;
-            background: transparent;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            font-size: 14px;
-
-            &:hover {
-              background-color: $steam-gray;
-            }
+            background-color: $steam-gray;
           }
         }
       }

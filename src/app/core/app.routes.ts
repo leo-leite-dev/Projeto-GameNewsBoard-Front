@@ -25,7 +25,7 @@ export const routes: Routes = [
       },
       {
         path: 'news',
-        component: ComingSoonComponent,
+        component: GameNewsComponent,
       },
       {
         path: 'all-games',
@@ -33,11 +33,11 @@ export const routes: Routes = [
       },
       {
         path: 'game-releases',
-        component: ComingSoonComponent,
+        component: GameReleasesComponent,
       },
       {
         path: 'all-releases',
-        component: ComingSoonComponent,
+        component: AllReleasesComponent,
       },
       {
         path: 'manage-games',

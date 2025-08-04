@@ -1,0 +1,53 @@
+@use 'colors' as *;
+
+.release-item {
+    height: 320px;
+    position: relative;
+    aspect-ratio: 2 / 2.6;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+
+    .game-cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    .game-overlay {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 0.5rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 20%, rgba(0, 0, 0, 0) 100%);
+        color: $pure-white;
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+        z-index: 2;
+    }
+
+    .game-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        text-shadow: 0 0 4px $overlay-bg;
+    }
+
+    .game-extra {
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        color: $neutral-gray;
+    }
+}

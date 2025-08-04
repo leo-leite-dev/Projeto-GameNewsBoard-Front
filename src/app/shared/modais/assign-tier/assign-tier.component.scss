@@ -2,47 +2,33 @@
 @use 'breakpoints' as *;
 
 @include respond(mobile) {
-    .assign-tier-modal-backdrop {
+    :host {
         position: fixed;
         inset: 0;
-        background-color: $overlay-bg;
-        z-index: 1000;
-        padding: 1rem;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+        background-color: rgba(0, 0, 0, 0.6);
+        box-sizing: border-box;
     }
 
-    .assign-tier-modal {
-        background-color: $void-black;
-        border-radius: 12px;
-        padding: 1.5rem;
-        width: 100%;
-        max-width: 400px;
+    .modal-content {
         max-height: 80vh;
         overflow-y: auto;
-        position: relative;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        color: $pure-white;
     }
 
-    .close-btn {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        background: none;
-        border: none;
-        color: $pure-white;
-        cursor: pointer;
-    }
-
-    .tier-options {
-        width: 100%;
+    .modal-option-list {
         padding: 0 12px;
 
-        .tier-button {
-            padding: 10px;
+        .option-item {
+            background-color: $white-overlay-05;
+            padding: 10px 15px;
             border-radius: 6px;
             cursor: pointer;
-            user-select: none;
-            transition: opacity 0.2s ease;
+            transition: 0.2s;
+            color: $pure-white;
 
             &.disabled {
                 opacity: 0.5;

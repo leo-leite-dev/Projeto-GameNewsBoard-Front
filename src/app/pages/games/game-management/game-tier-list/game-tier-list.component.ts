@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { GenericModule } from '../../../../../shareds/commons/GenericModule';
-import { CreateButtonComponent } from '../../../../shared/components/buttons/create-button/create-button.component';
 import { RemoveButtonComponent } from '../../../../shared/components/buttons/remove-button/remove-button.component';
 import { ConfirmDialogComponent } from '../../../../shared/modais/confirm-dialog/confirm-dialog.component';
 import { GamerLoadingComponent } from '../../../../shared/components/gamer-loading/gamer-loading.component';
@@ -13,13 +12,14 @@ import { NotificationService } from '../../../../shared/services/commons/notific
 import { ViewportService } from '../../../../shared/services/commons/viewport.service';
 import { TierListResponse } from '../../../../shared/models/tier-list.model';
 import { environment } from '../../../../../environments/environments';
+import { NavigateButtonComponent } from '../../../../shared/components/buttons/navigate-button/navigate-button.component';
 
 @Component({
   selector: 'app-game-tier-list',
   standalone: true,
   imports: [
     GenericModule,
-    CreateButtonComponent,
+    NavigateButtonComponent,
     RemoveButtonComponent,
     ConfirmDialogComponent,
     GamerLoadingComponent,

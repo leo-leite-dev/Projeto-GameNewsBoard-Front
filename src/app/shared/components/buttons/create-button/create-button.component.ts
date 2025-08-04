@@ -10,7 +10,7 @@ import { FaIconComponent } from '../../icons/fa-icon/fa-icon.component';
   styleUrl: './create-button.component.scss'
 })
 export class CreateButtonComponent {
-  @Input() label: string = 'Ir';
+  @Input() label: string = 'Criar';
   @Input() className = '';
 
   @Output() buttonClick = new EventEmitter<void>();

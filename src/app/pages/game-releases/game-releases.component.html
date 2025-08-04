@@ -13,7 +13,8 @@
     <app-carousel [title]="'Lançamentos Do Dia'" [items]="todayGames" [isLoading]="false" [autoReverse]="true"
       [itemTemplate]="todayTemplate" [category]="'today'" (seeAllClicked)="goToAllReleases('today')">
 
-      <div *ngIf="todayGames.length === 0 && message" class="carousel-empty-message fs-12 text-center nowrap">
+      <div *ngIf="todayGames.length === 0 && message"
+        class="carousel-empty-message fs-14 d-flex jc-center align-center nowrap">
         {{ message }}
       </div>
     </app-carousel>

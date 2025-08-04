@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, } from '@angular/core';
 import { Status } from '../../enums/status-game.enum';
-import { STATUS_CONFIG, getStatusClass, getStatusLabel, getValidStatuses } from '../../utils/status-utils';
+import { STATUS_CONFIG, getValidStatuses } from '../../utils/status-utils';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { CarouselItem } from '../../models/commons/carousel-item.model';
 
@@ -18,22 +18,12 @@ export class AssignStatusComponent {
   @Output() statusSelected = new EventEmitter<{ status: Status; game: CarouselItem }>();
   @Output() closed = new EventEmitter<void>();
 
-  readonly statuses = getValidStatuses().map(status => ({
-    value: status,
-    label: getStatusLabel(status),
-    class: getStatusClass(status),
-  }));
+  readonly statuses = STATUS_CONFIG.filter(config =>
+    getValidStatuses().includes(config.value)
+  );
 
   getFullCoverUrl(url: string): string {
     return url?.replace('t_thumb', 't_cover_big') ?? '';
-  }
-
-  getStatusClass(status: Status): string {
-    return getStatusClass(status);
-  }
-
-  getStatusLabel(status: Status): string {
-    return getStatusLabel(status);
   }
 
   selectStatus(status: Status): void {

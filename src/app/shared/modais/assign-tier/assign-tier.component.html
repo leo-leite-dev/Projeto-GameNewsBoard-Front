@@ -1,16 +1,16 @@
-<div class="assign-tier-modal-backdrop d-flex jc-center align-center" (click)="dismiss()">
-    <div class="assign-tier-modal" (click)="$event.stopPropagation()">
+<div class="modal-backdrop d-flex jc-center align-center" (click)="dismiss()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
         <button class="close-btn fs-20" (click)="dismiss()">
             <fa-icon [icon]="'times'"></fa-icon>
         </button>
 
-        <div class="game-preview mb-20">
+        <div class="modal-game-preview mb-20">
             <img [src]="getFullCoverUrl(game.coverImage)" [alt]="game.title" />
-            <h2 class="text-center fs-20">{{ game.title }}</h2>
+            <h2 class="text-center fs-16">{{ game.title }}</h2>
         </div>
 
-        <div class="tier-options d-flex column gap-10">
-            <div *ngFor="let tier of availableTiers" class="tier-button text-center bold  mb-5"
+        <div class="modal-option-list d-flex column gap-10">
+            <div *ngFor="let tier of availableTiers" class="option-item text-center bold mb-5"
                 [class]="'tier-' + tier.toLowerCase()" [class.disabled]="tier === currentTier"
                 (click)="tier !== currentTier && selectTier(tier)">
                 {{ tier }}

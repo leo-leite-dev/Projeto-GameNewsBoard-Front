@@ -4,6 +4,7 @@
 .all-releases-wrapper {
     max-width: 1600px;
     margin: 0 auto;
+    padding-bottom: 40px;
 
     .category-buttons {
         .category-button {
@@ -35,7 +36,7 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        background: $overlay-bg;
+        background: $void-black;
         color: $pure-white;
         padding: 6px 8px;
         z-index: 2;
@@ -65,7 +66,7 @@
             flex-direction: column;
             gap: 12px;
             align-items: center;
-            margin-top: 80px;
+            margin-top: 20px;
 
             .category-buttons {
                 order: 1;

@@ -20,11 +20,13 @@ $highlight-blue: #3fa9f5; // destaque azul moderno
 $neon-blue: #00e0ff; // efeitos glow azul ciano
 $cyber-glow: 0 0 20px rgba(0, 255, 200, 0.15);
 $deep-violet: #6a00f4;
+$mage-purple: #6E33A4;
 
 // =============================================
 // Escala de Cinza
 // =============================================
 $void-black: #1b1b1b;
+$Dark-matter: #252525;
 $charcoal: #333333;
 $dark-gray: #2c2c2c;
 $light-gray: #999999;
@@ -63,11 +65,11 @@ $orange-overlay: rgba(255, 94, 0, 0.53);
 // Cores dos Tiers
 // =============================================
 $tier-colors: (
-  sss: #ffa500,     // laranja
-  ss: #e83e8c,       // rosa vibrante
-  s: #6f42c1,        // roxo escuro
-  a: #007bff,        // azul
-  c: #28a745,        // verde
-  d: #6c757d,        // cinza
-  f: #dc3545         // vermelho
+  sss: #ffa500,
+  ss: #e83e8c,
+  s: #6f42c1,
+  a: #007bff,
+  c: #28a745,
+  d: #6c757d,
+  f: #dc3545
 );
