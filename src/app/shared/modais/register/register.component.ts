@@ -48,10 +48,10 @@ export class RegisterComponent {
         this.toastr.success(res.message);
         this.registerSuccess.emit();
       },
-      error: () => {
-        this.errorMessage = 'Erro ao registrar. Tente outro nome de usuário.';
+      error: (err) => {
+        this.errorMessage = err?.message || 'Erro inesperado. Tente novamente.';
         this.toastr.error(this.errorMessage);
-      },
+      }
     });
   }
 

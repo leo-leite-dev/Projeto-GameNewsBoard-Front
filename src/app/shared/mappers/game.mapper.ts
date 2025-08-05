@@ -1,4 +1,4 @@
-import { GameResponse } from '../models/game-response.model';
+import { GameResponse } from '../models/game.model';
 import { CarouselItem } from '../models/commons/carousel-item.model';
 
 export function mapGameToCarouselItem(game: GameResponse): CarouselItem {

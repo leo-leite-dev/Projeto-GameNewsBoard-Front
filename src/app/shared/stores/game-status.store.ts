@@ -57,19 +57,17 @@ export class GameStatusStore {
             const cloned: StatusGamesMap = structuredClone(current);
 
             const oldStatus = this.getGameStatusById(gameId);
-            if (oldStatus) {
+            if (oldStatus)
                 cloned[oldStatus] = cloned[oldStatus].filter(g => g.id !== gameId);
-            }
 
             const gameToAdd = game ?? this.getGameById(gameId);
-            if (gameToAdd) {
+            if (gameToAdd)
                 cloned[newStatus].push(gameToAdd);
-            }
 
             return cloned;
         });
 
-        this.gameStatusService.setGameStatus(gameId, newStatus).subscribe({
+        this.gameStatusService.setGameStatus(gameId, { status: newStatus }).subscribe({
             next: () => this.toastr.success('Status atualizado com sucesso!'),
             error: () => this.toastr.error('Erro ao atualizar status.')
         });
@@ -80,9 +78,8 @@ export class GameStatusStore {
             const cloned: StatusGamesMap = structuredClone(current);
 
             const status = this.getGameStatusById(gameId);
-            if (status) {
+            if (status) 
                 cloned[status] = cloned[status].filter(g => g.id !== gameId);
-            }
 
             return cloned;
         });

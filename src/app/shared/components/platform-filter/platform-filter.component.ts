@@ -1,21 +1,27 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { GenericModule } from '../../../../shareds/commons/GenericModule';
+
+export interface PlatformOption<T = unknown> {
+  value: T;
+  icon: IconDefinition;
+  label?: string;
+  key: string;
+}
 
 @Component({
   selector: 'app-platform-filter',
   templateUrl: './platform-filter.component.html',
   styleUrls: ['./platform-filter.component.scss'],
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule]
+  imports: [GenericModule]
 })
-export class PlatformFilterComponent {
-  @Input() platforms: { value: any; icon: IconDefinition; label?: string; key: string; }[] = [];
-  @Input() selected: any = null;
-  @Output() platformChange = new EventEmitter<any>();
+export class PlatformFilterComponent<T = unknown> {
+  @Input() platforms: PlatformOption<T>[] = [];
+  @Input() selected: T | null = null;
+  @Output() platformChange = new EventEmitter<T>();
 
-  onSelect(platformValue: any): void {
+  onSelect(platformValue: T): void {
     this.platformChange.emit(platformValue);
   }
 }

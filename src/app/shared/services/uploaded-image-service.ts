@@ -4,37 +4,43 @@ import { Observable, catchError, map } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { ApiResponse } from '../models/commons/api-response.model';
 import { ErrorHandlingService } from './commons/error-handling.service';
+import { UploadedImageResponse } from '../models/uploaded-image.model';
+import { validateApiResponse } from '../utils/api-response-util';
 
 @Injectable({ providedIn: 'root' })
-export class uploadedImageService {
-  private readonly uploadedBaseUrl = `${environment.apiBaseUrl}/UploadedImage`;
+export class UploadedImageService {
+  private readonly baseUrl = `${environment.apiBaseUrl}/UploadedImage`;
 
-  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) {}
+  constructor(
+    private http: HttpClient,
+    private errorHandler: ErrorHandlingService
+  ) {}
 
-  uploadImage(image: File): Observable<{ imageUrl: string; imageId: string }> {
+  uploadImage(image: File): Observable<UploadedImageResponse> {
     const formData = new FormData();
     formData.append('image', image);
 
     return this.http
-      .post<ApiResponse<{ imageUrl: string; imageId: string }>>(
-        `${this.uploadedBaseUrl}/upload`,
-        formData
-      )
+      .post<ApiResponse<UploadedImageResponse>>(`${this.baseUrl}/upload`, formData)
       .pipe(
-        map((res) => {
-          if (!res || !res.success || !res.data || !res.data.imageUrl || !res.data.imageId)
-            throw new Error('Resposta de upload inválida.');
-
-          return res.data;
+        map((response) => {
+          const validated = validateApiResponse(response, 'fazer upload da imagem');
+          if (!validated.data) throw new Error('Upload retornou resposta inválida.');
+          return validated.data;
         }),
         catchError(this.errorHandler.handleWithThrow.bind(this.errorHandler))
       );
   }
 
   deleteImage(imageId: string): Observable<void> {
-    return this.http.delete<ApiResponse<object>>(`${this.uploadedBaseUrl}/${imageId}`).pipe(
-      map(() => {}), 
-      catchError(this.errorHandler.handleWithThrow.bind(this.errorHandler))
-    );
+    return this.http
+      .delete<ApiResponse<void>>(`${this.baseUrl}/${imageId}`)
+      .pipe(
+        map((response) => {
+          validateApiResponse(response, 'deletar a imagem');
+          return;
+        }),
+        catchError(this.errorHandler.handleWithThrow.bind(this.errorHandler))
+      );
   }
 }

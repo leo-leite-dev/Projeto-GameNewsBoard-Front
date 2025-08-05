@@ -7,7 +7,7 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../constants/pagination.constan
 import { ApiResponse } from '../models/commons/api-response.model';
 import { Platform } from '../enums/platform.enum';
 import { YearCategory } from '../enums/year-category.enum';
-import { GameResponse } from '../models/game-response.model';
+import { GameResponse } from '../models/game.model';
 import { environment } from '../../../environments/environments';
 
 @Injectable({
@@ -16,7 +16,10 @@ import { environment } from '../../../environments/environments';
 export class IgdbGameService {
   private readonly baseUrl = `${environment.apiBaseUrl}/games`;
 
-  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) {}
+  constructor(
+    private http: HttpClient,
+    private errorHandler: ErrorHandlingService
+  ) { }
 
   getGames(
     page: number = DEFAULT_PAGE,

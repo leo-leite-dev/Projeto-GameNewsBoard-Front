@@ -57,6 +57,7 @@ export class GameReleasesComponent implements OnInit {
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (res) => {
+          console.log('[Game Releases Response]', res);
           this.todayGames = res.today.data ?? [];
           this.upcomingGames = res.upcoming.data ?? [];
           this.recentGames = res.recent.data ?? [];

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef, OnInit, OnDestroy, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, OnInit, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
 import { ViewportService } from '../../services/commons/viewport.service';
@@ -32,6 +32,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
   isMobile = false;
 
   private destroy$ = new Subject<void>();
+
   private onChange: (value: string) => void = () => { };
   private onTouchedFn: () => void = () => { };
 
@@ -43,6 +44,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateMobileState();
+
     fromEvent(window, 'resize')
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.updateMobileState());
@@ -61,11 +63,11 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy {
     this.value = value ?? '';
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouchedFn = fn;
   }
 

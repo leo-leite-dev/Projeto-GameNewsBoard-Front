@@ -7,9 +7,9 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(private router: Router, private toastr: ToastrService) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
     const clonedRequest = req.clone({ withCredentials: true });
 
     return next.handle(clonedRequest).pipe(
@@ -17,9 +17,9 @@ export class AuthInterceptor implements HttpInterceptor {
         const isAuthLogin = req.url.includes('/auth/login');
         const isUserMeCheck = req.url.includes('/user/me');
 
-        if (isAuthLogin || isUserMeCheck) 
+        if (isAuthLogin || isUserMeCheck)
           return throwError(() => error);
-        
+
         if (error.status === 401 || error.status === 403) {
           this.toastr.error('Sessão expirada. Faça login novamente.', 'Acesso negado');
           setTimeout(() => this.router.navigate(['/login']), 1500);

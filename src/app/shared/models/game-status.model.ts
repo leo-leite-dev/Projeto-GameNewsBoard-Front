@@ -1,8 +1,11 @@
 import { Status } from "../enums/status-game.enum";
-import { GameResponse } from "./game-response.model";
+import { GameResponse } from "./game.model";
 
-export interface GameStatus {
+export interface GameStatusResponse {
     gameId: number;
     gameResponse: GameResponse
+    status: Status
+}
+export interface GameStatusRequest {
     status: Status
 }

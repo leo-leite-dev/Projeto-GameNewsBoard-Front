@@ -5,7 +5,7 @@ import { YearCategory } from '../../enums/year-category.enum';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../models/commons/api-response.model';
 import { PaginatedResult } from '../../models/commons/paginated-result.model';
-import { GameResponse } from '../../models/game-response.model';
+import { GameResponse } from '../../models/game.model';
 
 @Injectable({ providedIn: 'root' })
 export class GameDataService {
@@ -22,13 +22,11 @@ export class GameDataService {
     const isPlatformFilter = platform !== Platform.All;
     const isYearFilter = yearCategory !== YearCategory.All;
 
-    if (isPlatformFilter) {
+    if (isPlatformFilter)
       return this.igdbGameService.getGamesByPlatform(page, pageSize, platform, searchTerm);
-    }
 
-    if (isYearFilter || hasSearchTerm) {
+    if (isYearFilter || hasSearchTerm)
       return this.igdbGameService.getGamesByYearCategory(page, pageSize, yearCategory, searchTerm);
-    }
 
     return this.igdbGameService.getGames(page, pageSize);
   }

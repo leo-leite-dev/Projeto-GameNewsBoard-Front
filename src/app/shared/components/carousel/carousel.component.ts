@@ -39,9 +39,9 @@ export class CarouselComponent<T> implements AfterViewInit, OnDestroy, OnChanges
   isMobile = false;
   canScroll: boolean = false;
 
-  private scrollInterval: any;
+  private scrollInterval: ReturnType<typeof setInterval> | null = null;
   private direction: 'forward' | 'backward' = 'forward';
-  private autoScrollRetryInterval?: any;
+  private autoScrollRetryInterval: ReturnType<typeof setTimeout> | null = null;
 
   constructor(private viewport: ViewportService) { }
 
@@ -63,8 +63,15 @@ export class CarouselComponent<T> implements AfterViewInit, OnDestroy, OnChanges
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.scrollInterval);
-    clearInterval(this.autoScrollRetryInterval);
+    if (this.scrollInterval) {
+      clearInterval(this.scrollInterval);
+      this.scrollInterval = null;
+    }
+
+    if (this.autoScrollRetryInterval) {
+      clearInterval(this.autoScrollRetryInterval);
+      this.autoScrollRetryInterval = null;
+    }
   }
 
   private tryStartAutoScroll(): void {
@@ -83,7 +90,10 @@ export class CarouselComponent<T> implements AfterViewInit, OnDestroy, OnChanges
           this.isPaused = true;
         }
 
-        clearInterval(this.autoScrollRetryInterval);
+        if (this.autoScrollRetryInterval) {
+          clearInterval(this.autoScrollRetryInterval);
+          this.autoScrollRetryInterval = null;
+        }
       }
     }, 100);
   }

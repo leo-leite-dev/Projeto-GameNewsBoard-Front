@@ -1,34 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { ApiResponse } from '../models/commons/api-response.model';
 import { ErrorHandlingService } from './commons/error-handling.service';
-import { GameResponse } from '../models/game-response.model';
+import { GameResponse } from '../models/game.model';
 import { Status } from '../enums/status-game.enum';
+import { GameStatusRequest } from '../models/game-status.model';
+import { validateApiResponse } from '../utils/api-response-util';
 
 @Injectable({ providedIn: 'root' })
 export class GameStatusService {
   private readonly baseUrl = `${environment.apiBaseUrl}/GameStatus`;
 
-  constructor(private http: HttpClient, private errorHandler: ErrorHandlingService) {}
+  constructor(
+    private http: HttpClient,
+    private errorHandler: ErrorHandlingService
+  ) { }
 
-  setGameStatus(gameId: number, status: Status): Observable<void> {
-    const params = new HttpParams().set('status', status.toString());
-
-    return this.http.put<ApiResponse<any>>(`${this.baseUrl}/${gameId}/status`, {}, { params }).pipe(
-      map((response) => {
-        if (!response.success) throw new Error('Erro ao definir status.');
-      }),
+  setGameStatus(gameId: number, request: GameStatusRequest): Observable<ApiResponse<void>> {
+    return this.http.put<ApiResponse<void>>(`${this.baseUrl}/${gameId}/status`, request).pipe(
+      map((response) => validateApiResponse(response, 'definir status')),
       catchError(this.errorHandler.handleWithThrow.bind(this.errorHandler))
     );
   }
 
-  removeGameStatus(gameId: number): Observable<void> {
-    return this.http.delete<ApiResponse<any>>(`${this.baseUrl}/${gameId}/status`).pipe(
-      map((response) => {
-        if (!response.success) throw new Error('Erro ao remover status.');
-      }),
+  removeGameStatus(gameId: number): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(`${this.baseUrl}/${gameId}/status`).pipe(
+      map((response) => validateApiResponse(response, 'remover status')),
       catchError(this.errorHandler.handleWithThrow.bind(this.errorHandler))
     );
   }
@@ -38,8 +37,9 @@ export class GameStatusService {
       .get<ApiResponse<{ game: GameResponse; status: Status }[]>>(`${this.baseUrl}/me`)
       .pipe(
         map((response) => {
-          if (!response.success || !response.data) throw new Error('Erro ao buscar status.');
-          return response.data;
+          const validated = validateApiResponse(response, 'buscar status');
+          if (!validated.data) throw new Error('Nenhum status encontrado.');
+          return validated.data;
         }),
         catchError(this.errorHandler.handleWithThrow.bind(this.errorHandler))
       );

@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { GameCarouselComponent } from '../../../../shared/components/game-carousel/game-carousel.component';
 import { AssignStatusComponent } from '../../../../shared/modais/assign-status/assign-status.component';
 import { Status } from '../../../../shared/enums/status-game.enum';
@@ -58,7 +58,7 @@ export class GameStatusListComponent implements OnInit {
     return getStatusLabel(status);
   }
 
-  onDrop(event: any, newStatus: Status): void {
+  onDrop(event: CdkDragDrop<CarouselItem[]>, newStatus: Status): void {
     const game = event.item.data as CarouselItem;
     this.store.setGameStatus(game.id, newStatus, game);
   }
@@ -71,14 +71,12 @@ export class GameStatusListComponent implements OnInit {
     this.hoveredStatus[status] = false;
   }
 
-onGameClicked(game: CarouselItem): void {
-  if (!this.isMobile) return;
-  this.selectedGame.set(game);
-  this.selectedGameStatus = this.store.getGameStatusById(game.id) ?? null;
-  console.log(`🧪 Jogo clicado: ${game.title}, Status atual: ${this.selectedGameStatus}`);
-  this.showAssignStatusModal = true;
-}
-
+  onGameClicked(game: CarouselItem): void {
+    if (!this.isMobile) return;
+    this.selectedGame.set(game);
+    this.selectedGameStatus = this.store.getGameStatusById(game.id) ?? null;
+    this.showAssignStatusModal = true;
+  }
 
   onStatusSelected(event: { status: Status; game: CarouselItem }): void {
     this.store.setGameStatus(event.game.id, event.status, event.game);

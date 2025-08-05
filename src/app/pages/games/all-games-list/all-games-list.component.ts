@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameDataService } from '../../../shared/services/commons/game-data.service';
-import { GameResponse } from '../../../shared/models/game-response.model';
+import { GameResponse } from '../../../shared/models/game.model';
 import { GameFilters } from '../../../shared/models/commons/game-filters.model';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../../shared/constants/pagination.constants';
 import { Platform } from '../../../shared/enums/platform.enum';

@@ -6,8 +6,8 @@ import { AuthService } from '../../../core/auth/services/auth.service';
 import { UserService } from '../../services/user.service';
 import { InputComponent } from '../../../shared/forms/input/input.component';
 import { GenericModule } from '../../../../shareds/commons/GenericModule';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconComponent } from '../../components/icons/fa-icon/fa-icon.component';
+import { ErrorHandlingService } from '../../services/commons/error-handling.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -33,7 +33,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private errorHandler: ErrorHandlingService
   ) {
     this.form = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -56,9 +57,12 @@ export class LoginComponent {
         this.userService.getAuthenticatedUserSafe().pipe(
           retry({
             count: 5,
-            delay: () => timer(200)
+            delay: () => timer(200),
           }),
-          catchError(() => of(null))
+          catchError(err => {
+            console.error('[Login] Erro ao buscar usuário autenticado:', err);
+            return of(null);
+          })
         )
       );
 
@@ -67,12 +71,13 @@ export class LoginComponent {
         this.loginSuccess.emit();
         this.close.emit();
       } else {
-        this.toastr.error('Não foi possível confirmar o login. Tente novamente.');
+        console.warn('[Login] Usuário retornado está vazio ou inválido.');
       }
 
     } catch (err) {
-      this.errorMessage = 'Usuário ou senha inválidos';
-      this.toastr.error(this.errorMessage);
+      const detail = this.errorHandler.handleWithLog(err, 'Login');
+      this.errorMessage = detail;
+      this.toastr.error(detail);
     }
   }
 

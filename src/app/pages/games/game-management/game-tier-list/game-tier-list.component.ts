@@ -125,7 +125,7 @@ export class GameTierListComponent implements OnInit, OnDestroy {
     this.navigateWithAuthGuard(['manage-games/tier-list/edit-tier-list', tierId]);
   }
 
-  private navigateWithAuthGuard(route: any[]): void {
+  private navigateWithAuthGuard(route: Parameters<Router['navigate']>[0]): void {
     this.router.navigate(route);
   }
 }
